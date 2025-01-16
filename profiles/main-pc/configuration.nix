@@ -11,11 +11,14 @@
     ../../common-configurations/nvidia-drivers.nix
     ./custom-folders.nix
     ./systemd-timers.nix
+    ./mount-points.nix
+
   ];
   networking.hostName = "main-pc"; # Define your hostname.
   services.nvidia-drivers.enable = true;
 
   services.custom-folders.enable = true;
+  services.mount-points.enable = true;
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = false;
