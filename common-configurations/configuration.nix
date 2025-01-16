@@ -5,7 +5,9 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ];
+  imports = [ ./podman.nix ];
+
+  services.podman-containers.enable = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

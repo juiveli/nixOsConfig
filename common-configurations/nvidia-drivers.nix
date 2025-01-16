@@ -51,5 +51,12 @@ in {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
+    environment.systemPackages = with pkgs;
+      [
+        pkgs.nvidia-container-toolkit
+        #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+        #  wget
+      ];
+
   };
 }
