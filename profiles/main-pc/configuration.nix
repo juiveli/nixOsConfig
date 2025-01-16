@@ -10,6 +10,7 @@
     ../../common-configurations/configuration.nix
     ../../common-configurations/nvidia-drivers.nix
     ./custom-folders.nix
+    ./systemd-timers.nix
   ];
   networking.hostName = "main-pc"; # Define your hostname.
   services.nvidia-drivers.enable = true;
