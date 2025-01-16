@@ -8,7 +8,8 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../common-configurations/configuration.nix
+    ../../common-configurations/nvidia-drivers.nix
   ];
   networking.hostName = "main-pc"; # Define your hostname.
-
+  services.nvidia-drivers.enable = true;
 }
