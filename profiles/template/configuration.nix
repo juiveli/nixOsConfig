@@ -12,7 +12,8 @@
     ../../common-configurations/nvidia-drivers.nix
   ];
 
-
   #networking.hostName = "template"; # Define your hostname.
   #services.nvidia-drivers.enable = true;
+  #system.autoUpgrade.enable = true;
+  #system.autoUpgrade.allowReboot = false;
 }
