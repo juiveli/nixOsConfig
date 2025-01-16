@@ -5,7 +5,8 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../common-configurations/configuration.nix
     ../../common-configurations/nvidia-drivers.nix
@@ -19,6 +20,7 @@
 
   services.custom-folders.enable = true;
   services.mount-points.enable = true;
+  services.systemd-timers.enable = true;
 
   system.autoUpgrade.enable = true;
   system.autoUpgrade.allowReboot = false;
