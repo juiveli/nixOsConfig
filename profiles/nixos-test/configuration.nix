@@ -12,4 +12,7 @@
   ];
   networking.hostName = "nixos-test"; # Define your hostname.
   services.nvidia-drivers.enable = true;
+
+  system.autoUpgrade.enable = false;
+  system.autoUpgrade.allowReboot = false;
 }
