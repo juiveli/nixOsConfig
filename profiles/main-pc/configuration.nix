@@ -12,4 +12,7 @@
   ];
   networking.hostName = "main-pc"; # Define your hostname.
   services.nvidia-drivers.enable = true;
+
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = false;
 }
