@@ -4,12 +4,21 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  # version 0.5.2
+  nix-flatpak = (builtins.getFlake
+    "github:gmodena/nix-flatpak/8bdc2540da516006d07b04019eb57ae0781a04b3");
+
+in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../common-configurations/configuration.nix
     ../../common-configurations/nvidia-drivers.nix
+    nix-flatpak.nixosModules.nix-flatpak
   ];
+
+  services.flatpak.enable = true;
+
   networking.hostName = "nixos-test"; # Define your hostname.
   services.nvidia-drivers.enable = true;
 
