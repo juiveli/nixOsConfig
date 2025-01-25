@@ -25,10 +25,16 @@ in {
 
   services.flatpak.enable = true;
 
-  services.flatpak.packages = [{
-    appId = "org.signal.Signal";
-    origin = "flathub";
-  }];
+  services.flatpak.packages = [
+    {
+      appId = "org.signal.Signal";
+      origin = "flathub";
+    }
+    {
+      appId = "com.heroicgameslauncher.hgl";
+      origin = "flathub";
+    }
+  ];
 
   environment.systemPackages = [ pkgs.element-desktop ];
 
