@@ -38,6 +38,8 @@ in {
     origin = "flathub";
   }];
 
+  environment.systemPackages = [ pkgs.element-desktop ];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall =
