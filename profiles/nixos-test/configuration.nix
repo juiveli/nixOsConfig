@@ -25,6 +25,11 @@ in {
 
   services.flatpak.enable = true;
 
+  services.flatpak.packages = [{
+    appId = "org.signal.Signal";
+    origin = "flathub";
+  }];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall =
