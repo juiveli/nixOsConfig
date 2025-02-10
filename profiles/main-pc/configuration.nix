@@ -44,7 +44,17 @@ in {
     }
   ];
 
-  environment.systemPackages = [ pkgs.element-desktop ];
+  environment.systemPackages = [
+    pkgs.element-desktop
+    # Minecraft custom launcher
+    (pkgs.prismlauncher.override {
+      # Add binary required by some mod
+      additionalPrograms = [ pkgs.ffmpeg ];
+
+      # Change Java runtimes available to Prism Launcher
+      jdks = [ pkgs.graalvm-ce pkgs.zulu8 pkgs.zulu17 pkgs.zulu ];
+    })
+  ];
 
   programs.steam = {
     enable = true;
