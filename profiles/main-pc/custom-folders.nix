@@ -74,6 +74,41 @@ in {
         };
       };
 
+      "caddy_folders" = {
+
+        "/var/lib/containers/caddy" = {
+          d = {
+            group = cfg.usergroup;
+            mode = "0755";
+            user = cfg.username;
+          };
+        };
+
+        "/var/lib/containers/caddy/srv" = {
+          d = {
+            group = cfg.usergroup;
+            mode = "0755";
+            user = cfg.username;
+          };
+        };
+
+        "/var/lib/containers/caddy/caddy_data" = {
+          d = {
+            group = cfg.usergroup;
+            mode = "0755";
+            user = cfg.username;
+          };
+        };
+
+        "/var/lib/containers/caddy/caddy_config" = {
+          d = {
+            group = cfg.usergroup;
+            mode = "0755";
+            user = cfg.username;
+          };
+        };
+      };
+
       "custom_scritps_folders" = {
         "/var/lib/dnsIpUpdater" = {
           d = {
