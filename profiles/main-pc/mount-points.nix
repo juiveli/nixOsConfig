@@ -71,9 +71,9 @@ in {
     };
     ####################
     # Bind mounts
-    # Mount /var/lib/chia/chiaPlots/toshiba on /mnt/toshiba/chiaPlots
-    # Accessing /var/lib/chia/chiaPlots/toshiba will actually access /mnt/toshiba/chiaPlots...
-    fileSystems."/var/lib/chia/chiaPlots/toshiba" = {
+    # Mount /var/lib/containers/chia/chiaPlots/toshiba on /mnt/toshiba/chiaPlots
+    # Accessing /var/lib/containers/chia/chiaPlots/toshiba will actually access /mnt/toshiba/chiaPlots...
+    fileSystems."/var/lib/containers/chia/chiaPlots/toshiba" = {
       depends = [
         # The mounts above have to be mounted in this given order
         "/mnt/toshiba"
@@ -86,55 +86,55 @@ in {
         "nofail"
       ];
     };
-    fileSystems."/var/lib/mmx/mmxPlots/toshiba" = {
+    fileSystems."/var/lib/containers/mmx/mmxPlots/toshiba" = {
       depends = [ "/mnt/toshiba" ];
       device = "/mnt/toshiba/mmxPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/chia/chiaPlots/seagate" = {
+    fileSystems."/var/lib/containers/chia/chiaPlots/seagate" = {
       depends = [ "/mnt/seagate" ];
       device = "/mnt/seagate/chiaPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/mmx/mmxPlots/seagate" = {
+    fileSystems."/var/lib/containers/mmx/mmxPlots/seagate" = {
       depends = [ "/mnt/seagate" ];
       device = "/mnt/seagate/mmxPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/chia/chiaPlots/4tbHDD" = {
+    fileSystems."/var/lib/containers/chia/chiaPlots/4tbHDD" = {
       depends = [ "/mnt/4tbHDD" ];
       device = "/mnt/4tbHDD/chiaPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/mmx/mmxPlots/4tbHDD" = {
+    fileSystems."/var/lib/containers/mmx/mmxPlots/4tbHDD" = {
       depends = [ "/mnt/4tbHDD" ];
       device = "/mnt/4tbHDD/mmxPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/chia/chiaPlots/samsung4tb" = {
+    fileSystems."/var/lib/containers/chia/chiaPlots/samsung4tb" = {
       depends = [ "/mnt/samsung4tb" ];
       device = "/mnt/samsung4tb/chiaPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/mmx/mmxPlots/samsung4tb" = {
+    fileSystems."/var/lib/containers/mmx/mmxPlots/samsung4tb" = {
       depends = [ "/mnt/samsung4tb" ];
       device = "/mnt/samsung4tb/mmxPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/chia/chiaPlots/myBook" = {
+    fileSystems."/var/lib/containers/chia/chiaPlots/myBook" = {
       depends = [ "/mnt/myBook" ];
       device = "/mnt/myBook/chiaPlots";
       fsType = "none";
       options = [ "bind" "ro" "nofail" ];
     };
-    fileSystems."/var/lib/mmx/mmxPlots/myBook" = {
+    fileSystems."/var/lib/containers/mmx/mmxPlots/myBook" = {
       depends = [ "/mnt/myBook" ];
       device = "/mnt/myBook/mmxPlots";
       fsType = "none";

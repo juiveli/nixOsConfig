@@ -19,8 +19,19 @@ in {
   config = mkIf cfg.enable {
 
     systemd.tmpfiles.settings = {
+      "containers_folder" = {
+        "/var/lib/containers" = {
+
+          d = {
+            group = cfg.usergroup;
+            mode = "0755";
+            user = cfg.username;
+          };
+        };
+      };
+
       "chia_folders" = {
-        "/var/lib/chia" = {
+        "/var/lib/containers/chia" = {
           d = {
             group = cfg.usergroup;
             mode = "0755";
@@ -28,7 +39,7 @@ in {
           };
         };
 
-        "/var/lib/chia/chiaPlots" = {
+        "/var/lib/containers/chia/chiaPlots" = {
           d = {
             group = cfg.usergroup;
             mode = "0755";
@@ -36,7 +47,7 @@ in {
           };
         };
 
-        "/var/lib/chia/.chia" = {
+        "/var/lib/containers/chia/.chia" = {
           d = {
             group = cfg.usergroup;
             mode = "0755";
@@ -46,7 +57,7 @@ in {
       };
 
       "mmx_folders" = {
-        "/var/lib/mmx/data" = {
+        "/var/lib/containers/mmx/data" = {
           d = {
             group = cfg.usergroup;
             mode = "0755";
@@ -54,7 +65,7 @@ in {
           };
         };
 
-        "/var/lib/mmx/mmxPlots" = {
+        "/var/lib/containers/mmx/mmxPlots" = {
           d = {
             group = cfg.usergroup;
             mode = "0755";
@@ -71,7 +82,6 @@ in {
             user = cfg.username;
           };
         };
-
       };
     };
   };
