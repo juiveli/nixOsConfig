@@ -21,6 +21,8 @@ in {
 
   ];
 
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
+
   networking.hostName = "main-pc"; # Define your hostname.
   services.nvidia-drivers.enable = true;
 
@@ -65,4 +67,10 @@ in {
     localNetworkGameTransfers.openFirewall =
       true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [80 443 ];
+  networking.firewall.allowedUDPPorts = [80 443 ];
+  # Or disable the firewall altogether.
+  networking.firewall.enable = true;
 }
