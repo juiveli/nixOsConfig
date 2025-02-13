@@ -56,6 +56,9 @@ in {
       # Change Java runtimes available to Prism Launcher
       jdks = [ pkgs.graalvm-ce pkgs.zulu8 pkgs.zulu17 pkgs.zulu ];
     })
+    pkgs.vscodium
+    pkgs.inkscape-with-extensions
+    pkgs.pinta
   ];
 
   programs.steam = {
@@ -69,8 +72,8 @@ in {
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [80 443 ];
-  networking.firewall.allowedUDPPorts = [80 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 80 443 ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 }
