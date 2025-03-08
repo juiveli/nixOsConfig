@@ -47,8 +47,12 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.displayManager.sddm.enable = true;
+  # services.desktopManager.plasma6.enable = true;
+
+  # Enable Gnome Desktop Environment
+  # services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -93,7 +97,7 @@
       ];
   };
 
-  # Enable automatic login for the user.
+  # Enable automatic login for the user. Do note that keyring password must be empty for it to open in autologin
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "joonas";
 
