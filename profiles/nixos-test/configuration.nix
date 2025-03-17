@@ -36,7 +36,7 @@ in {
     }
   ];
 
-  environment.systemPackages = [ pkgs.element-desktop ];
+  environment.systemPackages = [ pkgs.element-desktop pkgs.phoronix-test-suite pkgs.unigine-heaven ];
 
   programs.steam = {
     enable = true;
