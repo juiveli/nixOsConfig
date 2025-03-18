@@ -1,12 +1,72 @@
 {
   "nodes": {
+    "main-pc": {
+      "inputs": {
+        "nix-flatpak": "nix-flatpak"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-62n1UtcPG2NY/EwXPeqGOR0xX0RSE9j0c/44ffMX5lg=",
+        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/main-pc",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/main-pc",
+        "type": "path"
+      }
+    },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1741903049,
+        "narHash": "sha256-8Y8brH04JjSLrCLvBEbhK9vOu7lhQhqUBW4kI3tifdI=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "42c7fb2702219b86a8f5969c3475ce594c28f5d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
+    "nix-flatpak_2": {
+      "locked": {
+        "lastModified": 1741903049,
+        "narHash": "sha256-8Y8brH04JjSLrCLvBEbhK9vOu7lhQhqUBW4kI3tifdI=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "42c7fb2702219b86a8f5969c3475ce594c28f5d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
+    "nixos-test": {
+      "inputs": {
+        "nix-flatpak": "nix-flatpak_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-/HaiDiDVSj73uIelI899wVcgoMaAfKls9tRaDY/tCG4=",
+        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/nixos-test",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/nixos-test",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1736916166,
-        "narHash": "sha256-puPDoVKxkuNmYIGMpMQiK8bEjaACcCksolsG36gdaNQ=",
+        "lastModified": 1742268799,
+        "narHash": "sha256-IhnK4LhkBlf14/F8THvUy3xi/TxSQkp9hikfDZRD4Ic=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e24b4c09e963677b1beea49d411cd315a024ad3a",
+        "rev": "da044451c6a70518db5b730fe277b70f494188f1",
         "type": "github"
       },
       "original": {
@@ -18,6 +78,8 @@
     },
     "root": {
       "inputs": {
+        "main-pc": "main-pc",
+        "nixos-test": "nixos-test",
         "nixpkgs": "nixpkgs"
       }
     }
