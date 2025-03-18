@@ -7,11 +7,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-62n1UtcPG2NY/EwXPeqGOR0xX0RSE9j0c/44ffMX5lg=",
-        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/main-pc",
+        "path": "/nix/store/b35rarva03ffr6ida8vjxv0cnic0i1ap-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/main-pc",
+        "path": "/nix/store/b35rarva03ffr6ida8vjxv0cnic0i1ap-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -52,11 +52,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-/HaiDiDVSj73uIelI899wVcgoMaAfKls9tRaDY/tCG4=",
-        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/nixos-test",
+        "path": "/nix/store/b35rarva03ffr6ida8vjxv0cnic0i1ap-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/41gci5vm6axv1mdg7r765jr328z114i7-source/profiles/nixos-test",
+        "path": "/nix/store/b35rarva03ffr6ida8vjxv0cnic0i1ap-source/profiles/nixos-test",
         "type": "path"
       }
     },

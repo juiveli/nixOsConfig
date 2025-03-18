@@ -41,6 +41,59 @@
   # services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  environment.gnome.excludePackages = with pkgs; [
+    orca
+    evince
+    file-roller
+    geary
+    gnome-disk-utility
+    seahorse
+    sushi
+    sysprof
+    # gnome-shell-extensions
+    # adwaita-icon-theme
+    # gnome-backgrounds
+    gnome-bluetooth
+    # gnome-color-manager
+    
+    # Settings app
+    # gnome-control-center
+    gnome-tour # GNOME Shell detects the .desktop file on first log-in.
+    gnome-user-docs
+    glib # for gsettings program
+    gnome-menus
+    gtk3.out # for gtk-launch program
+    # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
+    # xdg-user-dirs-gtk # Used to create the default bookmarks
+    
+    baobab
+    epiphany
+    gnome-text-editor
+    gnome-calculator
+    gnome-calendar
+    gnome-characters
+    gnome-clocks
+    gnome-console
+    gnome-contacts
+    gnome-font-viewer
+    gnome-logs
+    gnome-maps
+    gnome-music
+    gnome-system-monitor
+    gnome-weather
+    loupe
+    nautilus
+    gnome-connections
+    simple-scan
+    snapshot
+    totem
+    yelp
+    gnome-software
+            ];
+
+  # xterm comes with gnome
+  services.xserver.excludePackages = [ pkgs.xterm ];
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "fi";
@@ -79,7 +132,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs;
       [
-        kdePackages.kate
         #  thunderbird
       ];
   };
@@ -98,8 +150,9 @@
   # $ nix search wget
   environment.systemPackages = with pkgs;
     [
-      # git is required for flakes support
-      pkgs.git
+      pkgs.git   # git is required for flakes support
+      pkgs.nemo-with-extensions # file-manager
+      pkgs.alacritty # terminal
       #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       #  wget
     ];
