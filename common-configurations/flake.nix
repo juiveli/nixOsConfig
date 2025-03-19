@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -10,6 +10,20 @@
   outputs = { self, nixpkgs, home-manager }: {
     nixosModules = {
       conffi = { config, pkgs, ... }: {
+
+        imports = [ 
+            home-manager.nixosModules.home-manager
+             {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.joonas = import ./home-manager-users/joonas/home.nix;
+
+              # Optionally, use home-manager.extraSpecialArgs to pass
+              # arguments to home.nix
+            }
+            
+          ];
+        programs.dconf.enable = true;
 
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -98,6 +112,7 @@
 
         # xterm comes with gnome
         services.xserver.excludePackages = [ pkgs.xterm ];
+        documentation.nixos.enable = false; # I can google it... 
 
         # Configure keymap in X11
         services.xserver.xkb = {
@@ -107,9 +122,6 @@
 
         # Configure console keymap
         console.keyMap = "fi";
-
-        # Enable CUPS to print documents.
-        services.printing.enable = true;
 
         # Enable sound with pipewire.
         hardware.pulseaudio.enable = false;
@@ -161,6 +173,7 @@
             pkgs.gnomeExtensions.dash-to-panel # taskbar
             pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
             pkgs.pulseaudio # required for audio panel
+            pkgs.dconf2nix
             # The Nano editor is also installed by default.
             #  wget
           ];
@@ -176,7 +189,6 @@
           };
         };
 
-        
 
         # This value determines the NixOS release from which the default
         # settings for stateful data, like file locations and database versions
