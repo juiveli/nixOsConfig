@@ -21,6 +21,7 @@
           # field (look at the following example).
           pkgs.gnomeExtensions.dash-to-panel.extensionUuid
           pkgs.gnomeExtensions.quick-settings-audio-panel.extensionUuid
+          pkgs.gnomeExtensions.arcmenu.extensionUuid
 
           
         ];
@@ -52,6 +53,21 @@
       "org/gnome/shell" = {
         favorite-apps = [ "Alacritty.desktop" "firefox.desktop" "codium.desktop" "nemo.desktop" ];
       };
+      
+      "org/gnome/shell/extensions/arcmenu" = {
+      force-menu-location = "Off";
+      hide-overview-on-startup = false;
+      dash-to-panel-standalone = false;
+      menu-button-appearance = "Text_Icon";
+      menu-button-position-offset = 1;
+      menu-layout = "Tognee";
+      menu-position-alignment = 41;
+      multi-monitor = false;
+      position-in-panel = "Left";
+      prefs-visible-page = 0;
+      # search-entry-border-radius = mkTuple [ true 25 ];
+      show-activities-button = false;
+      };
 
       "org/gnome/shell/extensions/dash-to-panel" = {
         animate-appicon-hover = true;
@@ -68,7 +84,7 @@
           {"0":"MIDDLE"}
         '';
         panel-element-positions = ''
-          {"0":[{"element":"showAppsButton","visible":true,"position":"stackedTL"},{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"}]}
+          {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"stackedBR"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"dateMenu","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":true,"position":"stackedBR"}]}
         '';
         panel-lengths = ''
           {"0":100}
@@ -100,13 +116,6 @@
 
       "org/nemo/preferences" = {
         show-hidden-files = true;
-      };
-
-      "org/nemo/window-state" = {
-        geometry = "800x550+1041+305";
-        maximized = false;
-        sidebar-bookmark-breakpoint = 1;
-        start-with-sidebar = true;
       };
     };
   };

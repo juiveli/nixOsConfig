@@ -60,55 +60,13 @@
         # services.xserver.displayManager.gdm.enable = true;
         services.xserver.desktopManager.gnome.enable = true;
 
-        environment.gnome.excludePackages = with pkgs; [
-          orca
-          evince
-          file-roller
-          geary
-          gnome-disk-utility
-          seahorse
-          sushi
-          sysprof
-          # gnome-shell-extensions
-          # adwaita-icon-theme
-          # gnome-backgrounds
-          gnome-bluetooth
-          # gnome-color-manager
-          
-          # Settings app
-          # gnome-control-center
+       services.gnome.core-utilities.enable = false;
+       
+
+         environment.gnome.excludePackages = with pkgs; [
           gnome-tour # GNOME Shell detects the .desktop file on first log-in.
-          gnome-user-docs
-          glib # for gsettings program
-          gnome-menus
-          gtk3.out # for gtk-launch program
-          # xdg-user-dirs # Update user dirs as described in https://freedesktop.org/wiki/Software/xdg-user-dirs/
-          # xdg-user-dirs-gtk # Used to create the default bookmarks
-          
-          baobab
-          epiphany
-          gnome-text-editor
-          gnome-calculator
-          gnome-calendar
-          gnome-characters
-          gnome-clocks
-          gnome-console
-          gnome-contacts
-          gnome-font-viewer
-          gnome-logs
-          gnome-maps
-          gnome-music
-          gnome-system-monitor
-          gnome-weather
-          loupe
-          nautilus
-          gnome-connections
-          simple-scan
-          snapshot
-          totem
-          yelp
-          gnome-software
-                  ];
+          gnome-shell-extensions
+                   ];
 
         # xterm comes with gnome
         services.xserver.excludePackages = [ pkgs.xterm ];
@@ -172,6 +130,7 @@
             pkgs.alacritty # terminal
             pkgs.gnomeExtensions.dash-to-panel # taskbar
             pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
+            pkgs.gnomeExtensions.arcmenu
             pkgs.pulseaudio # required for audio panel
             pkgs.dconf2nix
             # The Nano editor is also installed by default.
