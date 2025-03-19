@@ -153,7 +153,10 @@
       pkgs.git   # git is required for flakes support
       pkgs.nemo-with-extensions # file-manager
       pkgs.alacritty # terminal
-      #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      pkgs.gnomeExtensions.dash-to-panel # taskbar
+      pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
+      pkgs.pulseaudio # required for audio panel
+      # The Nano editor is also installed by default.
       #  wget
     ];
 
@@ -167,6 +170,8 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
+
+   
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
