@@ -4,19 +4,20 @@
   inputs = {
     # NixOS official package source, using the nixos-24.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    common-configurations.url = "./common-configurations";
     nixos-test.url = "./profiles/nixos-test";
     main-pc.url = "./profiles/main-pc";
   };
 
-  outputs = { self, nixpkgs, nixos-test, main-pc, ... }@inputs: {
+  outputs = { self, nixpkgs, common-configurations, nixos-test, main-pc, ... }@inputs: {
     nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./common-configurations/configuration.nix nixos-test.nixosModules.conffi];
+      modules = [ common-configurations.nixosModules.conffi nixos-test.nixosModules.conffi];
     };
 
     nixosConfigurations.main-pc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./common-configurations/configuration.nix main-pc.nixosModules.conffi];
+      modules = [ common-configurations.nixosModules.conffi main-pc.nixosModules.conffi];
     };
   };
 }
