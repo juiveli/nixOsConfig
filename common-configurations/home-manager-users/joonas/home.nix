@@ -28,19 +28,20 @@
       };
     
 
-#  "org/gnome/desktop/interface" = {
-#    color-scheme = "default";
-#    cursor-size = 24;
-#    cursor-theme = "breeze_cursors";
-#    enable-animations = true;
-#    font-name = "Noto Sans,  10";
-#    gtk-theme = "Adwaita";
-#    icon-theme = "breeze";
-#    scaling-factor = mkUint32 1;
-#    text-scaling-factor = 1.0;
-#    toolbar-style = "text";
-#  };
-#
+      "org/gnome/desktop/interface" = {
+        enable-hot-corners = false;
+        color-scheme = "default";
+        cursor-size = 24;
+        cursor-theme = "breeze_cursors";
+        enable-animations = true;
+        font-name = "Noto Sans,  10";
+        gtk-theme = "Adwaita";
+        icon-theme = "breeze";
+        # scaling-factor = mkUint32 1;
+        text-scaling-factor = 1.0;
+        toolbar-style = "text";
+      };
+
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = false;
         night-light-schedule-automatic = false;
@@ -116,7 +117,10 @@
 
       "org/nemo/preferences" = {
         show-hidden-files = true;
+        
       };
+
+
     };
   };
 }
