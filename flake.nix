@@ -4,7 +4,12 @@
   inputs = {
     # NixOS official package source, using the nixos-24.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    common-configurations.url = "./common-configurations";
+    
+    common-configurations = {
+      url = "./common-configurations";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-test.url = "./profiles/nixos-test";
     main-pc.url = "./profiles/main-pc";
   };
