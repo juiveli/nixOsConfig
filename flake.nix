@@ -47,13 +47,15 @@
         pre-commit-check = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
           src = ./.;
           hooks = {
-            nixpkgs-fmt.enable = true;
+            nixfmt-rfc-style.enable = true;
+
+
+
+
           };
         };
-      
+
       });
-
-
 
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
