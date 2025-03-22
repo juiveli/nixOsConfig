@@ -48,13 +48,18 @@
           src = ./.;
           hooks = {
             nixfmt-rfc-style.enable = true;
-
-
-
-
+            mdsh.enable = true;
           };
+
         };
 
+      });
+
+      devShells = eachSystem (pkgs: {
+        default = nixpkgs.legacyPackages.${pkgs.system}.mkShell {
+          inherit (self.checks.${pkgs.system}.pre-commit-check) shellHook;
+          buildInputs = self.checks.${pkgs.system}.pre-commit-check.enabledPackages;
+        };
       });
 
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
