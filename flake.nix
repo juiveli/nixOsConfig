@@ -6,6 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     common-configurations = {
       url = "./common-configurations";
@@ -34,13 +35,31 @@
 
       # Eval the treefmt modules from ./treefmt.nix
       treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
+
     in
     {
       # for `nix fmt`
       formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
-      # for `nix flake check`
+
       checks = eachSystem (pkgs: {
         formatting = treefmtEval.${pkgs.system}.config.build.check self;
+
+        pre-commit-check = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
+          src = ./.;
+          hooks = {
+            nixfmt-rfc-style.enable = true;
+            mdformat.enable = true;
+          };
+
+        };
+
+      });
+
+      devShells = eachSystem (pkgs: {
+        default = nixpkgs.legacyPackages.${pkgs.system}.mkShell {
+          inherit (self.checks.${pkgs.system}.pre-commit-check) shellHook;
+          buildInputs = self.checks.${pkgs.system}.pre-commit-check.enabledPackages;
+        };
       });
 
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
