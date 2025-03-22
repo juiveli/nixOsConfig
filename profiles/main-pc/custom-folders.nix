@@ -1,9 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
 
   cfg = config.services.custom-folders;
-in {
+in
+{
   options.services.custom-folders = {
     enable = mkEnableOption "custom-folders";
     username = mkOption {

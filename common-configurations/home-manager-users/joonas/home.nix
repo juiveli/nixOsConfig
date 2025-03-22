@@ -51,7 +51,7 @@ with lib.hm.gvariant;
       };
 
       ################################
-      # Wi-fi 
+      # Wi-fi
 
       # Regular nix syntax can be used
 
@@ -93,7 +93,9 @@ with lib.hm.gvariant;
 
       #####################################
       # Multitasking
-      "org/gnome/desktop/interface" = { enable-hot-corners = "false"; };
+      "org/gnome/desktop/interface" = {
+        enable-hot-corners = "false";
+      };
 
       "org/gnome/mutter" = {
         edge-tiling = true; # Active Screen Edges
@@ -106,7 +108,9 @@ with lib.hm.gvariant;
       #################################
       # Appearance
 
-      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
 
       ###################################
       # Apps
@@ -119,7 +123,7 @@ with lib.hm.gvariant;
       # Default apps with regular nix syntax
 
       ###################################
-      # Notifications 
+      # Notifications
 
       "org/gnome/desktop/notifications" = {
         show-banners = true; # Do not disturb (true is off)
@@ -149,7 +153,7 @@ with lib.hm.gvariant;
       };
 
       ############################
-      # Keyboard 
+      # Keyboard
 
       "org/gnome/desktop/input-sources" = {
         per-window = false;
@@ -179,7 +183,9 @@ with lib.hm.gvariant;
         overlay-scrolling = true; # Always Show Scrollbars
       };
 
-      "org/gnome/desktop/a11y/keyboard" = { togglekeys-enable = false; };
+      "org/gnome/desktop/a11y/keyboard" = {
+        togglekeys-enable = false;
+      };
 
       "org/gnome/desktop/interface" = {
         enable-animations = true;
@@ -188,7 +194,9 @@ with lib.hm.gvariant;
       };
 
       # Hearing
-      "org/gnome/desktop/sound" = { allow-volume-above-100-percent = false; };
+      "org/gnome/desktop/sound" = {
+        allow-volume-above-100-percent = false;
+      };
       "org/gnome/desktop/wm/preferences" = {
         visual-bell = false;
       }; # Visual alerts
@@ -219,20 +227,26 @@ with lib.hm.gvariant;
 
       # Pointing and Clicking
 
-      "org/gnome/desktop/a11y/keyboard" = { mousekeys-enable = false; };
+      "org/gnome/desktop/a11y/keyboard" = {
+        mousekeys-enable = false;
+      };
 
       "org/gnome/desktop/a11y/mouse" = {
         secondary-click-enabled = false;
         dwell-click-enabled = false;
       };
 
-      "org/gnome/desktop/interface" = { locate-pointer = false; };
+      "org/gnome/desktop/interface" = {
+        locate-pointer = false;
+      };
 
       "org/gnome/desktop/wm/preferences" = {
         focus-mode = "click";
       }; # Activate Windows on hover
 
-      "org/gnome/desktop/peripherals/mouse" = { double-click = 400; };
+      "org/gnome/desktop/peripherals/mouse" = {
+        double-click = 400;
+      };
 
       # Zoom
 
@@ -243,7 +257,7 @@ with lib.hm.gvariant;
       # Keep defaults
 
       ##########################
-      # System 
+      # System
       # Changes to System settings seem to be available trough regular nix syntax
 
       ######################################
@@ -262,14 +276,16 @@ with lib.hm.gvariant;
         multi-monitor = false;
         position-in-panel = "Left";
         prefs-visible-page = 0;
-        search-entry-border-radius = mkTuple [ true 25 ];
+        search-entry-border-radius = mkTuple [
+          true
+          25
+        ];
         show-activities-button = false;
       };
 
       "org/gnome/shell/extensions/dash-to-panel" = {
         animate-appicon-hover = true;
-        animate-appicon-hover-animation-extent =
-          "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}";
+        animate-appicon-hover-animation-extent = "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}";
         appicon-margin = 0;
         appicon-padding = 4;
         available-monitors = [ 0 ];
@@ -302,8 +318,7 @@ with lib.hm.gvariant;
         tray-padding = -1;
         tray-size = 0;
         window-preview-title-position = "TOP";
-        multi-monitors =
-          false; # It was hard to make config to be same on all displays
+        multi-monitors = false; # It was hard to make config to be same on all displays
       };
 
       "org/gnome/shell/extensions/quick-settings-audio-panel" = {

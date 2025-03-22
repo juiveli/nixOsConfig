@@ -15,7 +15,15 @@
   };
 
   outputs =
-    { self, nixpkgs, common-configurations, nixos-test, main-pc, ... }@inputs: {
+    {
+      self,
+      nixpkgs,
+      common-configurations,
+      nixos-test,
+      main-pc,
+      ...
+    }@inputs:
+    {
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [

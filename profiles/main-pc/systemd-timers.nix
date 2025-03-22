@@ -1,9 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 with lib;
 let
 
   cfg = config.services.systemd-timers;
-in {
+in
+{
   options.services.systemd-timers = {
     enable = mkEnableOption "systemd-timers";
   };
@@ -28,7 +34,10 @@ in {
       };
     };
     systemd.services."ip-updater-to-dns-always-when-run" = {
-      path = with pkgs; [ bash curl ];
+      path = with pkgs; [
+        bash
+        curl
+      ];
       script = ''
         bash /var/lib/dnsIpUpdater/checkAndUpdateDns.sh "yes"
       '';
@@ -38,7 +47,10 @@ in {
       };
     };
     systemd.services."ip-updater-to-dns-only-if-needed" = {
-      path = with pkgs; [ bash curl ];
+      path = with pkgs; [
+        bash
+        curl
+      ];
       script = ''
         bash /var/lib/dnsIpUpdater/checkAndUpdateDns.sh
       '';
