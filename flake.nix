@@ -48,7 +48,7 @@
           src = ./.;
           hooks = {
             nixfmt-rfc-style.enable = true;
-            mdsh.enable = true;
+            mdformat.enable = true;
           };
 
         };
