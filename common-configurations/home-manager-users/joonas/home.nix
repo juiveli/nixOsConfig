@@ -1,4 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+
+with lib.hm.gvariant;
 
 {
   home.username = "joonas";
@@ -6,12 +8,9 @@
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";
 
-
-
   dconf = {
     enable = true;
-    settings = 
-    {
+    settings = {
       "org/gnome/shell" = {
         disable-user-extensions = false; # enables user extensions
         enabled-extensions = [
@@ -23,60 +22,259 @@
           pkgs.gnomeExtensions.quick-settings-audio-panel.extensionUuid
           pkgs.gnomeExtensions.arcmenu.extensionUuid
 
-          
         ];
       };
-    
+
+      "org/nemo/preferences" = {
+        show-hidden-files = true;
+
+      };
 
       "org/gnome/desktop/interface" = {
-        enable-hot-corners = false;
-        color-scheme = "default";
-        cursor-size = 24;
         cursor-theme = "breeze_cursors";
-        enable-animations = true;
         font-name = "Noto Sans,  10";
         gtk-theme = "Adwaita";
         icon-theme = "breeze";
-        # scaling-factor = mkUint32 1;
-        text-scaling-factor = 1.0;
+        scaling-factor = mkUint32 1;
         toolbar-style = "text";
       };
+
+      ##############################
+
+      "org/gnome/shell" = {
+        favorite-apps = [
+          "Alacritty.desktop"
+          "codium.desktop"
+          "nemo.desktop"
+          "firefox.desktop"
+        ];
+      };
+
+      ################################
+      # Wi-fi 
+
+      # Regular nix syntax can be used
+
+      ################################
+      # Network
+
+      # Regular nix syntax can be used
+
+      ################################
+      # Bluetooth
+
+      # Keep default settings
+
+      #################################
+      # Display
 
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = false;
         night-light-schedule-automatic = false;
       };
 
+      # Other settings default because can not know how many display etc.
+
+      ############################################
+      # Sound
+      # Default should be fine (Mainly because right config settings could not be found)
+
+      ################################
+      # Power
+
+      # Powermode default (Because could not find how to set it)
+      #"org/gnome/desktop/session/idle-delay" = uint32 300 # Screen Blank
+
       "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
+        sleep-inactive-ac-type = "nothing"; # Automatic suspend
+        power-button-action = "interactive"; # Power button behaviour
+
       };
 
-      "org/gnome/shell" = {
-        favorite-apps = [ "Alacritty.desktop" "firefox.desktop" "codium.desktop" "nemo.desktop" ];
+      #####################################
+      # Multitasking
+      "org/gnome/desktop/interface" = { enable-hot-corners = "false"; };
+
+      "org/gnome/mutter" = {
+        edge-tiling = true; # Active Screen Edges
+        dynamic-workspaces = true;
       };
-      
+
+      # Multi-Monitor default ( I did not understand what it do)
+      # App Switching default ( I did not understand what it do)
+
+      #################################
+      # Appearance
+
+      "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+
+      ###################################
+      # Apps
+
+      # Default apps
+      "org/gnome/desktop/media-handling" = {
+        autorun-never = true;
+      }; # Media autostart
+
+      # Default apps with regular nix syntax
+
+      ###################################
+      # Notifications 
+
+      "org/gnome/desktop/notifications" = {
+        show-banners = true; # Do not disturb (true is off)
+        show-in-lock-screen = true; # Lock screen notifications
+      };
+
+      ##################################
+      # Search
+      # Keep default
+
+      ################################
+      # @ Online accounts
+      # Do with regular nix syntax if you wish
+
+      # Sharing
+      ###########################
+      # Keep default, if change needed I'd prefer regular nix syntax
+
+      ########################################
+
+      # Mouse and touchpad
+      "org/gnome/desktop/peripherals/mouse" = {
+        left-handed = false;
+        speed = 0.0;
+        accel-profile = "default";
+        natural-scroll = false;
+      };
+
+      ############################
+      # Keyboard 
+
+      "org/gnome/desktop/input-sources" = {
+        per-window = false;
+      }; # Input source switching
+      # Input sources can be handled by regular nix syntax
+
+      #################################
+      # Accessibility
+
+      "org/gnome/desktop/interface" = {
+        toolkit-accessibility = false;
+      }; # Not menu item
+
+      "org/gnome/desktop/a11y" = {
+        always-show-universal-access-status = false;
+      }; # Accessibility menu
+
+      # Seeing
+
+      "org/gnome/desktop/a11y/applications" = {
+        screen-reader-enabled = false;
+      };
+
+      "org/gnome/desktop/a11y/interface" = {
+        high-contrast = false;
+        show-status-shapes = false; # On/off shapes
+        overlay-scrolling = true; # Always Show Scrollbars
+      };
+
+      "org/gnome/desktop/a11y/keyboard" = { togglekeys-enable = false; };
+
+      "org/gnome/desktop/interface" = {
+        enable-animations = true;
+        text-scaling-factor = 1.0;
+        cursor-size = 24;
+      };
+
+      # Hearing
+      "org/gnome/desktop/sound" = { allow-volume-above-100-percent = false; };
+      "org/gnome/desktop/wm/preferences" = {
+        visual-bell = false;
+      }; # Visual alerts
+
+      # Typing
+
+      "org/gnome/desktop/a11y/applications" = {
+        screen-keyboard-enabled = false;
+      };
+
+      "org/gnome/desktop/a11y/keyboard" = {
+        enable = false; # Enable accessibility settigs with keyboard
+        stickykeys-enable = false;
+        slowkeys-enable = false;
+        bouncekeys-enable = false;
+      };
+
+      "org/gnome/desktop/interface" = {
+        cursor-blink = true;
+        cursor-blink-time = 1200;
+      };
+
+      "org/gnome/desktop/peripherals/keyboard" = {
+        repeat = true;
+        repeat-interval = mkUint32 30;
+        delay = mkUint32 500;
+      };
+
+      # Pointing and Clicking
+
+      "org/gnome/desktop/a11y/keyboard" = { mousekeys-enable = false; };
+
+      "org/gnome/desktop/a11y/mouse" = {
+        secondary-click-enabled = false;
+        dwell-click-enabled = false;
+      };
+
+      "org/gnome/desktop/interface" = { locate-pointer = false; };
+
+      "org/gnome/desktop/wm/preferences" = {
+        focus-mode = "click";
+      }; # Activate Windows on hover
+
+      "org/gnome/desktop/peripherals/mouse" = { double-click = 400; };
+
+      # Zoom
+
+      # Stick to defaults in Zoom options
+
+      ###############################
+      # Privacy and security
+      # Keep defaults
+
+      ##########################
+      # System 
+      # Changes to System settings seem to be available trough regular nix syntax
+
+      ######################################
+
+      ######################################
+      # Extensions
+
       "org/gnome/shell/extensions/arcmenu" = {
-      force-menu-location = "Off";
-      hide-overview-on-startup = false;
-      dash-to-panel-standalone = false;
-      menu-button-appearance = "Text_Icon";
-      menu-button-position-offset = 1;
-      menu-layout = "Tognee";
-      menu-position-alignment = 41;
-      multi-monitor = false;
-      position-in-panel = "Left";
-      prefs-visible-page = 0;
-      # search-entry-border-radius = mkTuple [ true 25 ];
-      show-activities-button = false;
+        force-menu-location = "Off";
+        hide-overview-on-startup = false;
+        dash-to-panel-standalone = false;
+        menu-button-appearance = "Text_Icon";
+        menu-button-position-offset = 1;
+        menu-layout = "Tognee";
+        menu-position-alignment = 41;
+        multi-monitor = false;
+        position-in-panel = "Left";
+        prefs-visible-page = 0;
+        search-entry-border-radius = mkTuple [ true 25 ];
+        show-activities-button = false;
       };
 
       "org/gnome/shell/extensions/dash-to-panel" = {
         animate-appicon-hover = true;
-        animate-appicon-hover-animation-extent = "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}";
+        animate-appicon-hover-animation-extent =
+          "{'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}";
         appicon-margin = 0;
         appicon-padding = 4;
         available-monitors = [ 0 ];
         dot-position = "LEFT";
+        dot-style-focused = "METRO";
         dot-style-unfocused = "DASHES";
         group-apps = true;
         hotkeys-overlay-combo = "TEMPORARILY";
@@ -104,6 +302,8 @@
         tray-padding = -1;
         tray-size = 0;
         window-preview-title-position = "TOP";
+        multi-monitors =
+          false; # It was hard to make config to be same on all displays
       };
 
       "org/gnome/shell/extensions/quick-settings-audio-panel" = {
@@ -115,11 +315,7 @@
         version = 2;
       };
 
-      "org/nemo/preferences" = {
-        show-hidden-files = true;
-        
-      };
-
+      ############################################
 
     };
   };

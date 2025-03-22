@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; 
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,18 +11,19 @@
     nixosModules = {
       conffi = { config, pkgs, ... }: {
 
-        imports = [ 
-            home-manager.nixosModules.home-manager
-             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.joonas = import ./home-manager-users/joonas/home.nix;
+        imports = [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.joonas =
+              import ./home-manager-users/joonas/home.nix;
 
-              # Optionally, use home-manager.extraSpecialArgs to pass
-              # arguments to home.nix
-            }
-            
-          ];
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+          }
+
+        ];
         programs.dconf.enable = true;
 
         nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -60,17 +61,16 @@
         # services.xserver.displayManager.gdm.enable = true;
         services.xserver.desktopManager.gnome.enable = true;
 
-       services.gnome.core-utilities.enable = false;
-       
+        services.gnome.core-utilities.enable = false;
 
-         environment.gnome.excludePackages = with pkgs; [
+        environment.gnome.excludePackages = with pkgs; [
           gnome-tour # GNOME Shell detects the .desktop file on first log-in.
           gnome-shell-extensions
-                   ];
+        ];
 
         # xterm comes with gnome
         services.xserver.excludePackages = [ pkgs.xterm ];
-        documentation.nixos.enable = false; # I can google it... 
+        documentation.nixos.enable = false; # I can google it...
 
         # Configure keymap in X11
         services.xserver.xkb = {
@@ -123,19 +123,18 @@
 
         # List packages installed in system profile. To search, run:
         # $ nix search wget
-        environment.systemPackages = with pkgs;
-          [
-            pkgs.git   # git is required for flakes support
-            pkgs.nemo-with-extensions # file-manager
-            pkgs.alacritty # terminal
-            pkgs.gnomeExtensions.dash-to-panel # taskbar
-            pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
-            pkgs.gnomeExtensions.arcmenu
-            pkgs.pulseaudio # required for audio panel
-            pkgs.dconf2nix
-            # The Nano editor is also installed by default.
-            #  wget
-          ];
+        environment.systemPackages = with pkgs; [
+          pkgs.git # git is required for flakes support
+          pkgs.nemo-with-extensions # file-manager
+          pkgs.alacritty # terminal
+          pkgs.gnomeExtensions.dash-to-panel # taskbar
+          pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
+          pkgs.gnomeExtensions.arcmenu
+          pkgs.pulseaudio # required for audio panel
+          pkgs.dconf2nix
+          # The Nano editor is also installed by default.
+          #  wget
+        ];
 
         virtualisation.containers.enable = true;
         virtualisation = {
@@ -147,7 +146,6 @@
             defaultNetwork.settings.dns_enabled = true;
           };
         };
-
 
         # This value determines the NixOS release from which the default
         # settings for stateful data, like file locations and database versions
