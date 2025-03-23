@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-podman-caddy-quadlet = {
+      url = "/home/joonas/Documents/git-projects/nix-podman-caddy-quadlet";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -18,7 +23,8 @@
       nixpkgs,
       home-manager,
       sops-nix,
-    }:
+      nix-podman-caddy-quadlet,
+    }@attrs:
     {
       nixosModules = {
         conffi =
@@ -51,6 +57,21 @@
               "nix-command"
               "flakes"
             ];
+
+            users.users.joonas = {
+              # ...
+              # required for auto start before user login
+              linger = true;
+              # required for rootless container with multiple users
+              autoSubUidGidRange = true;
+            };
+
+            home-manager.users.joonas =
+              { pkgs, config, ... }:
+              {
+
+                imports = [ nix-podman-caddy-quadlet.nixosModules.quadlet ];
+              };
 
             # Bootloader.
             boot.loader.systemd-boot.enable = true;
