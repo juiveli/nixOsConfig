@@ -5,6 +5,11 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -12,6 +17,7 @@
       self,
       nixpkgs,
       home-manager,
+      sops-nix,
     }:
     {
       nixosModules = {
@@ -29,9 +35,17 @@
                 # Optionally, use home-manager.extraSpecialArgs to pass
                 # arguments to home.nix
               }
+              sops-nix.nixosModules.sops
 
             ];
-            programs.dconf.enable = true;
+
+            sops.defaultSopsFile = ./secrets/secrets.yaml;
+            sops.defaultSopsFormat = "yaml";
+            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+            sops.secrets.test_key = {
+              owner = config.users.users.joonas.name;
+            };
 
             nix.settings.experimental-features = [
               "nix-command"
@@ -127,11 +141,12 @@
             services.displayManager.autoLogin.enable = true;
             services.displayManager.autoLogin.user = "joonas";
 
-            # Install firefox.
-            programs.firefox.enable = true;
-
             # Allow unfree packages
             nixpkgs.config.allowUnfree = true;
+
+            programs.firefox.enable = true;
+
+            programs.dconf.enable = true;
 
             # List packages installed in system profile. To search, run:
             # $ nix search wget
@@ -144,8 +159,8 @@
               pkgs.gnomeExtensions.arcmenu
               pkgs.pulseaudio # required for audio panel
               pkgs.dconf2nix
+              pkgs.sops
               # The Nano editor is also installed by default.
-              #  wget
             ];
 
             virtualisation.containers.enable = true;
