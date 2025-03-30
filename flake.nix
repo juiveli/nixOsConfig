@@ -67,6 +67,7 @@
         modules = [
           common-configurations.nixosModules.conffi
           nixos-test.nixosModules.conffi
+          ./testi
         ];
       };
 
