@@ -6,10 +6,33 @@
   inputs = {
     # ...
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix = {
+      url = "github:SEIAROTg/quadlet-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Let's try different approach next version after 24.11, see https://github.com/hercules-ci/flake-parts/pull/251
+    shared-quadlet = {
+      url = "./shared-quadlet";
+    };
   };
 
   outputs =
-    { self, nix-flatpak }:
+    {
+      self,
+      nix-flatpak,
+      home-manager,
+      quadlet-nix,
+      shared-quadlet,
+      nixpkgs,
+    }:
 
     {
       nixosModules = {
@@ -25,6 +48,28 @@
               nix-flatpak.nixosModules.nix-flatpak
 
             ];
+
+            users.users.joonas = {
+              # ...
+              # required for auto start before user login
+              linger = true;
+              # required for rootless container with multiple users
+              autoSubUidGidRange = true;
+            };
+
+            home-manager.users.joonas =
+              {
+                pkgs,
+                config,
+                lib,
+                ...
+              }:
+              {
+                systemd.user.startServices = "sd-switch";
+                imports = [
+                  shared-quadlet.nixosModules.quadlet
+                ];
+              };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 

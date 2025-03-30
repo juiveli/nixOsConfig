@@ -1,23 +1,16 @@
 {
   inputs = {
-      nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-      home-manager = {
-        url = "github:nix-community/home-manager/release-24.11";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-      sops-nix = {
-        url = "github:Mic92/sops-nix";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-      quadlet-nix = {
-        url = "github:SEIAROTg/quadlet-nix";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
-      # Let's try different approach next version after 24.11, see https://github.com/hercules-ci/flake-parts/pull/251
-      shared-quadlet = {
-         url = "./shared-quadlet";
-      };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+  };
 
   outputs =
     {
@@ -25,8 +18,6 @@
       nixpkgs,
       home-manager,
       sops-nix,
-      quadlet-nix,
-      shared-quadlet
     }@attrs:
     {
       nixosModules = {
@@ -48,7 +39,6 @@
 
             ];
 
-
             sops.defaultSopsFile = ./secrets/secrets.yaml;
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
@@ -61,26 +51,6 @@
               "nix-command"
               "flakes"
             ];
-
-            users.users.joonas = {
-              # ...
-              # required for auto start before user login
-              linger = true;
-              # required for rootless container with multiple users
-              autoSubUidGidRange = true;
-            };
-
-home-manager.users.joonas =
-    { pkgs, config, lib, ... }:
-    {
-      systemd.user.startServices = "sd-switch";
-      imports =
-        [
-          shared-quadlet.nixosModules.quadlet
-        ];
-    };
-
-    
 
             # Bootloader.
             boot.loader.systemd-boot.enable = true;
@@ -170,7 +140,6 @@ home-manager.users.joonas =
             # Enable automatic login for the user. Do note that keyring password must be empty for it to open in autologin
             services.displayManager.autoLogin.enable = true;
             services.displayManager.autoLogin.user = "joonas";
-
 
             system.tools.nixos-option.enable = true;
 

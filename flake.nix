@@ -14,7 +14,10 @@
     };
 
     nixos-test.url = "./profiles/nixos-test";
-    main-pc.url = "./profiles/main-pc";
+    main-pc = {
+      url = "./profiles/main-pc";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
