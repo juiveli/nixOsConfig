@@ -8,8 +8,14 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -29,6 +35,7 @@
       self,
       nix-flatpak,
       home-manager,
+      sops-nix,
       quadlet-nix,
       shared-quadlet,
       nixpkgs,
@@ -46,6 +53,7 @@
               ./systemd-timers.nix
               ./mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
+              sops-nix.nixosModules.sops
 
             ];
 
@@ -70,6 +78,14 @@
                   shared-quadlet.nixosModules.quadlet
                 ];
               };
+
+            sops.defaultSopsFile = ./secrets/secrets.yaml;
+            sops.defaultSopsFormat = "yaml";
+            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+            sops.secrets.test_key = {
+              owner = config.users.users.joonas.name;
+            };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
@@ -166,6 +182,7 @@
               pkgs.inkscape-with-extensions
               pkgs.pinta
               pkgs.nvidia-container-toolkit
+              pkgs.sops
             ];
 
             programs.steam = {

@@ -18,6 +18,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    test-pod-container = {
+      url = "/home/joonas/Documents/test-pod-container";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -28,6 +33,7 @@
       quadlet-nix,
       nix-podman-testServer-quadlet,
       nix-podman-caddy-quadlet,
+      test-pod-container,
       ...
     }@attrs:
     {
@@ -41,6 +47,7 @@
               quadlet-nix.homeManagerModules.quadlet
               nix-podman-testServer-quadlet.nixosModules.quadlet
               nix-podman-caddy-quadlet.nixosModules.quadlet
+              test-pod-container.nixosModules.quadlet
 
             ];
 
