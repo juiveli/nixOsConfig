@@ -1,10 +1,12 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,7 +50,6 @@
               nix-podman-testServer-quadlet.nixosModules.quadlet
               nix-podman-caddy-quadlet.nixosModules.quadlet
               test-pod-container.nixosModules.quadlet
-
             ];
 
           };

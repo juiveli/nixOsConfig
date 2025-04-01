@@ -28,6 +28,12 @@
     shared-quadlet = {
       url = "./shared-quadlet";
     };
+
+    nix-podman-secrets = {
+      url = "github:juiveli/nix-podman-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -36,6 +42,7 @@
       nix-flatpak,
       home-manager,
       sops-nix,
+      nix-podman-secrets,
       quadlet-nix,
       shared-quadlet,
       nixpkgs,
@@ -54,7 +61,7 @@
               ./mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
               sops-nix.nixosModules.sops
-
+              nix-podman-secrets.nixosModules.nix-podman-secrets
             ];
 
             users.users.joonas = {
@@ -63,6 +70,7 @@
               linger = true;
               # required for rootless container with multiple users
               autoSubUidGidRange = true;
+              uid = 1000;
             };
 
             home-manager.users.joonas =
@@ -76,7 +84,10 @@
                 systemd.user.startServices = "sd-switch";
                 imports = [
                   shared-quadlet.nixosModules.quadlet
+                  nix-podman-secrets.homeManagerModules.nix-podman-secrets
                 ];
+
+                home.packages = [nix-podman-secrets.packages.${pkgs.system}.nix-podman-secrets];
               };
 
             sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -85,6 +96,12 @@
 
             sops.secrets.test_key = {
               owner = config.users.users.joonas.name;
+              path = "/run/user/${toString config.users.users.joonas.uid}/containers/secrets/test_kekkeli";
+            };
+
+            sops.secrets.kakkosavain = {
+              owner = config.users.users.joonas.name;
+              path = "/run/user/${toString config.users.users.joonas.uid}/containers/secrets/kakkosavain";
             };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
