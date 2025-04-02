@@ -87,7 +87,7 @@
                   nix-podman-secrets.homeManagerModules.nix-podman-secrets
                 ];
 
-                home.packages = [nix-podman-secrets.packages.${pkgs.system}.nix-podman-secrets];
+                home.packages = [ nix-podman-secrets.packages.${pkgs.system}.nix-podman-secrets ];
               };
 
             sops.defaultSopsFile = ./secrets/secrets.yaml;

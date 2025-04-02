@@ -8,16 +8,29 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
-    common-configurations = {
-      url = "./common-configurations";
+    home-manager = {
+      # Use the same as your nixpkgs
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-test.url = "./profiles/nixos-test";
-    main-pc = {
-      url = "./profiles/main-pc";
+    common-configurations = {
+      url = "./common-configurations";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    nixos-test = {
+      url = "./profiles/nixos-test";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    main-pc = {
+      url = "./profiles/main-pc";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
