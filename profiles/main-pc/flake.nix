@@ -29,11 +29,6 @@
       url = "./shared-quadlet";
     };
 
-    nix-podman-secrets = {
-      url = "github:juiveli/nix-podman-secrets";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
@@ -42,7 +37,6 @@
       nix-flatpak,
       home-manager,
       sops-nix,
-      nix-podman-secrets,
       quadlet-nix,
       shared-quadlet,
       nixpkgs,
@@ -61,7 +55,6 @@
               ./mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
               sops-nix.nixosModules.sops
-              nix-podman-secrets.nixosModules.nix-podman-secrets
             ];
 
             users.users.joonas = {
@@ -84,7 +77,6 @@
                 systemd.user.startServices = "sd-switch";
                 imports = [
                   shared-quadlet.nixosModules.quadlet
-                  nix-podman-secrets.homeManagerModules.nix-podman-secrets
                   sops-nix.homeManagerModules.sops
                 ];
 
@@ -93,9 +85,7 @@
                 sops.defaultSopsFormat = "yaml";
                 sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
-                sops.secrets.nonRootTest = { 
-                  path = "%r/containers/podman-secrets/test.txtit";
-                };
+                sops.secrets.nonRootTest = { };
                 sops.secrets.kakkonen = { };
               };
 
@@ -103,9 +93,7 @@
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
-            sops.secrets.kakkosavain = { 
-              path = "/run/podman-secrets/kolikki";
-            };
+            sops.secrets.kakkosavain = { };
 
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;

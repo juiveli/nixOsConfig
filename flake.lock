@@ -12,11 +12,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-ZTblBEU5xF8HyZVSHEUxi19X6Qr6DnORG3M9bA5EOA0=",
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/common-configurations",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/common-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/common-configurations",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/common-configurations",
         "type": "path"
       }
     },
@@ -107,7 +107,6 @@
           "home-manager"
         ],
         "nix-flatpak": "nix-flatpak",
-        "nix-podman-secrets": "nix-podman-secrets",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -117,12 +116,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-tSwWkkqf8NU7HSUcIJGzPiY4x74TItr9+dvpQ++IPMg=",
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/profiles/main-pc",
+        "narHash": "sha256-3Rmkj/0PAByNlPgiPI4O6UhyEBq6iTbEnfl0OLBzJSs=",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/profiles/main-pc",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -178,27 +177,6 @@
         "type": "github"
       }
     },
-    "nix-podman-secrets": {
-      "inputs": {
-        "nixpkgs": [
-          "main-pc",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1743702911,
-        "narHash": "sha256-cBUY3SPziGlQL/HqN2bi315QvxC/ziQDH6vDfw5wfpI=",
-        "owner": "juiveli",
-        "repo": "nix-podman-secrets",
-        "rev": "f80309f6fdcfc434377b0a9a4b246dcef4cf5563",
-        "type": "github"
-      },
-      "original": {
-        "owner": "juiveli",
-        "repo": "nix-podman-secrets",
-        "type": "github"
-      }
-    },
     "nix-podman-testServer-quadlet": {
       "inputs": {
         "nixpkgs": [
@@ -228,11 +206,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/profiles/nixos-test",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/kn71la6k574wbn1hkgi0phmvfs00q5hd-source/profiles/nixos-test",
+        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -403,11 +381,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-xWp3Jhn8RPtkln6pqVF/8A5vYXJ6Zi/9ZES1Iyuf7Qg=",
-        "path": "/nix/store/4g8yf51nw0g4mnm45b7vjldvajlp0mli-source/shared-quadlet",
+        "path": "/nix/store/2bdk3kx2bmkkmwzm7vz6fa4gpgc3c9xc-source/shared-quadlet",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/4g8yf51nw0g4mnm45b7vjldvajlp0mli-source/shared-quadlet",
+        "path": "/nix/store/2bdk3kx2bmkkmwzm7vz6fa4gpgc3c9xc-source/shared-quadlet",
         "type": "path"
       }
     },
