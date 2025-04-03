@@ -85,24 +85,28 @@
                 imports = [
                   shared-quadlet.nixosModules.quadlet
                   nix-podman-secrets.homeManagerModules.nix-podman-secrets
+                  sops-nix.homeManagerModules.sops
                 ];
 
-                home.packages = [ nix-podman-secrets.packages.${pkgs.system}.nix-podman-secrets ];
+
+                sops.defaultSopsFile = ./secrets/rootless.yaml;
+                sops.defaultSopsFormat = "yaml";
+                sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+                sops.secrets.nonRootTest = { 
+                  path = "%r/containers/podman-secrets/test.txtit";
+                };
+                sops.secrets.kakkonen = { };
               };
 
-            sops.defaultSopsFile = ./secrets/secrets.yaml;
+            sops.defaultSopsFile = ./secrets/root.yaml;
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
-            sops.secrets.test_key = {
-              owner = config.users.users.joonas.name;
-              path = "/run/user/${toString config.users.users.joonas.uid}/containers/secrets/test_kekkeli";
+            sops.secrets.kakkosavain = { 
+              path = "/run/podman-secrets/kolikki";
             };
 
-            sops.secrets.kakkosavain = {
-              owner = config.users.users.joonas.name;
-              path = "/run/user/${toString config.users.users.joonas.uid}/containers/secrets/kakkosavain";
-            };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
