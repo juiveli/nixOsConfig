@@ -12,11 +12,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-ZTblBEU5xF8HyZVSHEUxi19X6Qr6DnORG3M9bA5EOA0=",
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/common-configurations",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/common-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/common-configurations",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/common-configurations",
         "type": "path"
       }
     },
@@ -112,16 +112,16 @@
         ],
         "quadlet-nix": "quadlet-nix",
         "shared-quadlet": "shared-quadlet",
-        "sops-nix": "sops-nix_2"
+        "sops-nix": "sops-nix"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-3Rmkj/0PAByNlPgiPI4O6UhyEBq6iTbEnfl0OLBzJSs=",
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/main-pc",
+        "narHash": "sha256-XxNjgjpisDW94WFeuTz45g/U6i1W5zdWBX92zFelfn4=",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/main-pc",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -206,11 +206,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/nixos-test",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/9b8pi7r9nbbfzfl5176ig18g9pgrib9a-source/profiles/nixos-test",
+        "path": "/nix/store/944jswl8d7ra00xhd0c3wsgpinvzirrj-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -232,22 +232,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1743441817,
-        "narHash": "sha256-+OE03P3u0FRwhS+Ah6EYiwxdS1rcIYlXheuXGM3wP3Q=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3eeaa42ef4c19447b48d1c676fe59077dfd0846e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1743576891,
         "narHash": "sha256-vXiKURtntURybE6FMNFAVpRPr8+e8KoLPrYs9TGuAKc=",
         "owner": "NixOS",
@@ -262,7 +246,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1730768919,
         "narHash": "sha256-8AKquNnnSaJRXZxc5YmF/WfmxiHX6MMZZasRP6RRQkE=",
@@ -278,7 +262,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1735554305,
         "narHash": "sha256-zExSA1i/b+1NMRhGGLtNfFGXgLtgo+dcuzHzaWA6w3Q=",
@@ -298,7 +282,7 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "gitignore": "gitignore",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1742649964,
@@ -363,7 +347,7 @@
         "home-manager": "home-manager",
         "main-pc": "main-pc",
         "nixos-test": "nixos-test",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
@@ -375,38 +359,20 @@
         "nix-podman-caddy-quadlet": "nix-podman-caddy-quadlet",
         "nix-podman-testServer-quadlet": "nix-podman-testServer-quadlet",
         "nixpkgs": "nixpkgs",
-        "quadlet-nix": "quadlet-nix_2",
-        "test-pod-container": "test-pod-container"
+        "quadlet-nix": "quadlet-nix_2"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-xWp3Jhn8RPtkln6pqVF/8A5vYXJ6Zi/9ZES1Iyuf7Qg=",
-        "path": "/nix/store/2bdk3kx2bmkkmwzm7vz6fa4gpgc3c9xc-source/shared-quadlet",
+        "narHash": "sha256-MytMJHcNgnS0zgpKIK8ccw/bBAgHvJBFvhezXZNsDfQ=",
+        "path": "/nix/store/l4nv365a2kw73b5fqq0y954m9723i9h8-source/shared-quadlet",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/2bdk3kx2bmkkmwzm7vz6fa4gpgc3c9xc-source/shared-quadlet",
+        "path": "/nix/store/l4nv365a2kw73b5fqq0y954m9723i9h8-source/shared-quadlet",
         "type": "path"
       }
     },
     "sops-nix": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1743604509,
-        "narHash": "sha256-Hf5aYGP3hP+uNbcd4NrEMUAR+1o518uGzoeVyMzzJwo=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "4521de68fba1a36fae8caebce3d6e047179661f7",
-        "type": "github"
-      },
-      "original": {
-        "id": "sops-nix",
-        "type": "indirect"
-      }
-    },
-    "sops-nix_2": {
       "inputs": {
         "nixpkgs": [
           "main-pc",
@@ -441,29 +407,9 @@
         "type": "indirect"
       }
     },
-    "test-pod-container": {
-      "inputs": {
-        "nixpkgs": [
-          "main-pc",
-          "shared-quadlet",
-          "nixpkgs"
-        ],
-        "sops-nix": "sops-nix"
-      },
-      "locked": {
-        "lastModified": 1743694784,
-        "narHash": "sha256-h5wtOlARxt7h6EPnCYgyIvs97JF3VwlgzfYY5Wzjmz4=",
-        "path": "/home/joonas/Documents/test-pod-container",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/joonas/Documents/test-pod-container",
-        "type": "path"
-      }
-    },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1743677901,
