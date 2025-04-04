@@ -140,10 +140,6 @@
               pkgs.git # git is required for flakes support
               pkgs.nemo-with-extensions # file-manager
               pkgs.alacritty # terminal
-              pkgs.gnomeExtensions.dash-to-panel # taskbar
-              pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
-              pkgs.gnomeExtensions.arcmenu
-              pkgs.pulseaudio # required for audio panel
               pkgs.dconf2nix
               # The Nano editor is also installed by default.
             ];

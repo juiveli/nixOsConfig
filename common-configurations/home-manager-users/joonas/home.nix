@@ -8,6 +8,13 @@ with lib.hm.gvariant;
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";
 
+  home.packages = [
+    pkgs.gnomeExtensions.dash-to-panel # taskbar
+    pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
+    pkgs.gnomeExtensions.arcmenu
+    pkgs.pulseaudio # required for audio panel gnome extension
+  ];
+
   dconf = {
     enable = true;
     settings = {

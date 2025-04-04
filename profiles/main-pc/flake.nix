@@ -19,14 +19,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    quadlet-nix = {
-      url = "github:SEIAROTg/quadlet-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Let's try different approach next version after 24.11, see https://github.com/hercules-ci/flake-parts/pull/251
-    shared-quadlet = {
-      url = "./shared-quadlet";
+    nix-podman-quadlet-collection = {
+      url = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection";
     };
 
   };
@@ -37,8 +32,7 @@
       nix-flatpak,
       home-manager,
       sops-nix,
-      quadlet-nix,
-      shared-quadlet,
+      nix-podman-quadlet-collection,
       nixpkgs,
     }:
 
@@ -54,7 +48,9 @@
               ./systemd-timers.nix
               ./mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
+              nix-podman-quadlet-collection.nixosModules.quadlet-collection
               sops-nix.nixosModules.sops
+
             ];
 
             users.users.joonas = {
@@ -76,10 +72,9 @@
               {
                 systemd.user.startServices = "sd-switch";
                 imports = [
-                  shared-quadlet.nixosModules.quadlet
+                  nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   sops-nix.homeManagerModules.sops
                 ];
-
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
                 sops.defaultSopsFormat = "yaml";
@@ -94,7 +89,6 @@
             sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
             sops.secrets.kakkosavain = { };
-
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
