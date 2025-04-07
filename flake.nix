@@ -20,29 +20,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    mmx = {
+      url = "./mmx";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      quadlet-nix,
-      testServer,
-      caddy,
-      ...
-    }@attrs:
-    {
-    
-      nixosModules = { 
+  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx, ...
+    }@attrs: {
+
+      nixosModules = {
         quadlet-collection = {
-            imports = [ quadlet-nix.nixosModules.quadlet ];
+          imports = [ quadlet-nix.nixosModules.quadlet ];
         };
-      };    
-    
+      };
+
       homeManagerModules = {
-        quadlet-collection =
-          { config, pkgs, ... }:
+        quadlet-collection = { config, pkgs, ... }:
 
           {
 
@@ -50,6 +44,7 @@
               quadlet-nix.homeManagerModules.quadlet
               testServer.nixosModules.quadlet
               caddy.nixosModules.quadlet
+              mmx.nixosModules.quadlet
             ];
 
           };
