@@ -87,5 +87,58 @@
           };
         };
       };
+
+    nixosModules.quadlet = { config, lib, pkgs, ... }:
+      let
+
+        cfg = config.services.nix-podman-mmx-quadlet;
+      in {
+
+        options.services.nix-podman-mmx-quadlet = {
+          folder-creations.enable = lib.mkEnableOption "nix-podman-mmx-quadlet.folder-creations";
+          username = lib.mkOption {
+            type = lib.types.str;
+            default = "joonas";
+          };
+          usergroup = lib.mkOption {
+            type = lib.types.str;
+            default = "users";
+          };
+        };
+
+        config = lib.mkIf cfg.folder-creations.enable {
+
+          systemd.tmpfiles.settings = {
+            "containers_folder" = {
+              "/var/lib/containers" = {
+
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+
+            "mmx_folders" = {
+              "/var/lib/containers/mmx/data" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/mmx/mmxPlots" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+          };
+        };
+      };
   };
 }

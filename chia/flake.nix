@@ -53,6 +53,68 @@
           };
         };
       };
+
+    nixosModules.quadlet = { config, lib, pkgs, ... }:
+      let
+
+        cfg = config.services.nix-podman-chia-quadlet;
+      in {
+
+        options.services.nix-podman-chia-quadlet = {
+          folder-creations.enable =
+            lib.mkEnableOption "nix-podman-chia-quadlet.folder-creations";
+          username = lib.mkOption {
+            type = lib.types.str;
+            default = "joonas";
+          };
+          usergroup = lib.mkOption {
+            type = lib.types.str;
+            default = "users";
+          };
+        };
+
+        config = lib.mkIf cfg.folder-creations.enable {
+
+          systemd.tmpfiles.settings = {
+            "containers_folder" = {
+              "/var/lib/containers" = {
+
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+
+            "chia_folders" = {
+              "/var/lib/containers/chia" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/chia/chiaPlots" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/chia/.chia" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+          };
+        };
+      };
   };
 }
 

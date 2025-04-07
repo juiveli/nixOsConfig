@@ -43,5 +43,77 @@
           };
         };
       };
+
+    nixosModules.quadlet = { config, lib, pkgs, ... }:
+
+      let
+
+        cfg = config.services.nix-podman-caddy-quadlet;
+      in {
+
+        options.services.nix-podman-caddy-quadlet = {
+          folder-creations.enable =
+            lib.mkEnableOption "nix-podman-caddy-quadlet.folder-creations";
+          username = lib.mkOption {
+            type = lib.types.str;
+            default = "joonas";
+          };
+          usergroup = lib.mkOption {
+            type = lib.types.str;
+            default = "users";
+          };
+        };
+
+        config = lib.mkIf cfg.folder-creations.enable {
+
+          systemd.tmpfiles.settings = {
+            "containers_folder" = {
+              "/var/lib/containers" = {
+
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+
+            "caddy_folders" = {
+
+              "/var/lib/containers/caddy" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/caddy/srv" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/caddy/caddy_data" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+
+              "/var/lib/containers/caddy/caddy_config" = {
+                d = {
+                  group = cfg.usergroup;
+                  mode = "0755";
+                  user = cfg.username;
+                };
+              };
+            };
+          };
+        };
+      };
   };
 }

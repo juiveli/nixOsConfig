@@ -36,7 +36,13 @@
 
       nixosModules = {
         quadlet-collection = {
-          imports = [ quadlet-nix.nixosModules.quadlet ];
+          imports = [
+            quadlet-nix.nixosModules.quadlet
+            caddy.nixosModules.quadlet
+            chia.nixosModules.quadlet
+            mmx.nixosModules.quadlet
+            #testServer does not have any folders that need to be created 
+          ];
         };
       };
 
