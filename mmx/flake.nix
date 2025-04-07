@@ -17,12 +17,12 @@
 
           source ./activate.sh
 
-          WALLET_FILE="/wallet.dat"
+          WALLET_FILE="/data/wallet.dat"
 
           MNEMONIC=$(cat /mnemonic.yaml)
 
           # Check if the wallet exists; create it if not
-          if [ ! -f "$WALLET_FILE" ]; then
+          if [ ! -f $WALLET_FILE ]; then
               echo "Wallet not found. Creating wallet..."
               mmx wallet create --mnemonic $MNEMONIC
 
