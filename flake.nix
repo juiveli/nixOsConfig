@@ -24,9 +24,14 @@
       url = "./mmx";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    chia = {
+      url = "./chia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx
+  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx, chia
     , ... }@attrs: {
 
       nixosModules = {
@@ -45,6 +50,7 @@
               testServer.nixosModules.quadlet
               caddy.nixosModules.quadlet
               mmx.nixosModules.quadlet
+              chia.nixosModules.quadlet
             ];
 
           };
