@@ -26,8 +26,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx, ...
-    }@attrs: {
+  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx
+    , ... }@attrs: {
 
       nixosModules = {
         quadlet-collection = {

@@ -39,7 +39,7 @@
 
         sops.secrets = {
           mnemonic = {
-            sopsFile = ./mnemonic.yaml; 
+            sopsFile = ./mnemonic.yaml;
             format = "yaml";
           };
         };
@@ -58,7 +58,7 @@
             unitConfig = {
               After = "sops-nix.service";
               Requires = "sops-nix.service";
-              };
+            };
 
             # Container-specific configurations
             containerConfig = {
