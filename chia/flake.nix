@@ -4,41 +4,50 @@
   outputs = { nixpkgs, ... }@attrs: {
     nixosModules.quadlet = { config, lib, pkgs, ... }:
 
-      {
-        sops.secrets = {
-          chia-mnemonic = {
-            sopsFile = ./mnemonic.yaml;
-            format = "yaml";
-          };
+      let cfg = config.services.nix-podman-chia-quadlet;
+      in {
+
+        options.services.nix-podman-chia-quadlet = {
+          enable = lib.mkEnableOption "nix-podman-chia-quadlet";
         };
 
-        systemd.user.startServices = "sd-switch";
+        config = lib.mkIf cfg.enable {
 
-        virtualisation.quadlet.containers = {
-          chia = {
-            autoStart = true;
-            serviceConfig = {
-              RestartSec = "10";
-              Restart = "always";
+          sops.secrets = {
+            chia-mnemonic = {
+              sopsFile = ./mnemonic.yaml;
+              format = "yaml";
             };
+          };
 
-            unitConfig = {
-              After = "sops-nix.service";
-              Requires = "sops-nix.service";
-            };
+          systemd.user.startServices = "sd-switch";
 
-            containerConfig = {
-              image = "ghcr.io/chia-network/chia:latest";
-              publishPorts = [ "8444:8444" ];
+          virtualisation.quadlet.containers = {
+            chia = {
+              autoStart = true;
+              serviceConfig = {
+                RestartSec = "10";
+                Restart = "always";
+              };
 
-              volumes = [
-                "${config.sops.secrets.chia-mnemonic.path}:/mnemonic.txt"
-                "/var/lib/containers/chia/chiaPlots:/plots"
-                "/var/lib/containers/chia/.chia:/root/.chia"
-              ];
-              environments = {
-                keys = "/mnemonic.txt";
-                recursive_plot_scan = "true";
+              unitConfig = {
+                After = "sops-nix.service";
+                Requires = "sops-nix.service";
+              };
+
+              containerConfig = {
+                image = "ghcr.io/chia-network/chia:latest";
+                publishPorts = [ "8444:8444" ];
+
+                volumes = [
+                  "${config.sops.secrets.chia-mnemonic.path}:/mnemonic.txt"
+                  "/var/lib/containers/chia/chiaPlots:/plots"
+                  "/var/lib/containers/chia/.chia:/root/.chia"
+                ];
+                environments = {
+                  keys = "/mnemonic.txt";
+                  recursive_plot_scan = "true";
+                };
               };
             };
           };

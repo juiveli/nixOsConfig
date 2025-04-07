@@ -9,6 +9,7 @@
     nixosModules.quadlet = { config, lib, pkgs, ... }:
 
       let
+        cfg = config.services.nix-podman-mmx-quadlet;
 
         # Define the script in the Nix store using pkgs.writeScript
         createWalletScript = pkgs.writeScript "create-wallet-and-start-mmx" ''
@@ -37,41 +38,51 @@
 
       in {
 
-        sops.secrets = {
-          mmx-mnemonic = {
-            sopsFile = ./mnemonic.yaml;
-            format = "yaml";
-          };
+        options.services.nix-podman-mmx-quadlet = {
+          enable = lib.mkEnableOption "nix-podman-mmx-quadlet";
         };
 
-        # Quadlet container configuration
-        virtualisation.quadlet.containers = {
-          mmx = {
-            autoStart = true;
+        config = lib.mkIf cfg.enable {
 
-            # Service-specific configurations
-            serviceConfig = {
-              RestartSec = "10";
-              Restart = "always";
+          sops.secrets = {
+            mmx-mnemonic = {
+              sopsFile = ./mnemonic.yaml;
+              format = "yaml";
             };
+          };
 
-            unitConfig = {
-              After = "sops-nix.service";
-              Requires = "sops-nix.service";
-            };
+          systemd.user.startServices = "sd-switch";
 
-            # Container-specific configurations
-            containerConfig = {
-              image = "ghcr.io/madmax43v3r/mmx-node:edge"; # MMX container image
-              networks = [ "host" ]; # Use host networking
-              volumes = [
-                "/var/lib/containers/mmx/data/:/data" # Persistent data storage
-                "/var/lib/containers/mmx/mmxPlots/:/mmxPlots" # Plots directory
-                "${createWalletScript}:/usr/local/bin/create-wallet-and-start-mmx.sh" # Correctly mount the script file
-                "${config.sops.secrets.mmx-mnemonic.path}:/mnemonic.yaml"
-              ];
-              entrypoint =
-                "/usr/local/bin/create-wallet-and-start-mmx.sh"; # Script itself is the entrypoint
+          # Quadlet container configuration
+          virtualisation.quadlet.containers = {
+            mmx = {
+              autoStart = true;
+
+              # Service-specific configurations
+              serviceConfig = {
+                RestartSec = "10";
+                Restart = "always";
+              };
+
+              unitConfig = {
+                After = "sops-nix.service";
+                Requires = "sops-nix.service";
+              };
+
+              # Container-specific configurations
+              containerConfig = {
+                image =
+                  "ghcr.io/madmax43v3r/mmx-node:edge"; # MMX container image
+                networks = [ "host" ]; # Use host networking
+                volumes = [
+                  "/var/lib/containers/mmx/data/:/data" # Persistent data storage
+                  "/var/lib/containers/mmx/mmxPlots/:/mmxPlots" # Plots directory
+                  "${createWalletScript}:/usr/local/bin/create-wallet-and-start-mmx.sh" # Correctly mount the script file
+                  "${config.sops.secrets.mmx-mnemonic.path}:/mnemonic.yaml"
+                ];
+                entrypoint =
+                  "/usr/local/bin/create-wallet-and-start-mmx.sh"; # Script itself is the entrypoint
+              };
             };
           };
         };
