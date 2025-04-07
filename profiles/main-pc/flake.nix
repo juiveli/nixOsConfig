@@ -9,11 +9,6 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,6 +17,8 @@
     # Let's try different approach next version after 24.11, see https://github.com/hercules-ci/flake-parts/pull/251
     nix-podman-quadlet-collection = {
       url = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
     };
 
   };
@@ -30,7 +27,6 @@
     {
       self,
       nix-flatpak,
-      home-manager,
       sops-nix,
       nix-podman-quadlet-collection,
       nixpkgs,
@@ -75,6 +71,12 @@
                   nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   sops-nix.homeManagerModules.sops
                 ];
+                # Nix quadlet activations:
+                services.nix-podman-caddy-quadlet.enable = true;
+                services.nix-podman-chia-quadlet.enable = true;
+                services.nix-podman-mmx-quadlet.enable = true;
+                services.nix-podman-testServer-quadlet.enable = true;
+
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
                 sops.defaultSopsFormat = "yaml";
@@ -83,6 +85,15 @@
                 sops.secrets.nonRootTest = { };
                 sops.secrets.kakkonen = { };
               };
+
+
+            # quadlet activations:
+            services.nix-podman-caddy-quadlet.folder-creations.enable = true;
+            services.nix-podman-chia-quadlet.folder-creations.enable = true;
+            services.nix-podman-mmx-quadlet.folder-creations.enable = true;
+            # testServer does not need folders to be created
+
+
 
             sops.defaultSopsFile = ./secrets/root.yaml;
             sops.defaultSopsFormat = "yaml";
