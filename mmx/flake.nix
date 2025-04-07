@@ -6,7 +6,7 @@
   };
 
   outputs = { nixpkgs, sops-nix, ... }: {
-    nixosModules.quadlet = { config, lib, pkgs, ... }:
+    homeManagerModules.quadlet = { config, lib, pkgs, ... }:
 
       let
         cfg = config.services.nix-podman-mmx-quadlet;

@@ -47,10 +47,10 @@
 
             imports = [
               quadlet-nix.homeManagerModules.quadlet
-              testServer.nixosModules.quadlet
-              caddy.nixosModules.quadlet
-              mmx.nixosModules.quadlet
-              chia.nixosModules.quadlet
+              testServer.homeManagerModules.quadlet
+              caddy.homeManagerModules.quadlet
+              mmx.homeManagerModules.quadlet
+              chia.homeManagerModules.quadlet
             ];
 
           };

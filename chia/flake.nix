@@ -2,7 +2,7 @@
 {
   inputs = { nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; };
   outputs = { nixpkgs, ... }@attrs: {
-    nixosModules.quadlet = { config, lib, pkgs, ... }:
+    homeManagerModules.quadlet = { config, lib, pkgs, ... }:
 
       let cfg = config.services.nix-podman-chia-quadlet;
       in {

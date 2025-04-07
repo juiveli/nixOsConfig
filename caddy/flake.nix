@@ -6,7 +6,7 @@
 
   };
   outputs = { nixpkgs, ... }@attrs: {
-    nixosModules.quadlet = { config, lib, pkgs, ... }:
+    homeManagerModules.quadlet = { config, lib, pkgs, ... }:
 
       let
 
