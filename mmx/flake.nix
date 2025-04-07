@@ -79,6 +79,7 @@
                   "/var/lib/containers/mmx/mmxPlots/:/mmxPlots" # Plots directory
                   "${createWalletScript}:/usr/local/bin/create-wallet-and-start-mmx.sh" # Correctly mount the script file
                   "${config.sops.secrets.mmx-mnemonic.path}:/mnemonic.yaml"
+                  "${./Harvester.json}:/data/config/local/Harvester.json"
                 ];
                 entrypoint =
                   "/usr/local/bin/create-wallet-and-start-mmx.sh"; # Script itself is the entrypoint
