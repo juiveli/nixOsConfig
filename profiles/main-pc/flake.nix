@@ -76,6 +76,10 @@
                 services.nix-podman-chia-quadlet.enable = true;
                 services.nix-podman-mmx-quadlet.enable = true;
                 services.nix-podman-testServer-quadlet.enable = true;
+                services.nix-podman-nicehash-nvidia-quadlet = {
+                  workerName = "main-pc";
+                  enable = true;
+                  };
 
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
@@ -92,6 +96,7 @@
             services.nix-podman-chia-quadlet.folder-creations.enable = true;
             services.nix-podman-mmx-quadlet.folder-creations.enable = true;
             # testServer does not need folders to be created
+            # nicehash does not need folder to be created
 
 
 
