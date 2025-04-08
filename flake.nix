@@ -29,10 +29,14 @@
       url = "./chia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nicehash-nvidia = {
+      url = "./nicehash-nvidia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy, mmx
-    , chia, ... }@attrs: {
+  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy
+    , nicehash-nvidia, mmx, chia, ... }@attrs: {
 
       nixosModules = {
         quadlet-collection = {
@@ -40,8 +44,9 @@
             quadlet-nix.nixosModules.quadlet
             caddy.nixosModules.quadlet
             chia.nixosModules.quadlet
+            # nicehash does not have folders that need to be created
             mmx.nixosModules.quadlet
-            #testServer does not have any folders that need to be created 
+            # testServer does not have any folders that need to be created 
           ];
         };
       };
@@ -57,6 +62,7 @@
               caddy.homeManagerModules.quadlet
               mmx.homeManagerModules.quadlet
               chia.homeManagerModules.quadlet
+              nicehash-nvidia.homeManagerModules.quadlet
             ];
 
           };

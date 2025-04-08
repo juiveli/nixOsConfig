@@ -96,7 +96,8 @@
       in {
 
         options.services.nix-podman-mmx-quadlet = {
-          folder-creations.enable = lib.mkEnableOption "nix-podman-mmx-quadlet.folder-creations";
+          folder-creations.enable =
+            lib.mkEnableOption "nix-podman-mmx-quadlet.folder-creations";
           username = lib.mkOption {
             type = lib.types.str;
             default = "joonas";
