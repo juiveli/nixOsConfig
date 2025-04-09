@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nicehash-nvidia = {
-      url = "./nicehash-nvidia";
+      url = "./nicehash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
