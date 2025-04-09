@@ -75,9 +75,11 @@
                 services.nix-podman-chia-quadlet.enable = true;
                 services.nix-podman-mmx-quadlet.enable = true;
                 services.nix-podman-testServer-quadlet.enable = true;
-                services.nix-podman-nicehash-nvidia-quadlet = {
+                services.nix-podman-nicehash-quadlet = {
                   workerName = "main-pc";
                   enable = true;
+                  nvidia = true;
+                  amd = false;
                 };
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
