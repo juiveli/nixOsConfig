@@ -22,12 +22,10 @@
 
     nixos-test = {
       url = "./profiles/nixos-test";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     main-pc = {
       url = "./profiles/main-pc";
-      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -18,7 +18,6 @@
     nix-podman-quadlet-collection = {
       url = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.sops-nix.follows = "sops-nix";
     };
 
   };
@@ -79,8 +78,7 @@
                 services.nix-podman-nicehash-nvidia-quadlet = {
                   workerName = "main-pc";
                   enable = true;
-                  };
-
+                };
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
                 sops.defaultSopsFormat = "yaml";
@@ -90,15 +88,12 @@
                 sops.secrets.kakkonen = { };
               };
 
-
             # quadlet activations:
             services.nix-podman-caddy-quadlet.folder-creations.enable = true;
             services.nix-podman-chia-quadlet.folder-creations.enable = true;
             services.nix-podman-mmx-quadlet.folder-creations.enable = true;
             # testServer does not need folders to be created
             # nicehash does not need folder to be created
-
-
 
             sops.defaultSopsFile = ./secrets/root.yaml;
             sops.defaultSopsFormat = "yaml";
@@ -197,7 +192,6 @@
                   pkgs.zulu
                 ];
               })
-              pkgs.vscodium
               pkgs.inkscape-with-extensions
               pkgs.pinta
               pkgs.nvidia-container-toolkit

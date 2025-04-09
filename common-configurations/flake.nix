@@ -26,8 +26,6 @@
                 home-manager.useUserPackages = true;
                 home-manager.users.joonas = import ./home-manager-users/joonas/home.nix;
 
-                # Optionally, use home-manager.extraSpecialArgs to pass
-                # arguments to home.nix
               }
             ];
 
@@ -73,11 +71,10 @@
 
             environment.gnome.excludePackages = with pkgs; [
               gnome-tour # GNOME Shell detects the .desktop file on first log-in.
-              gnome-shell-extensions
+              gnome-shell-extensions # This a collection of extensions.
             ];
 
-            # xterm comes with gnome
-            services.xserver.excludePackages = [ pkgs.xterm ];
+            services.xserver.excludePackages = [ pkgs.xterm ]; # xterm comes with gnome
             documentation.nixos.enable = false; # I can google it...
 
             # Configure keymap in X11
@@ -97,16 +94,7 @@
               alsa.enable = true;
               alsa.support32Bit = true;
               pulse.enable = true;
-              # If you want to use JACK applications, uncomment this
-              #jack.enable = true;
-
-              # use the example session manager (no others are packaged yet so this is enabled by default,
-              # no need to redefine it in your config for now)
-              #media-session.enable = true;
             };
-
-            # Enable touchpad support (enabled default in most desktopManager).
-            # services.xserver.libinput.enable = true;
 
             # Define a user account. Don't forget to set a password with ‘passwd’.
             users.users.joonas = {
@@ -117,7 +105,6 @@
                 "wheel"
               ];
               packages = with pkgs; [
-                #  thunderbird
               ];
             };
 
@@ -137,6 +124,7 @@
             # List packages installed in system profile. To search, run:
             # $ nix search wget
             environment.systemPackages = with pkgs; [
+              pkgs.vscodium
               pkgs.git # git is required for flakes support
               pkgs.nemo-with-extensions # file-manager
               pkgs.alacritty # terminal
