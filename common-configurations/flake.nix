@@ -1,10 +1,17 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    packages = {
+      url = "./packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -12,6 +19,7 @@
       self,
       nixpkgs,
       home-manager,
+      packages,
     }@attrs:
     {
       nixosModules = {
@@ -27,6 +35,7 @@
                 home-manager.users.joonas = import ./home-manager-users/joonas/home.nix;
 
               }
+              packages.nixosModules.packages
             ];
 
             nix.settings.experimental-features = [
@@ -86,16 +95,6 @@
             # Configure console keymap
             console.keyMap = "fi";
 
-            # Enable sound with pipewire.
-            hardware.pulseaudio.enable = false;
-            security.rtkit.enable = true;
-            services.pipewire = {
-              enable = true;
-              alsa.enable = true;
-              alsa.support32Bit = true;
-              pulse.enable = true;
-            };
-
             # Define a user account. Don't forget to set a password with ‘passwd’.
             users.users.joonas = {
               isNormalUser = true;
@@ -112,45 +111,15 @@
             services.displayManager.autoLogin.enable = true;
             services.displayManager.autoLogin.user = "joonas";
 
-            system.tools.nixos-option.enable = true;
-
-            # Allow unfree packages
-            nixpkgs.config.allowUnfree = true;
-
-            programs.firefox.enable = true;
-
-            programs.dconf.enable = true;
-
-            # List packages installed in system profile. To search, run:
-            # $ nix search wget
-            environment.systemPackages = with pkgs; [
-              pkgs.vscodium
-              pkgs.git # git is required for flakes support
-              pkgs.nemo-with-extensions # file-manager
-              pkgs.alacritty # terminal
-              pkgs.dconf2nix
-              # The Nano editor is also installed by default.
-            ];
-
-            virtualisation.containers.enable = true;
-            virtualisation = {
-              podman = {
-                enable = true;
-                # Create a `docker` alias for podman, to use it as a drop-in replacement
-                dockerCompat = false;
-                # Required for containers under podman-compose to be able to talk to each other.
-                defaultNetwork.settings.dns_enabled = true;
-              };
-            };
-
-            # This value determines the NixOS release from which the default
-            # settings for stateful data, like file locations and database versions
-            # on your system were taken. It‘s perfectly fine and recommended to leave
-            # this value at the release version of the first install of this system.
-            # Before changing this value read the documentation for this option
-            # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-            system.stateVersion = "24.11"; # Did you read the comment?
           };
+
+        # This value determines the NixOS release from which the default
+        # settings for stateful data, like file locations and database versions
+        # on your system were taken. It‘s perfectly fine and recommended to leave
+        # this value at the release version of the first install of this system.
+        # Before changing this value read the documentation for this option
+        # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+        system.stateVersion = "24.11"; # Did you read the comment?
       };
     };
 }

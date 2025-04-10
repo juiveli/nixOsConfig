@@ -1,0 +1,504 @@
+{
+  "nodes": {
+    "caddy": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-8b54X7h9VF17lr/LoDl9XlvfyWsHAYsbtIm7LyTSn80=",
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/caddy",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/caddy",
+        "type": "path"
+      }
+    },
+    "chia": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-NegKtZTciSpzQme8oa7Mv86MiSVOTzPRpdpL38m0CPI=",
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/chia",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/chia",
+        "type": "path"
+      }
+    },
+    "common-configurations": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "packages": "packages"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-EJn9orjlLw2C2CMt8UdZeSwrEqXPOKphndMIurKN+HU=",
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/common-configurations",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/common-configurations",
+        "type": "path"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744117652,
+        "narHash": "sha256-t7dFCDl4vIOOUMhEZnJF15aAzkpaup9x4ZRGToDFYWI=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b4e98224ad1336751a2ac7493967a4c9f6d9cb3f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-24.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744117652,
+        "narHash": "sha256-t7dFCDl4vIOOUMhEZnJF15aAzkpaup9x4ZRGToDFYWI=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b4e98224ad1336751a2ac7493967a4c9f6d9cb3f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-24.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "main-pc": {
+      "inputs": {
+        "nix-flatpak": "nix-flatpak",
+        "nix-podman-quadlet-collection": "nix-podman-quadlet-collection",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "sops-nix": "sops-nix_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-B6dQmZE+cGSoR48SUgGGDYL3945oP2ekV9M7ZrEDIGk=",
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/main-pc",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/main-pc",
+        "type": "path"
+      }
+    },
+    "mmx": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ],
+        "sops-nix": "sops-nix"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-kN9EVqu6NS8p2ron7BXMLBAc76ebFqe0KNTwncHqJb0=",
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/mmx",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/mmx",
+        "type": "path"
+      }
+    },
+    "nicehash-nvidia": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-eKG47FkY5b9VdW8O9GfMdO7uKWri/KwxJRBtbJd1BJI=",
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/nicehash",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/nicehash",
+        "type": "path"
+      }
+    },
+    "nix-flatpak": {
+      "locked": {
+        "lastModified": 1741903049,
+        "narHash": "sha256-8Y8brH04JjSLrCLvBEbhK9vOu7lhQhqUBW4kI3tifdI=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "42c7fb2702219b86a8f5969c3475ce594c28f5d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
+    "nix-flatpak_2": {
+      "locked": {
+        "lastModified": 1741903049,
+        "narHash": "sha256-8Y8brH04JjSLrCLvBEbhK9vOu7lhQhqUBW4kI3tifdI=",
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "rev": "42c7fb2702219b86a8f5969c3475ce594c28f5d0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gmodena",
+        "repo": "nix-flatpak",
+        "type": "github"
+      }
+    },
+    "nix-podman-quadlet-collection": {
+      "inputs": {
+        "caddy": "caddy",
+        "chia": "chia",
+        "home-manager": "home-manager_2",
+        "mmx": "mmx",
+        "nicehash-nvidia": "nicehash-nvidia",
+        "nixpkgs": [
+          "main-pc",
+          "nixpkgs"
+        ],
+        "quadlet-nix": "quadlet-nix",
+        "testServer": "testServer"
+      },
+      "locked": {
+        "lastModified": 1744208773,
+        "narHash": "sha256-IpYkC20fje8z+8WXSRpRtGFRZiHUAwMfMZNwJINnvrI=",
+        "ref": "refs/heads/main",
+        "rev": "52bc35a1ae0351987c702cfd8a9ff97c7b705cc8",
+        "revCount": 13,
+        "type": "git",
+        "url": "file:///home/joonas/Documents/git-projects/nix-podman-quadlet-collection"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/joonas/Documents/git-projects/nix-podman-quadlet-collection"
+      }
+    },
+    "nixos-test": {
+      "inputs": {
+        "nix-flatpak": "nix-flatpak_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/nixos-test",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/nixos-test",
+        "type": "path"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1743689281,
+        "narHash": "sha256-y7Hg5lwWhEOgflEHRfzSH96BOt26LaYfrYWzZ+VoVdg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2bfc080955153be0be56724be6fa5477b4eefabb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1744168086,
+        "narHash": "sha256-S9M4HddBCxbbX1CKSyDYgZ8NCVyHcbKnBfoUXeRu2jQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "60e405b241edb6f0573f3d9f944617fe33ac4a73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1730768919,
+        "narHash": "sha256-8AKquNnnSaJRXZxc5YmF/WfmxiHX6MMZZasRP6RRQkE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a04d33c0c3f1a59a2c1cb0c6e34cd24500e5a1dc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1735554305,
+        "narHash": "sha256-zExSA1i/b+1NMRhGGLtNfFGXgLtgo+dcuzHzaWA6w3Q=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "0e82ab234249d8eee3e8c91437802b32c74bb3fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "packages": {
+      "inputs": {
+        "nixpkgs": [
+          "common-configurations",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-O+3CKim25d2HfqHub+ZgdPcXQYKzqGyJM4PVLTtGqpM=",
+        "path": "/nix/store/43yl10l65plld9kq0wwjy1c1qpka6l2b-source/packages",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/43yl10l65plld9kq0wwjy1c1qpka6l2b-source/packages",
+        "type": "path"
+      }
+    },
+    "pre-commit-hooks": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "gitignore": "gitignore",
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1742649964,
+        "narHash": "sha256-DwOTp7nvfi8mRfuL1escHDXabVXFGT1VlPD1JHrtrco=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "dcf5072734cb576d2b0c59b2ac44f5050b5eac82",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "type": "github"
+      }
+    },
+    "quadlet-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743361017,
+        "narHash": "sha256-RELV9YxfhwjuN4edtVmpupVvHUiWu/KuF4mqzU+neYE=",
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "rev": "971479231c7dd2433954dd26c240e1bdc5bd9849",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SEIAROTg",
+        "repo": "quadlet-nix",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "common-configurations": "common-configurations",
+        "home-manager": "home-manager",
+        "main-pc": "main-pc",
+        "nixos-test": "nixos-test",
+        "nixpkgs": "nixpkgs_2",
+        "pre-commit-hooks": "pre-commit-hooks",
+        "systems": "systems",
+        "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1744103455,
+        "narHash": "sha256-SR6+qjkPjGQG+8eM4dCcVtss8r9bre/LAxFMPJpaZeU=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "69d5a5a4635c27dae5a742f36108beccc506c1ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sops-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744103455,
+        "narHash": "sha256-SR6+qjkPjGQG+8eM4dCcVtss8r9bre/LAxFMPJpaZeU=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "69d5a5a4635c27dae5a742f36108beccc506c1ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
+      }
+    },
+    "testServer": {
+      "inputs": {
+        "nixpkgs": [
+          "main-pc",
+          "nix-podman-quadlet-collection",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-FiTjAC6Q6ppVdhMDmCXaAUZMmah8dng02O4mC0sxAWk=",
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/testServer",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/00mg7xmxd8q4h912swx51hw3vigysqc3-source/testServer",
+        "type": "path"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1743748085,
+        "narHash": "sha256-uhjnlaVTWo5iD3LXics1rp9gaKgDRQj6660+gbUU3cE=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "815e4121d6a5d504c0f96e5be2dd7f871e4fd99d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
