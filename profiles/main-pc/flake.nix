@@ -42,6 +42,7 @@
               ./custom-folders.nix
               ./systemd-timers.nix
               ./mount-points.nix
+              ./dhcp.nix
               nix-flatpak.nixosModules.nix-flatpak
               nix-podman-quadlet-collection.nixosModules.quadlet-collection
               sops-nix.nixosModules.sops
