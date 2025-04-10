@@ -50,12 +50,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-9KSA0hx18q3JpqdnHcfhvcJiKoZ3FBZl6qEkTp9wIvs=",
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/common-configurations",
+        "narHash": "sha256-efLmCG1wbdYay6ygcF13NTd8+qEtWjDj6AedJdEFvGE=",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/common-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/common-configurations",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/common-configurations",
         "type": "path"
       }
     },
@@ -152,11 +152,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-8msZyhNOTxt7OuSN4gcbEF6mHucjC5Sl5F42umUVLEE=",
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/main-pc",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/main-pc",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -264,11 +264,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/nixos-test",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/nixos-test",
+        "path": "/nix/store/w79xan7zkr68l6agjaa1r8q0r8s1m213-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -346,11 +346,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-O+3CKim25d2HfqHub+ZgdPcXQYKzqGyJM4PVLTtGqpM=",
-        "path": "/nix/store/hhsvsvzkl9kygw6vpfz7d4gbc7cdgkc6-source/packages",
+        "path": "/nix/store/pwmdnfky14rysbhn922i4amcfwc958s2-source/packages",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/hhsvsvzkl9kygw6vpfz7d4gbc7cdgkc6-source/packages",
+        "path": "/nix/store/pwmdnfky14rysbhn922i4amcfwc958s2-source/packages",
         "type": "path"
       }
     },
