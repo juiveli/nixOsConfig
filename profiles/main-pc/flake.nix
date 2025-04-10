@@ -16,7 +16,7 @@
 
     # Let's try different approach next version after 24.11, see https://github.com/hercules-ci/flake-parts/pull/251
     nix-podman-quadlet-collection = {
-      url = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection";
+      url = "github:juiveli/nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
