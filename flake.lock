@@ -50,12 +50,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-EJn9orjlLw2C2CMt8UdZeSwrEqXPOKphndMIurKN+HU=",
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/common-configurations",
+        "narHash": "sha256-9KSA0hx18q3JpqdnHcfhvcJiKoZ3FBZl6qEkTp9wIvs=",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/common-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/common-configurations",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/common-configurations",
         "type": "path"
       }
     },
@@ -151,12 +151,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-B6dQmZE+cGSoR48SUgGGDYL3945oP2ekV9M7ZrEDIGk=",
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/main-pc",
+        "narHash": "sha256-8msZyhNOTxt7OuSN4gcbEF6mHucjC5Sl5F42umUVLEE=",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/main-pc",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -246,15 +246,15 @@
       "locked": {
         "lastModified": 1744208773,
         "narHash": "sha256-IpYkC20fje8z+8WXSRpRtGFRZiHUAwMfMZNwJINnvrI=",
-        "ref": "refs/heads/main",
+        "owner": "juiveli",
+        "repo": "nix-podman-quadlet-collection",
         "rev": "52bc35a1ae0351987c702cfd8a9ff97c7b705cc8",
-        "revCount": 13,
-        "type": "git",
-        "url": "file:///home/joonas/Documents/git-projects/nix-podman-quadlet-collection"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/joonas/Documents/git-projects/nix-podman-quadlet-collection"
+        "owner": "juiveli",
+        "repo": "nix-podman-quadlet-collection",
+        "type": "github"
       }
     },
     "nixos-test": {
@@ -264,11 +264,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/nixos-test",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/2gpn45p11d04i6c6ixg95284f5spy7qm-source/profiles/nixos-test",
+        "path": "/nix/store/nyvnkznsx5a9hb3sgj1iiq7rm9m860yk-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -346,11 +346,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-O+3CKim25d2HfqHub+ZgdPcXQYKzqGyJM4PVLTtGqpM=",
-        "path": "/nix/store/43yl10l65plld9kq0wwjy1c1qpka6l2b-source/packages",
+        "path": "/nix/store/hhsvsvzkl9kygw6vpfz7d4gbc7cdgkc6-source/packages",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/43yl10l65plld9kq0wwjy1c1qpka6l2b-source/packages",
+        "path": "/nix/store/hhsvsvzkl9kygw6vpfz7d4gbc7cdgkc6-source/packages",
         "type": "path"
       }
     },

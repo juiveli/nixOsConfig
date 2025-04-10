@@ -24,7 +24,12 @@
     {
       nixosModules = {
         conffi =
-          { config, pkgs, ... }:
+          {
+            config,
+            lib,
+            pkgs,
+            ...
+          }:
           {
 
             imports = [
@@ -44,8 +49,10 @@
             ];
 
             # Bootloader.
-            boot.loader.systemd-boot.enable = true;
-            boot.loader.efi.canTouchEfiVariables = true;
+            boot.loader = lib.mkDefault {
+              systemd-boot.enable = true;
+              efi.canTouchEfiVariables = true;
+            };
 
             # Enable networking
             networking.networkmanager.enable = true;
@@ -54,9 +61,9 @@
             time.timeZone = "Europe/Helsinki";
 
             # Select internationalisation properties.
-            i18n.defaultLocale = "en_US.UTF-8";
+            i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
-            i18n.extraLocaleSettings = {
+            i18n.extraLocaleSettings = lib.mkDefault {
               LC_ADDRESS = "fi_FI.UTF-8";
               LC_IDENTIFICATION = "fi_FI.UTF-8";
               LC_MEASUREMENT = "fi_FI.UTF-8";
@@ -68,32 +75,34 @@
               LC_TIME = "fi_FI.UTF-8";
             };
 
-            # Enable the X11 windowing system.
-            # You can disable this if you're only using the Wayland session.
-            services.xserver.enable = true;
+            services.xserver = lib.mkDefault {
+              # Enable the X11 windowing system.
+              # You can disable this if you're only using the Wayland session.
+              enable = true;
 
-            # Enable Gnome Desktop Environment
-            # services.xserver.displayManager.gdm.enable = true;
-            services.xserver.desktopManager.gnome.enable = true;
+              # Enable Gnome Desktop Environment
+              # services.xserver.displayManager.gdm.enable = true;
+              desktopManager.gnome.enable = true;
+              excludePackages = [ pkgs.xterm ]; # xterm comes with gnome
 
-            services.gnome.core-utilities.enable = false;
+              # Configure keymap in X11
+              xkb = {
+                layout = "fi";
+                variant = "";
+              };
 
-            environment.gnome.excludePackages = with pkgs; [
-              gnome-tour # GNOME Shell detects the .desktop file on first log-in.
-              gnome-shell-extensions # This a collection of extensions.
-            ];
-
-            services.xserver.excludePackages = [ pkgs.xterm ]; # xterm comes with gnome
-            documentation.nixos.enable = false; # I can google it...
-
-            # Configure keymap in X11
-            services.xserver.xkb = {
-              layout = "fi";
-              variant = "";
             };
 
             # Configure console keymap
             console.keyMap = "fi";
+
+            # Disable unnecessary gnome packages ...
+            services.gnome.core-utilities.enable = false;
+            environment.gnome.excludePackages = with pkgs; [
+              gnome-tour # GNOME Shell detects the .desktop file on first log-in.
+              gnome-shell-extensions # This a collection of extensions.
+            ];
+            documentation.nixos.enable = false; # I can google it...
 
             # Define a user account. Don't forget to set a password with ‘passwd’.
             users.users.joonas = {
