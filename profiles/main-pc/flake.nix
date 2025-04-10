@@ -77,7 +77,7 @@
                 services.nix-podman-testServer-quadlet.enable = true;
                 services.nix-podman-nicehash-quadlet = {
                   workerName = "main-pc";
-                  enable = true;
+                  enable = false;
                   nvidia = true;
                   amd = false;
                 };
