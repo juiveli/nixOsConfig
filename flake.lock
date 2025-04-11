@@ -51,11 +51,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-hCmkGEjm7h86WU/PhTkE/JhXENd2iTlcu0Qn5qgHsZ4=",
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/common-configurations",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/common-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/common-configurations",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/common-configurations",
         "type": "path"
       }
     },
@@ -151,12 +151,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-mTz3iZ6uSkec9jPxLaNrkWhiO/8SUmmIs1XoD+YasuQ=",
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/profiles/main-pc",
+        "narHash": "sha256-NNEMK+h8qVzD5yXIjONRYRneK0V7dMMjyuhsWs5I628=",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/profiles/main-pc",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -264,11 +264,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-zrQhDkYd9QXRMKy2plPIoU/lq2cMbPr1TuKYQYXr6gU=",
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/profiles/nixos-test",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/21fw5cchfh2rxxq1lf9i8chr4ly5jz9d-source/profiles/nixos-test",
+        "path": "/nix/store/4aa4zcbr4krcizi92i62qr3mfk0a4yjr-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -290,11 +290,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1744168086,
-        "narHash": "sha256-S9M4HddBCxbbX1CKSyDYgZ8NCVyHcbKnBfoUXeRu2jQ=",
+        "lastModified": 1744309437,
+        "narHash": "sha256-QZnNHM823am8apCqKSPdtnzPGTy2ZB4zIXOVoBp5+W0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "60e405b241edb6f0573f3d9f944617fe33ac4a73",
+        "rev": "f9ebe33a928b5d529c895202263a5ce46bdf12f7",
         "type": "github"
       },
       "original": {

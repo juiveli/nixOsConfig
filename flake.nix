@@ -2,14 +2,14 @@
   description = "A flake with multiple pc nixosConfigurations";
 
   inputs = {
-    # NixOS official package source, using the nixos-24.11 branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
+    # Treefmt module: provides utilities for code formatting
     treefmt-nix.url = "github:numtide/treefmt-nix";
+
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     home-manager = {
-      # Use the same as your nixpkgs
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -28,7 +28,6 @@
       url = "./profiles/main-pc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
   outputs =
@@ -44,7 +43,7 @@
     }@inputs:
 
     let
-      # Small tool to iterate over each systems
+      # Small tool to iterate over each system
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
 
       # Eval the treefmt modules from ./treefmt.nix
@@ -55,19 +54,27 @@
       # for `nix fmt`
       formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
 
-      checks = eachSystem (pkgs: {
-        formatting = treefmtEval.${pkgs.system}.config.build.check self;
-
-        pre-commit-check = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
-          src = ./.;
-          hooks = {
-            nixfmt-rfc-style.enable = true;
-            mdformat.enable = true;
+      checks = eachSystem (
+        pkgs:
+        let
+          # Cache the pre-commit-check evaluation
+          preCommitCheck = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
+            src = ./.;
+            hooks = {
+              nixfmt-rfc-style.enable = true;
+              mdformat.enable = true;
+            };
           };
+        in
+        {
+          formatting = treefmtEval.${pkgs.system}.config.build.check self;
 
-        };
+          pre-commit-check = preCommitCheck;
 
-      });
+          # Optimize enabledPackages by filtering for critical dependencies
+          enabledPackages = builtins.filter (pkg: pkg.isCritical == true) preCommitCheck.enabledPackages;
+        }
+      );
 
       devShells = eachSystem (pkgs: {
         default = nixpkgs.legacyPackages.${pkgs.system}.mkShell {
@@ -81,7 +88,6 @@
         modules = [
           common-configurations.nixosModules.conffi
           nixos-test.nixosModules.conffi
-          ./testi
         ];
       };
 
@@ -93,5 +99,4 @@
         ];
       };
     };
-
 }
