@@ -2,6 +2,8 @@
 
 with lib.hm.gvariant;
 
+{
+
   home.packages = [
     pkgs.gnomeExtensions.dash-to-panel # taskbar
     pkgs.gnomeExtensions.quick-settings-audio-panel # app specific audio, and mic slider
@@ -335,3 +337,4 @@ with lib.hm.gvariant;
 
     };
   };
+}
