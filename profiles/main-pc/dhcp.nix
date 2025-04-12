@@ -7,6 +7,7 @@
         interfaces = [ "enp6s0" ];
       };
       lease-database = {
+        # Folder seemed to created automatically
         name = "/var/lib/kea/dhcp4.leases";
         persist = true;
         type = "memfile";
