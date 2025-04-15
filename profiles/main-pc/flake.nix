@@ -70,6 +70,7 @@
                 imports = [
                   nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   sops-nix.homeManagerModules.sops
+                  ./home.nix
                 ];
                 # Nix quadlet activations:
                 services.nix-podman-caddy-quadlet.enable = true;
@@ -201,6 +202,7 @@
               pkgs.pinta
               pkgs.nvidia-container-toolkit
               pkgs.sops
+              pkgs.sshfs
             ];
 
             programs.steam = {
