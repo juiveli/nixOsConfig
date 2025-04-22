@@ -7,19 +7,6 @@
 with lib;
 
 let
-  sshfsRestart = pkgs.writeShellScriptBin "sshfs-restart" ''
-    MOUNT_POINT="/media/rajalat"
-
-    ${pkgs.coreutils}/bin/mkdir -p /media/rajalat
-
-    if ! ${pkgs.util-linux}/bin/mountpoint -q "$MOUNT_POINT"; then
-      echo "Not mounted, let's restart the mounting service..."
-      ${pkgs.systemd}/bin/systemctl --user restart sshfs-rajalat.service; 
-    else
-      echo "SSHFS already mounted."
-    fi
-  '';
-
   sshfsSetup = pkgs.writeShellScriptBin "sshfs-setup" ''
     MOUNT_POINT="/media/rajalat"
     ${pkgs.coreutils}/bin/mkdir -p /media/rajalat
@@ -44,44 +31,23 @@ in
     pkgs.systemd
   ]; # Install SSHFS for the user
 
-  systemd.user.services.sshfs-rajalat = {
+  systemd.user.services.sshfs-mounts = {
     Unit = {
       Description = "Auto SSHFS Mount for /media/rajalat";
       After = [ "network.target" ];
     };
     Service = {
-      Type = "oneshot";
+      Type = "forking";
       ExecStart = "${sshfsSetup}/bin/sshfs-setup";
-      RemainAfterExit = true;
+      RestartSec = "120";
+      Restart = "always";
+
+      # Perform additional cleanup AFTER SSHFS is fully unmounted
+      ExecStopPost = "${pkgs.coreutils}/bin/rmdir /media/rajalat";
+      
     };
     Install = {
       WantedBy = [ "default.target" ];
     };
   };
-
-  systemd.user.services.sshfs-rajalat-restart = {
-    Unit = {
-      Description = "Force restart SSHFS service";
-      After = [ "network.target" ];
-    };
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${sshfsRestart}/bin/sshfs-restart";
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
-
-  systemd.user.timers."sshfs-rajalat-restart" = {
-    Install = {
-      WantedBy = [ "timers.target" ];
-    };
-    Timer = {
-      OnBootSec = "60s";
-      OnUnitActiveSec = "60s";
-      Unit = "sshfs-rajalat-restart.service";
-    };
-  };
-
 }
