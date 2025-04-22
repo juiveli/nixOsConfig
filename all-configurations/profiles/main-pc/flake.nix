@@ -1,26 +1,105 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+
 {
   inputs = {
     # ...
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
-    { self, nix-flatpak }:
+    {
+      self,
+      nix-flatpak,
+      sops-nix,
+      nixpkgs,
+    }:
 
     {
       nixosModules = {
-        conffi =
+        main-pc-specific =
           { pkgs, config, ... }:
           {
             imports = [
               # Include the results of the hardware scan.
               ./hardware-configuration.nix
+              ./custom-folders.nix
+              ./systemd-timers.nix
+              ./mount-points.nix
+              ./dhcp.nix
               nix-flatpak.nixosModules.nix-flatpak
+              sops-nix.nixosModules.sops
+
             ];
 
-            networking.hostName = "nixos-test"; # Define your hostname.
+            users.users.joonas = {
+              # ...
+              # required for auto start before user login
+              linger = true;
+              # required for rootless container with multiple users
+              autoSubUidGidRange = true;
+              uid = 1000;
+            };
 
-            system.autoUpgrade.enable = false;
+            home-manager.users.joonas =
+              {
+                pkgs,
+                config,
+                lib,
+                ...
+              }:
+              {
+                imports = [
+                  sops-nix.homeManagerModules.sops
+                  ./home.nix
+                ];
+
+                sops.defaultSopsFile = ./secrets/rootless.yaml;
+                sops.defaultSopsFormat = "yaml";
+                sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+                sops.secrets.nonRootTest = { };
+                sops.secrets.kakkonen = { };
+              };
+
+            sops.defaultSopsFile = ./secrets/root.yaml;
+            sops.defaultSopsFormat = "yaml";
+            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+            sops.secrets.kakkosavain = { };
+
+            boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
+
+            networking.hostName = "main-pc"; # Define your hostname.
+
+            # Open ports in the firewall.
+            networking.firewall.allowedTCPPorts = [
+              80
+              443
+              64541
+            ];
+            networking.firewall.allowedUDPPorts = [
+              80
+              443
+              64541
+            ];
+            # Or disable the firewall altogether.
+            networking.firewall.enable = true;
+
+            services.custom-folders.enable = true;
+            services.mount-points.enable = true;
+            services.systemd-timers.enable = true;
+
+            system.autoUpgrade.enable = true;
             system.autoUpgrade.allowReboot = false;
 
             # Enable OpenGL
@@ -78,8 +157,24 @@
 
             environment.systemPackages = [
               pkgs.element-desktop
-              pkgs.phoronix-test-suite
-              pkgs.unigine-heaven
+              # Minecraft custom launcher
+              (pkgs.prismlauncher.override {
+                # Add binary required by some mod
+                additionalPrograms = [ pkgs.ffmpeg ];
+
+                # Change Java runtimes available to Prism Launcher
+                jdks = [
+                  pkgs.graalvm-ce
+                  pkgs.zulu8
+                  pkgs.zulu17
+                  pkgs.zulu
+                ];
+              })
+              pkgs.inkscape-with-extensions
+              pkgs.pinta
+              pkgs.nvidia-container-toolkit
+              pkgs.sops
+              pkgs.sshfs
             ];
 
             programs.steam = {

@@ -14,19 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    common-configurations = {
-      url = "./common-configurations";
+    all-configurations = {
+      url = "./all-configurations";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-
-    nixos-test = {
-      url = "./profiles/nixos-test";
-    };
-
-    main-pc = {
-      url = "./profiles/main-pc";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -34,11 +25,9 @@
     {
       self,
       nixpkgs,
-      common-configurations,
+      all-configurations,
       systems,
       treefmt-nix,
-      nixos-test,
-      main-pc,
       ...
     }@inputs:
 
@@ -86,16 +75,14 @@
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          common-configurations.nixosModules.conffi
-          nixos-test.nixosModules.conffi
+          all-configurations.nixosModules.nixos-test
         ];
       };
 
       nixosConfigurations.main-pc = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          common-configurations.nixosModules.conffi
-          main-pc.nixosModules.conffi
+          all-configurations.nixosModules.main-pc
         ];
       };
     };

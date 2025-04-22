@@ -44,7 +44,7 @@ in
 
       # Perform additional cleanup AFTER SSHFS is fully unmounted
       ExecStopPost = "${pkgs.coreutils}/bin/rmdir /media/rajalat";
-      
+
     };
     Install = {
       WantedBy = [ "default.target" ];
