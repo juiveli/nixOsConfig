@@ -49,7 +49,7 @@
           profile =
             {
               profileModules ? [ ],
-              users ? {},
+              users ? { },
             }:
             {
               config,
@@ -86,6 +86,9 @@
                     ./home-manager-configs/gnome.nix
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
+
+                  home.username = username; 
+                  home.homeDirectory = "/home/${username}";
                 }
               ) users; # Map users to their Home Manager configurations
             };

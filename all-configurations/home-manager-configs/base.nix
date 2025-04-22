@@ -1,6 +1,11 @@
 {
-  home.username = "joonas";
-  home.homeDirectory = "/home/joonas";
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";
 }
