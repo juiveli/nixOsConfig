@@ -19,7 +19,7 @@
       amd = false;
     };
 
-    services.home-manager-gnome-settings.enable = true;
+    custom.gnome.dconfSettings.enable = true;
 
   };
 }

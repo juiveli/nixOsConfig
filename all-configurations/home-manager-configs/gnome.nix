@@ -7,13 +7,13 @@
 
 let
 
-  cfg = config.services.home-manager-gnome-settings;
+  cfg = config.custom.gnome.dconfSettings;
 in
 
 {
 
-  options.services.home-manager-gnome-settings = {
-    enable = lib.mkEnableOption "home-manager-gnome-settings";
+  options.custom.gnome.dconfSettings  = {
+    enable = lib.mkEnableOption "Custom GNOME dconf configurations.";
   };
 
   config = lib.mkIf cfg.enable {
