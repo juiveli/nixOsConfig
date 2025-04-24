@@ -2,11 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # Due to https://github.com/hercules-ci/flake-parts/pull/251 this needs to be here, and not in invidual flakes.
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,7 +25,7 @@
       url = "./chia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nicehash-nvidia = {
+    nicehash = {
       url = "./nicehash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -39,11 +35,10 @@
     {
       self,
       nixpkgs,
-      home-manager,
       quadlet-nix,
       testServer,
       caddy,
-      nicehash-nvidia,
+      nicehash,
       mmx,
       chia,
       ...
@@ -75,7 +70,7 @@
               caddy.homeManagerModules.quadlet
               mmx.homeManagerModules.quadlet
               chia.homeManagerModules.quadlet
-              nicehash-nvidia.homeManagerModules.quadlet
+              nicehash.homeManagerModules.quadlet
             ];
 
           };
