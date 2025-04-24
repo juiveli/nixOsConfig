@@ -1,7 +1,5 @@
 { pkgs, lib, ... }:
 
-with lib.hm.gvariant;
-
 {
 
   home.packages = [
@@ -38,7 +36,7 @@ with lib.hm.gvariant;
         font-name = "Noto Sans,  10";
         gtk-theme = "Adwaita";
         icon-theme = "breeze";
-        scaling-factor = mkUint32 1;
+        scaling-factor = lib.hm.gvariant.mkUint32 1;
         toolbar-style = "text";
       };
 
@@ -224,8 +222,8 @@ with lib.hm.gvariant;
 
       "org/gnome/desktop/peripherals/keyboard" = {
         repeat = true;
-        repeat-interval = mkUint32 30;
-        delay = mkUint32 500;
+        repeat-interval = lib.hm.gvariant.mkUint32 30;
+        delay = lib.hm.gvariant.mkUint32 500;
       };
 
       # Pointing and Clicking
@@ -279,7 +277,7 @@ with lib.hm.gvariant;
         multi-monitor = false;
         position-in-panel = "Left";
         prefs-visible-page = 0;
-        search-entry-border-radius = mkTuple [
+        search-entry-border-radius = lib.hm.gvariant.mkTuple [
           true
           25
         ];
