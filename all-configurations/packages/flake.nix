@@ -31,7 +31,6 @@
 
             # Enable programs.
             programs.firefox.enable = true;
-            programs.dconf.enable = true;
 
             # List packages installed in the system profile.
             environment.systemPackages = with pkgs; [
