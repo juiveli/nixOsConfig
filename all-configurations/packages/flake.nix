@@ -18,7 +18,7 @@
 
           let
             # Block for GUI packages
-            guiConfig = lib.mkIf config.customPackages.gui.enable {
+            guiConfig = lib.mkIf config.custom.packages.gui.enable {
               programs.firefox.enable = true;
 
               environment.systemPackages = [
@@ -29,7 +29,7 @@
             };
 
             # Block for GUI-less packages
-            guilessConfig = lib.mkIf config.customPackages.guiless.enable {
+            guilessConfig = lib.mkIf config.custom.packages.guiless.enable {
               hardware.pulseaudio.enable = false;
               security.rtkit.enable = true;
               services.pipewire = {
@@ -57,8 +57,8 @@
           {
 
             options = {
-              customPackages.gui.enable = lib.mkEnableOption "Enable GUI-based packages I think are necessary defaults.";
-              customPackages.guiless.enable = lib.mkEnableOption "Enable GUI-less packages I think are necessary defaults.";
+              custom.packages.gui.enable = lib.mkEnableOption "Enable GUI-based packages I think are necessary defaults.";
+              custom.packages.guiless.enable = lib.mkEnableOption "Enable GUI-less packages I think are necessary defaults.";
             };
 
             # Merge everything into the config

@@ -112,15 +112,15 @@
               ];
               system.stateVersion = lib.mkDefault "24.11";
 
-              users.joonas.enable = lib.mkDefault true;
+              custom.users.joonas.enable = lib.mkDefault true;
 
               services.displayManager.autoLogin = {
-                enable = lib.mkDefault config.users.joonas.enable;
+                enable = lib.mkDefault config.custom.users.joonas.enable;
                 user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
               };
 
-              customPackages.gui.enable = true;
-              customPackages.guiless.enable = true;
+              custom.packages.gui.enable = true;
+              custom.packages.guiless.enable = true;
 
               ##################################################################
 

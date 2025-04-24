@@ -6,12 +6,12 @@
 }:
 
 let
-  cfg = config.users.joonas;
+  cfg = config.custom.users.joonas;
 
 in
 {
 
-  options.users.joonas = {
+  options.custom.users.joonas = {
     enable = lib.mkEnableOption "user Joonas";
   };
 
