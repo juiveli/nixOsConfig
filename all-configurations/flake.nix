@@ -82,13 +82,13 @@
                 }:
                 {
                   imports = (userConfig.homeManagerModules or [ ]) ++ [
-                    ./home-manager-configs/base.nix
                     ./home-manager-configs/gnome.nix
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
-                  home.username = username; 
+                  home.username = username;
                   home.homeDirectory = "/home/${username}";
+                  home.stateVersion = lib.mkDefault "24.11";
                 }
               ) users; # Map users to their Home Manager configurations
             };
