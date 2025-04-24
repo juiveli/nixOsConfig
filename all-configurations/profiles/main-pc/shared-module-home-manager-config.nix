@@ -19,5 +19,7 @@
       amd = false;
     };
 
+    services.home-manager-gnome-settings.enable = true;
+
   };
 }
