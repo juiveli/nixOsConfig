@@ -27,7 +27,6 @@
 
     nixos-test = {
       url = "./profiles/nixos-test";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -113,8 +112,12 @@
               ];
               system.stateVersion = lib.mkDefault "24.11";
 
-              services.displayManager.autoLogin.enable = true;
-              services.displayManager.autoLogin.user = "joonas";
+              users.joonas.enable = lib.mkDefault true;
+
+              services.displayManager.autoLogin = {
+                enable = lib.mkDefault config.users.joonas.enable;
+                user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
+              };
 
               customPackages.gui.enable = true;
               customPackages.guiless.enable = true;
