@@ -15,39 +15,61 @@
             pkgs,
             ...
           }:
-          {
-            # Enable sound with Pipewire.
-            hardware.pulseaudio.enable = false;
-            security.rtkit.enable = true;
-            services.pipewire = {
-              enable = true;
-              alsa.enable = true;
-              alsa.support32Bit = true;
-              pulse.enable = true;
+
+          let
+            # Block for GUI packages
+            guiConfig = lib.mkIf config.customPackages.gui.enable {
+              programs.firefox.enable = true;
+
+              environment.systemPackages = [
+                pkgs.vscodium
+                pkgs.nemo-with-extensions
+                pkgs.alacritty
+              ];
             };
 
-            # Allow unfree packages.
-            nixpkgs.config.allowUnfree = true;
+            # Block for GUI-less packages
+            guilessConfig = lib.mkIf config.customPackages.guiless.enable {
+              hardware.pulseaudio.enable = false;
+              security.rtkit.enable = true;
+              services.pipewire = {
+                enable = true;
+                alsa.enable = true;
+                alsa.support32Bit = true;
+                pulse.enable = true;
+              };
 
-            # Enable programs.
-            programs.firefox.enable = true;
+              virtualisation.containers.enable = true;
+              virtualisation.podman = {
+                enable = true;
+                dockerCompat = false;
+                defaultNetwork.settings.dns_enabled = true;
+              };
 
-            # List packages installed in the system profile.
-            environment.systemPackages = with pkgs; [
-              pkgs.vscodium
-              pkgs.git
-              pkgs.nemo-with-extensions
-              pkgs.alacritty
-              pkgs.dconf2nix
+              environment.systemPackages = [
+                pkgs.git
+                pkgs.dconf2nix
+              ];
+            };
+
+          in
+
+          {
+
+            options = {
+              customPackages.gui.enable = lib.mkEnableOption "Enable GUI-based packages I think are necessary defaults.";
+              customPackages.guiless.enable = lib.mkEnableOption "Enable GUI-less packages I think are necessary defaults.";
+            };
+
+            # Merge everything into the config
+            config = lib.mkMerge [
+              {
+                nixpkgs.config.allowUnfree = lib.mkDefault true;
+              }
+              guiConfig
+              guilessConfig
             ];
 
-            # Virtualization settings.
-            virtualisation.containers.enable = true;
-            virtualisation.podman = {
-              enable = true;
-              dockerCompat = false;
-              defaultNetwork.settings.dns_enabled = true;
-            };
           };
       };
     };

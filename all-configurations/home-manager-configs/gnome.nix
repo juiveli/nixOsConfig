@@ -12,7 +12,7 @@ in
 
 {
 
-  options.custom.gnome.dconfSettings  = {
+  options.custom.gnome.dconfSettings = {
     enable = lib.mkEnableOption "Custom GNOME dconf configurations.";
   };
 

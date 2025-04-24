@@ -116,6 +116,9 @@
               services.displayManager.autoLogin.enable = true;
               services.displayManager.autoLogin.user = "joonas";
 
+              customPackages.gui.enable = true;
+              customPackages.guiless.enable = true;
+
               ##################################################################
 
               # home-manager-settings
