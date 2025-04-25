@@ -85,9 +85,25 @@
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
-                  home.username = username;
-                  home.homeDirectory = "/home/${username}";
+                  home.username = lib.mkDefault username;
+                  home.homeDirectory = lib.mkDefault "/home/${username}";
                   home.stateVersion = lib.mkDefault "24.11";
+
+                  custom.gnome.dconfSettings.enable = lib.mkDefault true;
+
+                  # Podman quadlet enables
+                  services.nix-podman-caddy-quadlet.enable = lib.mkDefault false;
+                  services.nix-podman-chia-quadlet.enable = lib.mkDefault false;
+                  services.nix-podman-mmx-quadlet.enable = lib.mkDefault false;
+                  services.nix-podman-testServer-quadlet.enable = lib.mkDefault false;
+
+                  services.nix-podman-nicehash-quadlet = {
+                    workerName = lib.mkDefault config.network.hostName;
+                    enable = lib.mkDefault false;
+                    nvidia = lib.mkDefault false;
+                    amd = lib.mkDefault false;
+                  };
+
                 }
               ) users; # Map users to their Home Manager configurations
             };
@@ -119,8 +135,15 @@
                 user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
               };
 
-              custom.packages.gui.enable = true;
-              custom.packages.guiless.enable = true;
+              custom.packages.gui.enable = lib.mkDefault true;
+              custom.packages.guiless.enable = lib.mkDefault true;
+
+              # Folder creations
+              services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
+              services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
+              services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
+              # testServer does not need folders to be created
+              # nicehash does not need folder to be created
 
               ##################################################################
 
