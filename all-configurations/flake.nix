@@ -48,6 +48,14 @@
           profile =
             {
               profileModules ? [ ],
+
+              # `users` is a map where each key is a username homeManagerModules under specific user is added to their profile
+              # Example:
+              # users = {
+              #   joonas = {
+              #     homeManagerModules = [ ./custom-config.nix ];
+              #   };
+              # };
               users ? { },
             }:
             {
