@@ -79,14 +79,6 @@
 
             };
 
-            systemd.user.services.testService = {
-              Unit = {
-                Description = "Auto SSHFS Mount for /media/rajalat";
-              };
-              Service = {
-                ExecStart = "${dnsIpUpdaterScript}/bin/dns-ip-updater";
-              };
-            };
 
             systemd.user.services."ip-updater-to-dns-always-when-run1" = {
               Unit = {
