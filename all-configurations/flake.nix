@@ -57,9 +57,12 @@
               ...
             }:
             {
-              # Combine shared imports with specific profile modules
+
+              ############################################
+
+              # Non home-manager settings
+
               imports = [
-                self.nixosModules.shared
                 ./bootloader.nix
                 ./desktop-environment.nix
                 ./locale.nix
@@ -69,6 +72,42 @@
                 nix-podman-quadlet-collection.nixosModules.quadlet-collection
                 packages.nixosModules.packages
               ] ++ profileModules;
+
+              nix.settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
+              system.stateVersion = lib.mkDefault "24.11";
+
+              custom.boot.loader.defaultSettings.enable = true;
+              custom.defaultLocale.enable = lib.mkDefault true;
+              custom.users.joonas.enable = lib.mkDefault true;
+
+              services.displayManager.autoLogin = {
+                enable = lib.mkDefault config.custom.users.joonas.enable;
+                user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
+              };
+
+              custom.packages.gui.enable = lib.mkDefault true;
+              custom.packages.guiless.enable = lib.mkDefault true;
+
+              # Folder creations
+              services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
+              services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
+              services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
+              # testServer does not need folders to be created
+              # nicehash does not need folder to be created
+
+              ##################################################################
+
+              # home-manager global settings
+
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              ##################################################################
+
+              # home-manager user shared settings
 
               # Dynamically add user-specific Home Manager configurations
               home-manager.users = builtins.mapAttrs (
@@ -109,52 +148,6 @@
             };
         in
         {
-
-          shared =
-            {
-              config,
-              lib,
-              pkgs,
-              ...
-            }:
-            {
-
-              ############################################
-              # Non home-manager settings
-
-              nix.settings.experimental-features = [
-                "nix-command"
-                "flakes"
-              ];
-              system.stateVersion = lib.mkDefault "24.11";
-
-              custom.boot.loader.defaultSettings.enable = true;
-              custom.defaultLocale.enable = lib.mkDefault true;
-              custom.users.joonas.enable = lib.mkDefault true;
-
-              services.displayManager.autoLogin = {
-                enable = lib.mkDefault config.custom.users.joonas.enable;
-                user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
-              };
-
-              custom.packages.gui.enable = lib.mkDefault true;
-              custom.packages.guiless.enable = lib.mkDefault true;
-
-              # Folder creations
-              services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
-              services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
-              services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
-              # testServer does not need folders to be created
-              # nicehash does not need folder to be created
-
-              ##################################################################
-
-              # home-manager-settings
-
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-            };
 
           main-pc = profile {
             profileModules = [
