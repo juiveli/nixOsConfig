@@ -1,23 +1,35 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
+let
+  cfg = config.custom.desktop-environment.gnome;
+
+in
 {
-  services.xserver = lib.mkDefault {
-    enable = true;
-    desktopManager.gnome.enable = true;
-    excludePackages = [ pkgs.xterm ]; # Exclude xterm
-    xkb = {
-      layout = "fi";
-      variant = "";
-    };
+
+  options.custom.desktop-environment.gnome = {
+    enable = lib.mkEnableOption "Enable gnome with fi as default keyboard that can be overriden";
   };
 
-  # Disable unnecessary gnome packages ...
-  services.gnome.core-utilities.enable = false;
-  environment.gnome.excludePackages = with pkgs; [
-    gnome-tour # GNOME Shell detects the .desktop file on first log-in.
-    gnome-shell-extensions # This a collection of extensions.
-  ];
-  documentation.nixos.enable = false; # I can google it...
+  config = lib.mkIf cfg.enable {
 
-  console.keyMap = "fi";
+    services.xserver = {
+      enable = true;
+      desktopManager.gnome.enable = true;
+      excludePackages = [ pkgs.xterm ]; # Exclude xterm
+      xkb = lib.mkDefault {
+        layout = "fi";
+        variant = "";
+      };
+    };
+
+    # Disable unnecessary gnome packages ...
+    services.gnome.core-utilities.enable = false;
+    environment.gnome.excludePackages = [
+      pkgs.gnome-tour # GNOME Shell detects the .desktop file on first log-in.
+      pkgs.gnome-shell-extensions # This a collection of extensions.
+    ];
+    documentation.nixos.enable = false; # I can google it...
+
+    console.keyMap = lib.mkDefault "fi";
+  };
 }

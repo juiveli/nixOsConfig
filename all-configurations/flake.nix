@@ -90,6 +90,7 @@
               custom.boot.loader.defaultSettings.enable = true;
               custom.defaultLocale.enable = lib.mkDefault true;
               custom.users.joonas.enable = lib.mkDefault true;
+              custom.desktop-environment.gnome.enable = lib.mkDefault true;
 
               services.displayManager.autoLogin = {
                 enable = lib.mkDefault config.custom.users.joonas.enable;
@@ -136,7 +137,7 @@
                   home.homeDirectory = lib.mkDefault "/home/${username}";
                   home.stateVersion = lib.mkDefault "24.11";
 
-                  custom.gnome.dconfSettings.enable = lib.mkDefault true;
+                  custom.gnome.dconfSettings.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
 
                   # Podman quadlet enables
                   services.nix-podman-caddy-quadlet.enable = lib.mkDefault false;
