@@ -128,6 +128,8 @@
               ];
               system.stateVersion = lib.mkDefault "24.11";
 
+              custom.boot.loader.defaultSettings.enable = true;
+
               custom.users.joonas.enable = lib.mkDefault true;
 
               services.displayManager.autoLogin = {
