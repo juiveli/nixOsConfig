@@ -33,7 +33,6 @@
               # Include the results of the hardware scan.
               ./hardware-configuration.nix
               ./custom-folders.nix
-              ./systemd-timers.nix
               ./mount-points.nix
               ./dhcp.nix
               nix-flatpak.nixosModules.nix-flatpak
@@ -97,7 +96,6 @@
 
             services.custom-folders.enable = true;
             services.mount-points.enable = true;
-            services.systemd-timers.enable = true;
 
             system.autoUpgrade.enable = true;
             system.autoUpgrade.allowReboot = false;

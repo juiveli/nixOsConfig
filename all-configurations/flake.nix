@@ -7,6 +7,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dns-ip-updater = {
+      url = "./dns-ip-updater";
+    };
+
     nix-podman-quadlet-collection = {
       url = "./nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +38,7 @@
   outputs =
     {
       self,
+      dns-ip-updater,
       home-manager,
       main-pc,
       nixos-test,
@@ -133,6 +138,7 @@
                 {
                   imports = (userConfig.homeManagerModules or [ ]) ++ [
                     ./home-manager-configs/gnome.nix
+                    dns-ip-updater.homeManagerModules.quadlet
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
