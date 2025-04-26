@@ -1,4 +1,3 @@
-
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -34,10 +33,12 @@
               )
 
               URL_BASE="https://www.dy.fi/nic/update?hostname="
-              IP_FILE="/var/lib/dnsIpUpdater/current_ip.txt"
+              IP_FILE=''${HOME}/.dnsIpUpdater/current_ip.txt
               CURRENT_IP=$(curl -s https://ipv4.icanhazip.com)
 
-              # Ensure IP file exists
+
+              # Ensure directory and file exist
+              mkdir -p "$(dirname "$IP_FILE")"
               touch "$IP_FILE"
 
               OLD_IP=$(cat "$IP_FILE")
@@ -47,9 +48,9 @@
                 echo "IP has changed from $OLD_IP to $CURRENT_IP. Updating..."
                 echo "$CURRENT_IP" > "$IP_FILE"
 
-               # Convert the space-separated string into a Bash array
-              for URL in ''${SERVER_HOSTNAME[@]}; do
-                curl -u ''$USERNAME:$PASSWORD ''${URL_BASE}''${URL}
+                # Convert the space-separated string into a Bash array
+                for URL in ''${SERVER_HOSTNAME[@]}; do
+                  curl -u ''$USERNAME:$PASSWORD ''${URL_BASE}''${URL}
               done
 
             fi
@@ -79,8 +80,7 @@
 
             };
 
-
-            systemd.user.services."ip-updater-to-dns-always-when-run1" = {
+            systemd.user.services."ip-updater-to-dns-always-when-run" = {
               Unit = {
                 Description = "Update DNS always when run - periodic updater";
               };
@@ -88,19 +88,16 @@
                 ExecStart = "${dnsIpUpdaterScript}/bin/dns-ip-updater yes";
                 Type = "oneshot";
               };
-              Install = {
-                WantedBy = [ "default.target" ];
-              };
             };
 
             systemd.user.timers."ip-updater-to-dns-always-when-run" = {
               Unit = {
-                Description = "Timer for ip-updater-to-dns-always-when-run1 service";
+                Description = "Timer for ip-updater-to-dns-always-when-run service";
               };
               Timer = {
                 OnCalendar = "Mon,Fri 9:00";
                 Persistent = true;
-                Unit = "ip-updater-to-dns-always-when-run1.service";
+                Unit = "ip-updater-to-dns-always-when-run.service";
               };
               Install = {
                 WantedBy = [ "timers.target" ];
@@ -115,14 +112,11 @@
                 ExecStart = "${dnsIpUpdaterScript}/bin/dns-ip-updater";
                 Type = "oneshot";
               };
-              Install = {
-                WantedBy = [ "default.target" ];
-              };
             };
 
             systemd.user.timers."ip-updater-to-dns-only-if-needed" = {
               Unit = {
-                Description = "Timer for ip-updater-to-dns-only-if-needed1 service";
+                Description = "Timer for ip-updater-to-dns-only-if-needed service";
               };
               Timer = {
                 OnBootSec = "60s";
