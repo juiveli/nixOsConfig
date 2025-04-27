@@ -14,5 +14,7 @@
     # testServer does not need folders to be created
     # nicehash does not need folder to be created
 
+    services.dns-ip-updater.dy-fi.enable = true;
+
   };
 }

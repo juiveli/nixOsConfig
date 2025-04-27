@@ -32,7 +32,6 @@
             imports = [
               # Include the results of the hardware scan.
               ./hardware-configuration.nix
-              ./custom-folders.nix
               ./mount-points.nix
               ./dhcp.nix
               nix-flatpak.nixosModules.nix-flatpak
@@ -94,7 +93,6 @@
             # Or disable the firewall altogether.
             networking.firewall.enable = true;
 
-            services.custom-folders.enable = true;
             services.mount-points.enable = true;
 
             system.autoUpgrade.enable = true;

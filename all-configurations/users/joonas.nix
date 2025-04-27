@@ -17,14 +17,20 @@ in
 
   config = lib.mkIf cfg.enable {
 
+    users.groups.joonas = { };
+
     users.users.joonas = {
-      isNormalUser = true;
+      isSystemUser = true;
+      home = "/home/joonas";
       description = "joonas";
       extraGroups = [
         "networkmanager"
         "wheel"
+        "service-control"
       ];
       packages = [ ];
+
+      group = "joonas";
     };
 
   };

@@ -7,7 +7,7 @@
   outputs =
     { nixpkgs, sops-nix, ... }:
     {
-      homeManagerModules.quadlet =
+      nixosModules.quadlet =
         {
           config,
           lib,
@@ -16,9 +16,18 @@
         }:
 
         let
-          cfg = config.services.dns-ip-updater;
+          cfg = config.services.dns-ip-updater.dy-fi;
 
-          dnsIpUpdaterScript = pkgs.writeShellScriptBin "dns-ip-updater" ''
+          # Creates <serviceName>-checked and <serviceName>-forced services and timers. For example. dns-ip-updater-forced.service
+          serviceName = "dns-ip-updater";
+
+          # creates var/lib/<stateDirectory>
+          stateDirectory = serviceName;
+
+          serviceUser = serviceName;
+          serviceGroup = serviceName;
+
+          dnsIpUpdaterScript = pkgs.writeShellScriptBin "${serviceName}" ''
               #!/bin/bash
 
               USERNAME=$(cat ${config.sops.secrets."dy-fi/username".path})
@@ -33,7 +42,7 @@
               )
 
               URL_BASE="https://www.dy.fi/nic/update?hostname="
-              IP_FILE=''${HOME}/.dnsIpUpdater/current_ip.txt
+              IP_FILE="''${STATE_DIRECTORY}/current_ip.txt"
               CURRENT_IP=$(curl -s https://ipv4.icanhazip.com)
 
 
@@ -63,71 +72,82 @@
             enable = lib.mkEnableOption "Dns Ip updater";
           };
 
-          config = {
+          config = lib.mkIf cfg.enable {
 
             sops.secrets = {
               "dy-fi/username" = {
                 sopsFile = ./dy-fi.yaml;
                 format = "yaml";
+                owner = serviceUser;
 
               };
 
               "dy-fi/password" = {
                 sopsFile = ./dy-fi.yaml;
                 format = "yaml";
+                owner = serviceUser;
 
               };
 
             };
 
-            systemd.user.services."ip-updater-to-dns-always-when-run" = {
-              Unit = {
-                Description = "Update DNS always when run - periodic updater";
-              };
-              Service = {
-                ExecStart = "${dnsIpUpdaterScript}/bin/dns-ip-updater yes";
+            users.groups.${serviceGroup} = { };
+            users.users.${serviceUser} = {
+              isSystemUser = true;
+              description = "Used for ${serviceName} service";
+              group = serviceGroup;
+
+              extraGroups = [
+              ];
+              packages = [ ];
+            };
+
+            systemd.services."${serviceName}-forced" = {
+              path = [ pkgs.curl ];
+              description = "Forced updates for ${serviceName}";
+              serviceConfig = {
+                ExecStart = "${dnsIpUpdaterScript}/bin/${serviceName} yes";
                 Type = "oneshot";
+                User = serviceUser;
+                Group = serviceGroup;
+                StateDirectory = stateDirectory;
+                StateDirectoryMode = "0750";
               };
             };
 
-            systemd.user.timers."ip-updater-to-dns-always-when-run" = {
-              Unit = {
-                Description = "Timer for ip-updater-to-dns-always-when-run service";
-              };
-              Timer = {
+            systemd.timers."${serviceName}-forced" = {
+              description = "Timer for forced updates of ${serviceName}";
+
+              timerConfig = {
                 OnCalendar = "Mon,Fri 9:00";
                 Persistent = true;
-                Unit = "ip-updater-to-dns-always-when-run.service";
+                Unit = "${serviceName}-forced.service";
               };
-              Install = {
-                WantedBy = [ "timers.target" ];
-              };
+              wantedBy = [ "timers.target" ];
             };
 
-            systemd.user.services."ip-updater-to-dns-only-if-needed" = {
-              Unit = {
-                Description = "Update DNS only if needed - frequent updater";
-              };
-              Service = {
-                ExecStart = "${dnsIpUpdaterScript}/bin/dns-ip-updater";
+            systemd.services."${serviceName}-checked" = {
+              path = [ pkgs.curl ];
+              description = "Checked updates for ${serviceName}";
+              serviceConfig = {
+                ExecStart = "${dnsIpUpdaterScript}/bin/${serviceName}";
                 Type = "oneshot";
+                User = serviceUser;
+                Group = serviceGroup;
+                StateDirectory = stateDirectory;
+                StateDirectoryMode = "0750";
               };
             };
 
-            systemd.user.timers."ip-updater-to-dns-only-if-needed" = {
-              Unit = {
-                Description = "Timer for ip-updater-to-dns-only-if-needed service";
-              };
-              Timer = {
+            systemd.timers."${serviceName}-checked" = {
+              description = "Timer for checked updates of ${serviceName}";
+              timerConfig = {
                 OnBootSec = "60s";
                 OnUnitActiveSec = "5m";
-                Unit = "ip-updater-to-dns-only-if-needed.service";
+                Unit = "${serviceName}-checked.service";
               };
-              Install = {
-                WantedBy = [ "timers.target" ];
-              };
+              wantedBy = [ "timers.target" ];
             };
-
           };
         };
     };

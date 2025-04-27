@@ -81,6 +81,7 @@
                 ./locale.nix
                 ./networking.nix
                 ./users/joonas.nix
+                dns-ip-updater.nixosModules.quadlet
                 home-manager.nixosModules.home-manager
                 nix-podman-quadlet-collection.nixosModules.quadlet-collection
                 packages.nixosModules.packages
@@ -107,6 +108,8 @@
 
               custom.packages.gui.enable = lib.mkDefault true;
               custom.packages.guiless.enable = lib.mkDefault true;
+
+              services.dns-ip-updater.dy-fi.enable = lib.mkDefault false;
 
               # Folder creations
               services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
@@ -138,12 +141,11 @@
                 {
                   imports = (userConfig.homeManagerModules or [ ]) ++ [
                     ./home-manager-configs/gnome.nix
-                    dns-ip-updater.homeManagerModules.quadlet
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
                   home.username = lib.mkDefault username;
-                  home.homeDirectory = lib.mkDefault "/home/${username}";
+                  home.homeDirectory = lib.mkDefault config.users.users.${username}.home;
                   home.stateVersion = lib.mkDefault "24.11";
 
                   custom.gnome.dconfSettings.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
