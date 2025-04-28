@@ -20,7 +20,7 @@ in
     users.groups.joonas = { };
 
     users.users.joonas = {
-      isSystemUser = true;
+      isNormalUser = true;
       home = "/home/joonas";
       description = "joonas";
       extraGroups = [
