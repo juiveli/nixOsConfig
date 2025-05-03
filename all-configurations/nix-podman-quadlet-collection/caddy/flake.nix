@@ -4,9 +4,19 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    hugo-blog = {
+      url = "/home/joonas/Documents/git-projects/hugo-blog";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
   outputs =
-    { nixpkgs, ... }@attrs:
+    { nixpkgs, hugo-blog, ... }@attrs:
+
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { system = system; };
+    in
     {
       homeManagerModules.quadlet =
         {
@@ -27,7 +37,42 @@
           };
 
           config = lib.mkIf cfg.enable {
+
             systemd.user.startServices = "sd-switch";
+
+            home.packages = [ pkgs.hugo ];
+
+            systemd.user.services.hugo-update = {
+              Unit = {
+                Description = "Rebuild Hugo site";
+                After = [ "network-online.target" ];
+              };
+
+              Service = {
+                ExecStart = "/bin/sh -c 'cd ${hugo-blog} && hugo -d /var/lib/containers/caddy/srv/hugo --noBuildLock'";
+                WorkingDirectory = "/var/lib/containers/caddy/srv";
+                Restart = "always";
+              };
+
+              Install = {
+                WantedBy = [ "default.target" ]; # Enables it in user session
+              };
+            };
+
+            systemd.user.timers.hugo-update = {
+              Unit = {
+                Description = "Run Hugo site update daily";
+              };
+
+              Timer = {
+                OnCalendar = "daily"; # Runs Hugo site update every day
+                Persistent = true;
+              };
+
+              Install = {
+                WantedBy = [ "timers.target" ]; # Ensures it's active in user session
+              };
+            };
 
             virtualisation.quadlet.containers = {
               caddy = {
@@ -108,6 +153,14 @@
                 };
 
                 "/var/lib/containers/caddy/srv" = {
+                  d = {
+                    group = cfg.usergroup;
+                    mode = "0755";
+                    user = cfg.username;
+                  };
+                };
+
+                "/var/lib/containers/caddy/srv/hugo" = {
                   d = {
                     group = cfg.usergroup;
                     mode = "0755";
