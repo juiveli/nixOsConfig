@@ -39,6 +39,7 @@
                 "test2.generic.tunk.org"
                 "test.juiveli.fi"
                 "juiveli.fi"
+                "blog.juiveli.fi"
               )
 
               URL_BASE="https://www.dy.fi/nic/update?hostname="
