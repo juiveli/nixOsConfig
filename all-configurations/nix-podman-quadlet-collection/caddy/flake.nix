@@ -9,9 +9,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hugo-mainsite = {
+      url = "/home/joonas/Documents/git-projects/main-website";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
   outputs =
-    { nixpkgs, hugo-blog, ... }@attrs:
+    {
+      nixpkgs,
+      hugo-blog,
+      hugo-mainsite,
+      ...
+    }@attrs:
 
     let
       system = "x86_64-linux";
@@ -41,6 +51,11 @@
             systemd.user.startServices = "sd-switch";
 
             home.packages = [ pkgs.hugo ];
+
+            home.activation.hugoDeploy = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              echo "Deploying Hugo site from Nix store..."
+              cp -r ${hugo-mainsite.packages.x86_64-linux.hugo-mainsite} /var/lib/containers/caddy/srv/mainpage
+            '';
 
             systemd.user.services.hugo-update = {
               Unit = {
