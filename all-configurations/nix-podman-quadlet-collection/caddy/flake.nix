@@ -55,6 +55,7 @@
             home.activation.hugoDeploy = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               echo "Deploying Hugo site from Nix store..."
               cp -r ${hugo-mainsite.packages.x86_64-linux.hugo-mainsite} /var/lib/containers/caddy/srv/mainpage
+              chmod -R 775 /var/lib/containers/caddy/srv/mainpage
             '';
 
             systemd.user.services.hugo-update = {
@@ -64,7 +65,7 @@
               };
 
               Service = {
-                ExecStart = "/bin/sh -c 'cd ${hugo-blog} && hugo -d /var/lib/containers/caddy/srv/hugo --noBuildLock'";
+                ExecStart = "/bin/sh -c 'cd ${hugo-blog} && hugo -d /var/lib/containers/caddy/srv/hugo --noBuildLock && chmod -R 775 /var/lib/containers/caddy/srv/hugo && chown -R joonas:users /var/lib/containers/caddy/srv/hugo'";
                 WorkingDirectory = "/var/lib/containers/caddy/srv";
                 Restart = "always";
               };

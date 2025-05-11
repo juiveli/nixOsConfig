@@ -39,6 +39,7 @@
                 "test2.generic.tunk.org"
                 "test.juiveli.fi"
                 "juiveli.fi"
+                "static.juiveli.fi"
                 "blog.juiveli.fi"
               )
 
