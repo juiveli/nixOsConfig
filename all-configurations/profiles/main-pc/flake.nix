@@ -166,6 +166,8 @@
                   pkgs.zulu
                 ];
               })
+              pkgs.transmission_4-qt6
+              pkgs.vlc
               pkgs.inkscape-with-extensions
               pkgs.pinta
               pkgs.nvidia-container-toolkit
