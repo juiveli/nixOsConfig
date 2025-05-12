@@ -107,6 +107,8 @@
                 packages.nixosModules.packages
               ] ++ profileModules;
 
+              environment.systemPackages = [ dev-rebuild ]; 
+
               nix.settings.experimental-features = [
                 "nix-command"
                 "flakes"
