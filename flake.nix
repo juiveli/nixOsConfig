@@ -2,11 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+    # Due to https://github.com/hercules-ci/flake-parts/pull/251 this needs to be here, and not in invidual flakes.
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,14 +25,25 @@
       url = "./chia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nicehash-nvidia = {
+    nicehash = {
       url = "./nicehash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, quadlet-nix, testServer, caddy
-    , nicehash-nvidia, mmx, chia, ... }@attrs: {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      quadlet-nix,
+      testServer,
+      caddy,
+      nicehash,
+      mmx,
+      chia,
+      ...
+    }@attrs:
+    {
 
       nixosModules = {
         quadlet-collection = {
@@ -46,13 +53,14 @@
             chia.nixosModules.quadlet
             # nicehash does not have folders that need to be created
             mmx.nixosModules.quadlet
-            # testServer does not have any folders that need to be created 
+            # testServer does not have any folders that need to be created
           ];
         };
       };
 
       homeManagerModules = {
-        quadlet-collection = { config, pkgs, ... }:
+        quadlet-collection =
+          { config, pkgs, ... }:
 
           {
 
@@ -62,7 +70,7 @@
               caddy.homeManagerModules.quadlet
               mmx.homeManagerModules.quadlet
               chia.homeManagerModules.quadlet
-              nicehash-nvidia.homeManagerModules.quadlet
+              nicehash.homeManagerModules.quadlet
             ];
 
           };
