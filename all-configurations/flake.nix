@@ -81,10 +81,10 @@
 
               dev-rebuild = pkgs.writeShellScriptBin "dev-rebuild" ''
                 nixos-rebuild switch --flake .# \
-                --override-input dns-ip-updater /home/joonas/Documents/git-projects/dns-ip-updater \
-                --override-input nix-gnome-configs /home/joonas/Documents/git-projects/nix-gnome-configs \
-                --override-input nix-podman-quadlet-collection /home/joonas/Documents/git-projects/nix-podman-quadlet-collection \
-                --override-input nix-router-functionalities /home/joonas/Documents/git-projects/nix-router-functionalities
+                --override-input all-configurations/dns-ip-updater /home/joonas/Documents/git-projects/dns-ip-updater \
+                --override-input all-configurations/nix-gnome-configs /home/joonas/Documents/git-projects/nix-gnome-configs \
+                --override-input all-configurations/nix-podman-quadlet-collection /home/joonas/Documents/git-projects/nix-podman-quadlet-collection \
+                --override-input all-configurations/main-pc/nix-router-functionalities /home/joonas/Documents/git-projects/nix-router-functionalities
               '';
 
             in

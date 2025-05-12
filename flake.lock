@@ -17,12 +17,12 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-kN56Ls3yuur3+qryZXieox3KvntQtqhN8f5mT8n6vf4=",
-        "path": "/nix/store/mkjdp7a3gx7isb5m86bc20qmp1saj8m3-source/all-configurations",
+        "narHash": "sha256-ppTzK7SP4/sLwAYWM6UL5d+zywiFQhFk5LBfsuYgOmA=",
+        "path": "/nix/store/sklj4mpcqj354qkqz3axkyrmkq1z3a41-source/all-configurations",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/mkjdp7a3gx7isb5m86bc20qmp1saj8m3-source/all-configurations",
+        "path": "/nix/store/sklj4mpcqj354qkqz3axkyrmkq1z3a41-source/all-configurations",
         "type": "path"
       }
     },
@@ -205,11 +205,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-/+sa+hzjBCTg7yMDJkgbskChaWIe1GvnHKIpdYT4ywY=",
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/profiles/main-pc",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/profiles/main-pc",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/profiles/main-pc",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/profiles/main-pc",
         "type": "path"
       }
     },
@@ -352,11 +352,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-kt15Dx93qBYWyqDAzKiIONIv4FM8tJnmvTy/L/U4HoA=",
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/profiles/nixos-test",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/profiles/nixos-test",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/profiles/nixos-test",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/profiles/nixos-test",
         "type": "path"
       }
     },
@@ -450,11 +450,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-ygSNKisdzpkQNC5OFpw2nu31wIAGZmw2KeYHC4vVV8I=",
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/packages",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/packages",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/b9w2qb99v3h8rh9x8xmydq422wvs3p4x-source/packages",
+        "path": "/nix/store/z02bqwysgnb5qhxj29a3hhw9yk6f45n6-source/packages",
         "type": "path"
       }
     },
