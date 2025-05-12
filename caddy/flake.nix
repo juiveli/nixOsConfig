@@ -5,12 +5,12 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     hugo-blog = {
-      url = "/home/joonas/Documents/git-projects/hugo-blog";
+      url = "github:juiveli/hugo-blog";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hugo-mainsite = {
-      url = "/home/joonas/Documents/git-projects/main-website";
+      url = "github:juiveli/main-website";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
