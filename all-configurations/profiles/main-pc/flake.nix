@@ -9,6 +9,9 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
+
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,8 +23,9 @@
     {
       self,
       nix-flatpak,
-      sops-nix,
       nixpkgs,
+      nix-router-functionalities,
+      sops-nix,
     }:
 
     {
@@ -31,10 +35,10 @@
           {
             imports = [
               # Include the results of the hardware scan.
-              ./hardware-configuration.nix
-              ./mount-points.nix
-              ./dhcp.nix
+              ./nixosModules/hardware-configuration.nix
+              ./nixosModules/mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
+              nix-router-functionalities.nixosModules.dhcp
               sops-nix.nixosModules.sops
 
             ];
@@ -58,7 +62,7 @@
               {
                 imports = [
                   sops-nix.homeManagerModules.sops
-                  ./home.nix
+                  ./homeManagerModules/sshfs.nix
                 ];
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;

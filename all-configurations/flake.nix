@@ -8,11 +8,17 @@
     };
 
     dns-ip-updater = {
-      url = "./dns-ip-updater";
+      url = "github:juiveli/dns-ip-updater";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-gnome-configs = {
+      url = "github:juiveli/nix-gnome-configs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-podman-quadlet-collection = {
-      url = "./nix-podman-quadlet-collection";
+      url = "github:juiveli/nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -69,6 +75,19 @@
               pkgs,
               ...
             }:
+
+            let
+
+              dev-rebuild = pkgs.writeShellScriptBin "dev-rebuild" ''
+                nixos-rebuild switch --flake .# \
+                --override-input dns-ip-updater /home/joonas/Documents/git-projects/dns-ip-updater \
+                --override-input nix-gnome-configs /home/joonas/Documents/git-projects/nix-gnome-configs \
+                --override-input nix-podman-quadlet-collection /home/joonas/Documents/git-projects/nix-podman-quadlet-collection \
+                --override-input nix-router-functionalities /home/joonas/Documents/git-projects/nix-router-functionalities
+              '';
+
+            in
+
             {
 
               ############################################
