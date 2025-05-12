@@ -49,6 +49,7 @@
       main-pc,
       nixos-test,
       nixpkgs,
+      nix-gnome-configs,
       nix-podman-quadlet-collection,
       packages,
     }@attrs:
@@ -159,7 +160,7 @@
                 }:
                 {
                   imports = (userConfig.homeManagerModules or [ ]) ++ [
-                    ./home-manager-configs/gnome.nix
+                    nix-gnome-configs.homeManagerModules.nix-gnome-home-configs
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
