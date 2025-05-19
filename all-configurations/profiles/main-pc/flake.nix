@@ -86,13 +86,35 @@
             networking.firewall.allowedTCPPorts = [
               80
               443
+              47984 # Sunshine
+              47989 # Sunshine
+              47990 # Sunshine
+              48010 # Sunshine
               64541
             ];
             networking.firewall.allowedUDPPorts = [
               80
               443
+
+              # sunshine ports
+              8000
+              8001
+              8002
+              8003
+              8004
+              8005
+              8006
+              8007
+              8008
+              8009
+              8010
+              47998
+              47999
+              48000
+
               64541
             ];
+
             # Or disable the firewall altogether.
             networking.firewall.enable = true;
 
@@ -152,7 +174,18 @@
                 appId = "com.heroicgameslauncher.hgl";
                 origin = "flathub";
               }
+
+              
             ];
+
+            services.avahi.publish.enable = true;
+
+              services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
+  };
 
             environment.systemPackages = [
               pkgs.element-desktop

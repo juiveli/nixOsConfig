@@ -4,7 +4,11 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }:
+    {
+      self,
+      nixpkgs,
+      ...
+    }:
     {
       # Define reusable modules in `nixosModules`.
       nixosModules = {
@@ -17,6 +21,7 @@
           }:
 
           let
+
             # Block for GUI packages
             guiConfig = lib.mkIf config.custom.packages.gui.enable {
               programs.firefox.enable = true;

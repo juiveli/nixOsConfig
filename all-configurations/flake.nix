@@ -107,7 +107,7 @@
                 packages.nixosModules.packages
               ] ++ profileModules;
 
-              environment.systemPackages = [ dev-rebuild ]; 
+              environment.systemPackages = [ dev-rebuild ];
 
               nix.settings.experimental-features = [
                 "nix-command"
@@ -122,6 +122,8 @@
 
               custom.users.joonas.enable = lib.mkDefault true;
               custom.desktop-environment.gnome.enable = lib.mkDefault true;
+
+              services.openssh.enable = lib.mkDefault true;
 
               services.displayManager.autoLogin = {
                 enable = lib.mkDefault config.custom.users.joonas.enable;

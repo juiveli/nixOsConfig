@@ -20,12 +20,19 @@ in
     services.xserver = {
       enable = true;
       desktopManager.gnome.enable = true;
+      displayManager.gdm.enable = true;
+      displayManager.gdm.wayland = true;
+      
       excludePackages = [ pkgs.xterm ]; # Exclude xterm
       xkb = lib.mkDefault {
         layout = "fi";
         variant = "";
+        
       };
     };
+
+    systemd.services."getty@tty1".enable = false;
+    systemd.services."autovt@tty1".enable = false;
 
     # Disable unnecessary gnome packages ...
     services.gnome.core-utilities.enable = false;
