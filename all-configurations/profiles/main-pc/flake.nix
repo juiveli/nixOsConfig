@@ -175,17 +175,16 @@
                 origin = "flathub";
               }
 
-              
             ];
 
             services.avahi.publish.enable = true;
 
-              services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
-    openFirewall = true;
-  };
+            services.sunshine = {
+              enable = true;
+              autoStart = true;
+              capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+              openFirewall = true;
+            };
 
             environment.systemPackages = [
               pkgs.element-desktop

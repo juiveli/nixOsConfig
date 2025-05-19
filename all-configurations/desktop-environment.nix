@@ -22,12 +22,12 @@ in
       desktopManager.gnome.enable = true;
       displayManager.gdm.enable = true;
       displayManager.gdm.wayland = true;
-      
+
       excludePackages = [ pkgs.xterm ]; # Exclude xterm
       xkb = lib.mkDefault {
         layout = "fi";
         variant = "";
-        
+
       };
     };
 
