@@ -1,11 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
+    #lact.url = "/home/joonas/Documents/lact";
   };
 
   outputs =
     {
       self,
+      #lact,
       nixpkgs,
       ...
     }:
@@ -30,7 +32,11 @@
                 pkgs.vscodium
                 pkgs.nemo-with-extensions
                 pkgs.alacritty
+                #lact.packages.x86_64-linux.lact
               ];
+
+              #systemd.packages = [ lact.packages.x86_64-linux.lact ];
+              #systemd.services.lactd.enable = true;
             };
 
             # Block for GUI-less packages

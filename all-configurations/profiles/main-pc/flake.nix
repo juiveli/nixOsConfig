@@ -30,7 +30,12 @@
     {
       nixosModules = {
         main-pc-specific =
-          { pkgs, config, ... }:
+          {
+            pkgs,
+            config,
+            lib,
+            ...
+          }:
           {
             imports = [
               # Include the results of the hardware scan.
@@ -161,6 +166,11 @@
 
               # Optionally, you may need to select the appropriate driver version for your specific GPU.
               package = config.boot.kernelPackages.nvidiaPackages.stable;
+            };
+
+            # LACT need this
+            environment.sessionVariables = {
+              LD_LIBRARY_PATH = "/run/opengl-driver/lib";
             };
 
             services.flatpak.enable = true;
