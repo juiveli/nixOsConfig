@@ -170,7 +170,7 @@
 
                   home.username = lib.mkDefault username;
                   home.homeDirectory = lib.mkDefault config.users.users.${username}.home;
-                  home.stateVersion = lib.mkDefault "24.11";
+                  home.stateVersion = lib.mkDefault "25.05";
 
                   custom.gnome.dconfSettings.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
 

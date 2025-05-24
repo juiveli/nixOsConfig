@@ -35,7 +35,7 @@ in
     systemd.services."autovt@tty1".enable = false;
 
     # Disable unnecessary gnome packages ...
-    services.gnome.core-utilities.enable = false;
+    services.gnome.core-apps.enable = false;
     environment.gnome.excludePackages = [
       pkgs.gnome-tour # GNOME Shell detects the .desktop file on first log-in.
       pkgs.gnome-shell-extensions # This a collection of extensions.

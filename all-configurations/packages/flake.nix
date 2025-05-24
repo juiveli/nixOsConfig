@@ -41,7 +41,7 @@
 
             # Block for GUI-less packages
             guilessConfig = lib.mkIf config.custom.packages.guiless.enable {
-              hardware.pulseaudio.enable = false;
+              services.pulseaudio.enable = false;
               security.rtkit.enable = true;
               services.pipewire = {
                 enable = true;
