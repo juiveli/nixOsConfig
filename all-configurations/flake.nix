@@ -23,7 +23,7 @@
     };
 
     packages = {
-      url = "./packages";
+      url = "/etc/nixos/all-configurations/packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -168,6 +168,8 @@
                     nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
+                  services.podman.enable = true;
+
                   home.username = lib.mkDefault username;
                   home.homeDirectory = lib.mkDefault config.users.users.${username}.home;
                   home.stateVersion = lib.mkDefault "25.05";
@@ -179,7 +181,7 @@
                   services.nix-podman-chia-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-mmx-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-testServer-quadlet.enable = lib.mkDefault false;
-
+                  
                   services.nix-podman-nicehash-quadlet = {
                     workerName = lib.mkDefault config.network.hostName;
                     enable = lib.mkDefault false;
