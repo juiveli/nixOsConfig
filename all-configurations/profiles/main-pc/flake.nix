@@ -184,6 +184,10 @@
                 appId = "com.heroicgameslauncher.hgl";
                 origin = "flathub";
               }
+              {
+                appId = "eu.vcmi.VCMI";
+                origin = "flathub";
+              }
 
             ];
 
