@@ -84,7 +84,9 @@
                 --override-input all-configurations/dns-ip-updater /home/joonas/Documents/git-projects/dns-ip-updater \
                 --override-input all-configurations/nix-gnome-configs /home/joonas/Documents/git-projects/nix-gnome-configs \
                 --override-input all-configurations/nix-podman-quadlet-collection /home/joonas/Documents/git-projects/nix-podman-quadlet-collection \
-                --override-input all-configurations/main-pc/nix-router-functionalities /home/joonas/Documents/git-projects/nix-router-functionalities
+                --override-input all-configurations/main-pc/nix-router-functionalities /home/joonas/Documents/git-projects/nix-router-functionalities \
+                --override-input all-configurations/nix-podman-quadlet-collection/caddy/hugo-blog /home/joonas/Documents/git-projects/hugo-blog \
+                --impure
               '';
 
             in
@@ -139,6 +141,7 @@
               services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
               services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
               services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
+              services.nix-podman-appflowy-quadlet.folder-creations.enable = lib.mkDefault false;
               # testServer does not need folders to be created
               # nicehash does not need folder to be created
 
@@ -181,7 +184,8 @@
                   services.nix-podman-chia-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-mmx-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-testServer-quadlet.enable = lib.mkDefault false;
-                  
+                  services.nix-podman-appflowy-quadlet.enable = lib.mkDefault false;
+
                   services.nix-podman-nicehash-quadlet = {
                     workerName = lib.mkDefault config.network.hostName;
                     enable = lib.mkDefault false;
