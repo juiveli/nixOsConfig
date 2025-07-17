@@ -11,6 +11,10 @@
 
     nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
 
+    melonDS = {
+      url = "github:melonDS-emu/melonDS";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +28,7 @@
       nix-flatpak,
       nixpkgs,
       nix-router-functionalities,
+      melonDS,
       sops-nix,
     }:
 
@@ -91,6 +96,7 @@
             networking.firewall.allowedTCPPorts = [
               80
               443
+              3030 # Heroes3
               47984 # Sunshine
               47989 # Sunshine
               47990 # Sunshine
@@ -222,6 +228,7 @@
               pkgs.nvidia-container-toolkit
               pkgs.sops
               pkgs.sshfs
+              melonDS.packages.${pkgs.system}.default
             ];
 
             programs.steam = {
