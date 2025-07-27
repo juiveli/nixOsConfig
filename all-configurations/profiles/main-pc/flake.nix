@@ -207,6 +207,8 @@
             };
 
             environment.systemPackages = [
+              pkgs.mkvtoolnix
+
               pkgs.element-desktop
               # Minecraft custom launcher
               (pkgs.prismlauncher.override {
