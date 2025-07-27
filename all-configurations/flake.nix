@@ -107,7 +107,8 @@
                 home-manager.nixosModules.home-manager
                 nix-podman-quadlet-collection.nixosModules.quadlet-collection
                 packages.nixosModules.packages
-              ] ++ profileModules;
+              ]
+              ++ profileModules;
 
               environment.systemPackages = [ dev-rebuild ];
 

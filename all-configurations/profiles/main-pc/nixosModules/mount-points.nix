@@ -19,26 +19,25 @@ let
       bindMounts ? [ ],
     }:
     {
-      fileSystems =
-        {
-          # Main device mount
-          "${mountPoint}" = {
-            device = device;
-            fsType = fsType;
-            options = options;
+      fileSystems = {
+        # Main device mount
+        "${mountPoint}" = {
+          device = device;
+          fsType = fsType;
+          options = options;
+        };
+      }
+      // builtins.listToAttrs (
+        map (bind: {
+          name = bind.path;
+          value = {
+            device = "${mountPoint}/${bind.relativePath}";
+            fsType = "none";
+            options = [ "bind" ] ++ (bind.options or [ ]);
+            depends = [ "${mountPoint}" ];
           };
-        }
-        // builtins.listToAttrs (
-          map (bind: {
-            name = bind.path;
-            value = {
-              device = "${mountPoint}/${bind.relativePath}";
-              fsType = "none";
-              options = [ "bind" ] ++ (bind.options or [ ]);
-              depends = [ "${mountPoint}" ];
-            };
-          }) bindMounts
-        );
+        }) bindMounts
+      );
     };
 
 in
