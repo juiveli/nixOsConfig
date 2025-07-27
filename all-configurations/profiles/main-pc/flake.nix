@@ -101,7 +101,7 @@
               47989 # Sunshine
               47990 # Sunshine
               48010 # Sunshine
-              64541
+              17693 # Johanneksen ssh-server
             ];
             networking.firewall.allowedUDPPorts = [
               80
@@ -123,7 +123,7 @@
               47999
               48000
 
-              64541
+              
             ];
 
             # Or disable the firewall altogether.
