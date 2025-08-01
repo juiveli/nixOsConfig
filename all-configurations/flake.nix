@@ -186,6 +186,7 @@
                   services.nix-podman-mmx-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-testServer-quadlet.enable = lib.mkDefault false;
                   services.nix-podman-appflowy-quadlet.enable = lib.mkDefault false;
+                  services.nix-podman-sshServerJohannes-quadlet.enable = lib.mkDefault false;
 
                   services.nix-podman-nicehash-quadlet = {
                     workerName = lib.mkDefault config.network.hostName;

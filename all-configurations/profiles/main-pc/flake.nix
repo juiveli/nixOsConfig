@@ -123,7 +123,6 @@
               47999
               48000
 
-              
             ];
 
             # Or disable the firewall altogether.
@@ -193,6 +192,11 @@
               {
                 appId = "eu.vcmi.VCMI";
                 origin = "flathub";
+              }
+
+              {
+                appId = "io.appflowy.AppFlowy";
+                origin = "flathub"; 
               }
 
             ];
