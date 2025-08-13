@@ -76,6 +76,7 @@
               environment.systemPackages = [
                 pkgs.git
                 pkgs.dconf2nix
+                pkgs.dig
               ];
             };
 
