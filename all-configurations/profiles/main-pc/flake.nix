@@ -196,7 +196,7 @@
 
               {
                 appId = "io.appflowy.AppFlowy";
-                origin = "flathub"; 
+                origin = "flathub";
               }
 
             ];
