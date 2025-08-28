@@ -15,4 +15,3 @@
 - Go to [web server](localhost)
 - After editing source files, do `docker compose up -d --no-deps --build admin_frontend`
 - You might need to add `--force-recreate` flag for non build changes to take effect
-

@@ -7,6 +7,12 @@
       url = "github:SEIAROTg/quadlet-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    appflowy = {
+      url = "./appflowy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     testServer = {
       url = "./testServer";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,6 +46,7 @@
     {
       self,
       nixpkgs,
+      appflowy,
       quadlet-nix,
       testServer,
       caddy,
@@ -54,6 +61,7 @@
       nixosModules = {
         quadlet-collection = {
           imports = [
+            appflowy.nixosModules.quadlet
             quadlet-nix.nixosModules.quadlet
             caddy.nixosModules.quadlet
             chia.nixosModules.quadlet
@@ -71,6 +79,7 @@
           {
 
             imports = [
+              appflowy.homeManagerModules.quadlet
               quadlet-nix.homeManagerModules.quadlet
               testServer.homeManagerModules.quadlet
               caddy.homeManagerModules.quadlet

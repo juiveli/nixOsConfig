@@ -3,6 +3,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+
   };
 
   outputs =
@@ -135,6 +138,12 @@
 
         let
           cfg = config.services.nix-podman-appflowy-quadlet;
+          networks = {
+            appflowy_cloud = "appflowy_cloud";
+          };
+          # networks = { appflowy_cloud = "172.20.0.1/24"; };
+
+          secretsDir = ./secrets;
 
         in
         {
@@ -143,357 +152,615 @@
             enable = lib.mkEnableOption "Enable nix-podman-appflowy-quadlet service.";
           };
 
-          config = lib.mkIf cfg.enable {
+          config = lib.mkIf cfg.enable (
 
-            home.packages = [ self.packages.x86_64-linux.appflowySource ];
-            systemd.user.startServices = "sd-switch";
+            let
 
-            virtualisation.quadlet.pods = {
-              appflowy_pod = { };
-            };
-
-            services.podman.builds = {
-              appflowyinc_gotrue = {
-                file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/docker/gotrue/Dockerfile";
-                tags = [ "localhost/homemanager/appflowyinc_gotrue" ];
+              globalCommonEnv = {
+                APPFLOWY_BASE_URL = "http://appflowy.juiveli.fi";
+                APPFLOWY_WEB_URL = "http://appflowy.juiveli.fi";
+                APPFLOWY_ENVIRONMENT = "production";
+                APPFLOWY_WORKER_ENVIRONMENT = "production";
+                APPFLOWY_ACCESS_CONTROL = "true";
+                APPFLOWY_WEBSOCKET_MAILBOX_SIZE = "6000";
 
               };
 
-              admin_frontend_build = {
-                file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/admin_frontend/Dockerfile";
-                tags = [ "admin_frontend_build" ];
-                workingDirectory = "/home/joonas/tempo";
-              };
-
-              appflowy_worker_build = {
-                file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/services/appflowy-worker/Dockerfile";
-                tags = [ "appflowy_worker_build" ];
-              };
-
-              appflowy_cloud_build = {
-                file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/Dockerfile";
-                tags = [ "appflowy_cloud_build" ];
-                # annotations = [ "FEATURES=" ];
-              };
-            };
-
-            services.podman.containers.minio = {
-
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  Restart = "on-failure";
-                  RestartSec = "10";
-                };
-              };
-
-              image = "minio/minio";
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
-
-              environment = {
-                # MINIO_BROWSER_REDIRECT_URL=${APPFLOWY_BASE_URL}
-                MINIO_BROWSER_REDIRECT_URL = "http://localhost";
-                MINIO_ROOT_USER = "minioadmin";
-                MINIO_ROOT_PASSWORD = "minioadmin";
-              };
-
-              exec = "server /data --console-address :9001";
-              volumes = [
-                "/var/lib/containers/appflowy/minio_data:/data"
-              ];
-
-            };
-
-            services.podman.containers.postgres = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
-                };
-              };
-              image = "pgvector/pgvector:pg16";
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
-
-              environment = {
-                POSTGRES_USER = "postgres";
-                POSTGRES_DB = "postgres";
-                POSTGRES_PASSWORD = "password";
+              networkHostEnv = {
                 POSTGRES_HOST = "postgres";
+                POSTGRES_PORT = "5432"; # Port for internal connections to Postgres
+                REDIS_HOST = "redis";
+                REDIS_PORT = "6379"; # Port for internal connections to Redis
+                MINIO_HOST = "minio";
+                MINIO_PORT = "9000"; # Port for internal connections to Minio
+                AI_SERVER_HOST = "ai";
+                APPFLOWY_AI_SERVER_PORT = "8080";
+
+                APPFLOWY_GOTRUE_BASE_URL = "http://gotrue:9999";
+                ADMIN_FRONTEND_GOTRUE_URL = "http://gotrue:9999";
+                ADMIN_FRONTEND_REDIS_URL = "redis://redis:6379";
+                ADMIN_FRONTEND_APPFLOWY_CLOUD_URL = "http://appflowy_cloud:8000";
+                ADMIN_FRONTEND_PATH_PREFIX = "/";
+                APPFLOWY_S3_MINIO_URL = "http://minio:9000"; # AppFlowy services need this to connect to MinIO
+                APPFLOWY_WORKER_REDIS_URL = "redis://redis:6379";
+
               };
 
-              # Health Check Configuration
-              # healthCmd = "CMD pg_isready -U ''${POSTGRES_USER}'' -d ''${POSTGRES_DB}''";
-              # healthInterval = "5s";
-              # healthTimeout = "5s";
-              # healthRetries = 12;
+              dbCredsEnvBundle = {
+                environmentFile = [
+                  config.sops.secrets.postgres-user.path # POSTGRES_USER 
+                  config.sops.secrets.postgres-password.path # POSTGRES_PASSWORD
+                ];
 
-              volumes = [
-                "/var/lib/containers/appflowy/postgres_data:/var/lib/postgresql/data"
-              ];
-            };
-
-            services.podman.containers.redis = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+                environment = {
+                  POSTGRES_DB = "postgres";
                 };
               };
-              image = "redis";
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
 
-            };
+              minioCreds = {
+                environment = {
 
-            services.podman.containers.gotrue = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+                  APPFLOWY_S3_BUCKET = "appflowy";
+                  APPFLOWY_S3_USE_MINIO = "true";
+                  APPFLOWY_S3_CREATE_BUCKET = "true";
+                  # APPFLOWY_S3_PRESIGNED_URL_ENDPOINT = "${globalCommonEnv.APPFLOWY_BASE_URL}/minio-api"; # Uncomment and adjust Nginx if using
+
                 };
-                Unit = {
-                  After = [ "podman-postgres.service"];
-                  Requires = [ "podman-postgres.service"];
-                };
+
+                environmentFile = [
+                  config.sops.secrets.minio-root-user.path # APPFLOWY_S3_ACCESS_KEY
+                  config.sops.secrets.minio-root-password.path # APPFLOWY_S3_SECRET_KEY
+                ];
+
+
               };
-              image = "appflowyinc_gotrue.build";
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
+              appflowyMailer = {
 
-              # Health Check
-              # healthCmd = "curl --fail http://127.0.0.1:9999/health || exit 1";
-              # healthInterval = "5s";
-              # healthTimeout = "5s";
-              # healthRetries = 12;
+                environment = {
+                APPFLOWY_MAILER_SMTP_HOST = "smtp.gmail.com";
+                APPFLOWY_MAILER_SMTP_PORT = "465";
+                APPFLOWY_MAILER_SMTP_TLS_KIND = "wrapper";
+                };
 
-              environment = {
-                GOTRUE_ADMIN_EMAIL = "admin@example.com";
-                GOTRUE_ADMIN_PASSWORD = "securepassword";
+                environmentFile = [
+                 config.sops.secrets.appflowy-mailer-smtp-username.path # APPFLOWY_MAILER_SMTP_USERNAME
+                 config.sops.secrets.appflowy-mailer-smtp-email.path # APPFLOWY_MAILER_SMTP_EMAIL
+                 config.sops.secrets.appflowy-mailer-smtp-password.path # APPFLOWY_MAILER_SMTP_PASSWORD
+                ];
+
+              };
+
+              minioSpecific = {
+                environment = {
+                  MINIO_BROWSER_REDIRECT_URL = "${globalCommonEnv.APPFLOWY_BASE_URL}/minio";
+                };
+                environmentFile = [
+                  config.sops.secrets.minio-root-user.path # MINIO_ROOT_USER
+                  config.sops.secrets.minio-root-password.path # MINIO_ROOT_PASSWORD
+                ];
+              };
+
+              gotrueSpecific = {
+
+
+                environment = {
+                  # There are a lot of options to configure GoTrue. You can reference the example config:
+                # https://github.com/supabase/auth/blob/master/example.env
+
+                # The initial GoTrue Admin user password to create, if not already exists.
+                # If the user already exists, the update will be skipped.
                 GOTRUE_DISABLE_SIGNUP = "false";
-                GOTRUE_SITE_URL = "appflowy-flutter://";
+                GOTRUE_SITE_URL = "appflowy-flutter://"; # redirected to AppFlowy application
                 GOTRUE_URI_ALLOW_LIST = "**";
-                GOTRUE_JWT_SECRET = "defaultsecret";
-                GOTRUE_JWT_EXP = "3600";
+                GOTRUE_JWT_EXP = "7200";
+                # Without this environment variable, the createuser command will create an admin
+                # with the `admin` role as opposed to `supabase_admin`
                 GOTRUE_JWT_ADMIN_GROUP_NAME = "supabase_admin";
                 GOTRUE_DB_DRIVER = "postgres";
-                API_EXTERNAL_URL = "http://localhost:8080";
-                DATABASE_URL = "postgres://postgres:password@localhost:5432/postgres";
+                API_EXTERNAL_URL = "https://appflowy.juiveli.fi/gotrue";
+                # URL that connects to the postgres docker container. If your password contains special characters,
+                # instead of using ${POSTGRES_PASSWORD}, you will need to convert them into url encoded format.
+                # For example, `p@ssword` will become `p%40ssword`.
                 PORT = "9999";
-                GOTRUE_SMTP_HOST = "smtp.example.com";
-                GOTRUE_SMTP_PORT = "587";
-                GOTRUE_SMTP_USER = "noreply@example.com";
-                GOTRUE_SMTP_PASS = "smtpsecurepassword";
+                GOTRUE_SMTP_HOST = "smtp.gmail.com";
+                GOTRUE_SMTP_PORT = "465";                
                 GOTRUE_MAILER_URLPATHS_CONFIRMATION = "/gotrue/verify";
                 GOTRUE_MAILER_URLPATHS_INVITE = "/gotrue/verify";
                 GOTRUE_MAILER_URLPATHS_RECOVERY = "/gotrue/verify";
                 GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE = "/gotrue/verify";
                 GOTRUE_MAILER_TEMPLATES_MAGIC_LINK = "default_magic_link_template";
-                GOTRUE_SMTP_ADMIN_EMAIL = "admin@example.com";
-                GOTRUE_SMTP_MAX_FREQUENCY = "1ns";
-                GOTRUE_RATE_LIMIT_EMAIL_SENT = "100";
-                GOTRUE_MAILER_AUTOCONFIRM = "false";
-              };
-            };
+              
+                GOTRUE_SMTP_MAX_FREQUENCY = "1ns"; # set to 1ns for running tests
+                GOTRUE_RATE_LIMIT_EMAIL_SENT = "100"; # number of email sendable per minute
+                GOTRUE_MAILER_AUTOCONFIRM = "false"; # change this to true to skip email confirmation
 
-            services.podman.containers.appflowy_cloud = {
-              autoStart = true;
-              extraConfig = {
+                # Google OAuth2
+                GOTRUE_EXTERNAL_GOOGLE_ENABLED = "false";
+                GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
 
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+                # GitHub OAuth2
+                GOTRUE_EXTERNAL_GITHUB_ENABLED = "false";
+                GOTRUE_EXTERNAL_GITHUB_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+
+                # Discord OAuth2
+                GOTRUE_EXTERNAL_DISCORD_ENABLED = "false";
+                GOTRUE_EXTERNAL_DISCORD_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+
+                # Apple OAuth2
+                GOTRUE_EXTERNAL_APPLE_ENABLED = "false";
+                GOTRUE_EXTERNAL_APPLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+
+                # SAML 2.0. Refer to https://github.com/AppFlowy-IO/AppFlowy-Cloud/blob/main/doc/OKTA_SAML.md for example using Okta.
+                GOTRUE_SAML_ENABLED = "false";
+                
                 };
-                Unit = {
-                  After = "gotrue.container";
-                  Requires = "gotrue.container";
-                };
+
+                environmentFile = [
+                  config.sops.secrets.gotrue-smtp-user.path # GOTRUE_SMTP_USER
+                  config.sops.secrets.gotrue-smtp-pass.path # GOTRUE_SMTP_PASS
+                  config.sops.secrets.gotrue-smtp-admin-email.path # GOTRUE_SMTP_ADMIN_EMAIL
+                  # The initial GoTrue Admin user to create, if not already exists.
+                  config.sops.secrets.gotrue-admin-email.path # GOTRUE_ADMIN_EMAIL
+                  config.sops.secrets.gotrue-admin-password.path # GOTRUE_ADMIN_PASSWORD
+                  config.sops.secrets.gotrue-jwt-secret.path # GOTRUE_JWT_SECRET
+                  
+                  config.sops.secrets.gotrue-database-url.path
+                  # DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
+                  # GOTRUE_DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
+
+                  # Google OAuth2 secrets
+                  config.sops.secrets.gotrue-external-google-client-id.path # GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID
+                  config.sops.secrets.gotrue-external-google-secret.path # GOTRUE_EXTERNAL_GOOGLE_SECRET
+
+                  # GitHub OAuth2 secrets
+                  config.sops.secrets.gotrue-external-github-client-id.path # GOTRUE_EXTERNAL_GITHUB_CLIENT_ID
+                  config.sops.secrets.gotrue-external-github-secret.path # GOTRUE_EXTERNAL_GITHUB_SECRET
+                  
+                  # Discord OAuth2 secrets
+                  config.sops.secrets.gotrue-external-discord-client-id.path # GOTRUE_EXTERNAL_DISCORD_CLIENT_ID
+                  config.sops.secrets.gotrue-external-discord-secret.path # GOTRUE_EXTERNAL_DISCORD_SECRET
+
+                  # Apple OAuth2
+                  config.sops.secrets.gotrue-external-apple-client-id.path # GOTRUE_EXTERNAL_APPLE_CLIENT_ID
+                  config.sops.secrets.gotrue-external-apple-secret.path # GOTRUE_EXTERNAL_APPLE_SECRET
+                  
+                  # SAML 2.0
+                  config.sops.secrets.gotrue-saml-private-key.path # GOTRUE_SAML_PRIVATE_KEY
+
+                ];
+
+
+                
               };
-              image = "appflowy_cloud_build.build";
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
+              appflowy_cloudSpecific = {
 
-              # Health Check
-              # healthCmd = "curl --fail http://127.0.0.1:9999/health || exit 1";
-              # healthInterval = "5s";
-              # healthTimeout = "5s";
-              # healthRetries = 12;
+                environment = {
+                  APPFLOWY_REDIS_URI = "redis://${networkHostEnv.REDIS_HOST}:${networkHostEnv.REDIS_PORT}";
 
-              environment = {
+                  APPFLOWY_ACCESS_CONTROL = globalCommonEnv.APPFLOWY_ACCESS_CONTROL;
+                  APPFLOWY_DATABASE_MAX_CONNECTIONS = "40";
+                  RUST_LOG = "info";
+
+                  APPFLOWY_GOTRUE_JWT_EXP = gotrueSpecific.environment.GOTRUE_JWT_EXP; # Expiration is general
+                };
+                
+                environmentFile = [
+                  config.sops.secrets.appflowy-database-url.path # APPFLOWY_DATABASE_URL = "${networkHostEnv.POSTGRES_HOST}://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                  config.sops.secrets.gotrue-jwt-secret.path # APPFLOWY_GOTRUE_JWT_SECRET gotrueSpecific.environmentFile.GOTRUE_JWT_SECRET;
+                  
+                ];
+
+
+              };
+
+              admin_frontendSpecific = {
                 RUST_LOG = "info";
-                APPFLOWY_ENVIRONMENT = "production";
-                APPFLOWY_DATABASE_URL = "APPFLOWY_DATABASE_URL";
-                APPFLOWY_REDIS_URI = "APPFLOWY_REDIS_URI";
-                APPFLOWY_GOTRUE_JWT_SECRET = "GOTRUE_JWT_SECRET";
-                APPFLOWY_GOTRUE_JWT_EXP = "GOTRUE_JWT_EXP";
-                APPFLOWY_GOTRUE_BASE_URL = "APPFLOWY_GOTRUE_BASE_URL";
-                APPFLOWY_S3_CREATE_BUCKET = "APPFLOWY_S3_CREATE_BUCKET";
-                APPFLOWY_S3_USE_MINIO = "APPFLOWY_S3_USE_MINIO";
-                APPFLOWY_S3_MINIO_URL = "APPFLOWY_S3_MINIO_URL";
-                APPFLOWY_S3_ACCESS_KEY = "minioadmin";
-                APPFLOWY_S3_SECRET_KEY = "minioadmin";
               };
 
-            };
+              appflowy_workerSpecific = {
 
-            services.podman.containers.admin_frontend = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+                environment = {
+                  RUST_LOG = "info";
+                  APPFLOWY_WORKER_IMPORT_TICK_INTERVAL = "30";
+                  APPFLOWY_WORKER_REDIS_URL = "redis://${networkHostEnv.REDIS_HOST}:${networkHostEnv.REDIS_PORT}";
+                  APPFLOWY_WORKER_DATABASE_NAME = dbCredsEnvBundle.environment.POSTGRES_DB;
                 };
-                Unit = {
-                  After = [
-                    "gotrue.container"
-                    "appflowy_cloud.container"
-                  ];
-                  Requires = [
-                    "gotrue.container"
-                    "appflowy_cloud.container"
-                  ];
+
+                environmentFile = [config.sops.secrets.appflowy-worker-database-url.path # APPFLOWY_WORKER_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public"; 
+                ];
+
+              };
+
+              
+
+              aiApiKeys = {
+                environmentFile = [config.sops.secrets.openai-api-key.path];
+                # OPENAI_API_KEY
+                # AI_OPENAI_API_KEY
+              };
+
+              aiSpecific = {
+                environment = {
+                  APPFLOWY_AI_REDIS_URL = "redis://${networkHostEnv.REDIS_HOST}:${networkHostEnv.REDIS_PORT}";
+                };
+
+                environmentFile = [config.sops.secrets.appflowy-ai-database-url.path # APPFLOWY_AI_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                ];
+                
+                
+              };
+
+              minioVariables = {
+                environment = networkHostEnv // minioCreds.environment // minioSpecific.environment;
+
+                environmentFile = minioSpecific.environmentFile ++ minioCreds.environmentFile;
+
+              };
+
+              postgresVariables = {
+                environment = networkHostEnv // dbCredsEnvBundle.environment; 
+
+                environmentFile = dbCredsEnvBundle.environmentFile;
+              };
+
+              redisEnvironment = networkHostEnv;
+
+              gotrueEnvironment = globalCommonEnv // networkHostEnv // dbCredsEnvBundle.environment // gotrueSpecific.environment;
+              gotrueEnvironmentFile = gotrueSpecific.environmentFile ++ dbCredsEnvBundle.environmentFile;
+
+              appflowy_cloudVariables =
+
+              {
+                environment = globalCommonEnv
+                // networkHostEnv
+                // dbCredsEnvBundle.environment
+                // minioCreds.environment
+                // appflowyMailer.environment
+                // appflowy_cloudSpecific.environment;
+
+                environmentFile = appflowyMailer.environmentFile ++ appflowy_cloudSpecific.environmentFile ++ dbCredsEnvBundle.environmentFile ++ minioCreds.environmentFile ++ aiApiKeys.environmentFile;
+              };
+
+              admin_frontendEnvironment = networkHostEnv // globalCommonEnv;
+
+              aiEnvironment =
+                {
+                  environment = networkHostEnv  # For AI connecting to Postgres/MinIO
+                  // dbCredsEnvBundle.environment      # If AI uses Postgres for embeddings              
+
+                  // minioCreds.environment         # If AI stores/retrieves from S3        
+
+                  
+                  // aiSpecific.environment;
+
+                  environmentFile = dbCredsEnvBundle.environmentFile ++ aiSpecific.environmentFile ++ minioCreds.environmentFile ++ aiApiKeys.environmentFile;
+                };
+
+
+              appflowy_workerEnvironment =
+                networkHostEnv
+                // dbCredsEnvBundle.environment
+                // minioCreds.environment
+                // appflowyMailer.environment
+                // appflowy_workerSpecific.environment;
+
+              appflowy_workerEnvironmentFile = appflowyMailer.environmentFile ++ dbCredsEnvBundle.environmentFile ++ appflowy_workerSpecific.environmentFile ++ minioCreds.environmentFile; 
+
+              appflowy_webEnvironment = globalCommonEnv;
+
+              appflowy_nginxEnvironment = globalCommonEnv;
+
+            in
+            {
+
+              sops.secrets = builtins.mapAttrs (name: _: {
+                sopsFile = ./secrets/${name};
+                format = "binary";
+              }) (lib.attrsets.filterAttrs (name: type: type == "regular") (builtins.readDir ./secrets));
+
+              home.packages = [ self.packages.x86_64-linux.appflowySource ];
+              systemd.user.startServices = "sd-switch";
+
+              services.podman.builds = {
+                appflowyinc_gotrue = {
+                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/docker/gotrue/Dockerfile";
+                  tags = [ "localhost/homemanager/appflowyinc_gotrue" ];
+
+                };
+
+                admin_frontend_build = {
+                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/admin_frontend/Dockerfile";
+                  tags = [ "admin_frontend_build" ];
+                  workingDirectory = "/home/joonas/tempo";
+                };
+
+                appflowy_worker_build = {
+                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/services/appflowy-worker/Dockerfile";
+                  tags = [ "appflowy_worker_build" ];
+                  workingDirectory = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud";
+                };
+
+                appflowy_cloud_build = {
+                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/Dockerfile";
+                  tags = [ "appflowy_cloud_build" ];
+                  # annotations = [ "FEATURES=" ];
                 };
               };
 
-              image = "admin_frontend_build.build";
+              services.podman.containers.minio = {
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
-
-              environment = {
-                RUST_LOG = "info";
-                ADMIN_FRONTEND_REDIS_URL = "redis://redis:6379";
-                ADMIN_FRONTEND_GOTRUE_URL = "http://gotrue:9999";
-                ADMIN_FRONTEND_APPFLOWY_CLOUD_URL = "http://appflowy_cloud:8000";
-                ADMIN_FRONTEND_PATH_PREFIX = "/";
-              };
-            };
-
-            services.podman.containers.ai = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    Restart = "on-failure";
+                    RestartSec = "10";
+                  };
                 };
-                Unit = {
-                  After = "postgres.container";
-                  Requires = "postgres.container";
-                };
+
+                image = "minio/minio";
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                environment = minioVariables.environment;
+                environmentFile = minioVariables.environmentFile;
+
+                exec = "server /data --console-address :9001";
+
+                volumes = [
+                  "/var/lib/containers/appflowy/minio_data:/data"
+                ];
+
               };
 
-              image = "appflowyinc/appflowy_ai:latest";
-
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
-
-              environment = {
-                OPENAI_API_KEY = builtins.getEnv "AI_OPENAI_API_KEY";
-                APPFLOWY_AI_SERVER_PORT = "8080";
-              };
-            };
-
-            services.podman.containers.appflowy_worker = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
+              services.podman.containers.postgres = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  # REMOVED Health Check Configuration from extraConfig.Container
+                  # Container = {
+                  #   HealthcheckCommand = "CMD pg_isready -U \\\"$POSTGRES_USER\\\" -d \\\"$POSTGRES_DB\\\"";
+                  #   HealthcheckInterval = "5s";
+                  #   HealthcheckTimeout = "5s";
+                  #   HealthcheckRetries = "12";
+                  # };
                 };
-                Unit = {
-                  After = "postgres.container";
-                  Requires = "postgres.container";
-                };
-              };
+                image = "pgvector/pgvector:pg16";
 
-              image = "appflowy_worker_build.build";
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
+                environment = postgresVariables.environment;
+                environmentFile = postgresVariables.environmentFile;
 
-              environment = {
-                RUST_LOG = "info";
-                APPFLOWY_ENVIRONMENT = "production";
-                APPFLOWY_WORKER_REDIS_URL = "redis://redis:6379";
-                APPFLOWY_WORKER_ENVIRONMENT = "production";
-                APPFLOWY_WORKER_IMPORT_TICK_INTERVAL = "30";
-                APPFLOWY_S3_ACCESS_KEY = "minioadmin";
-                APPFLOWY_S3_SECRET_KEY = "minioadmin";
-              };
-            };
-
-            services.podman.containers.appflowy_web = {
-              autoStart = true;
-              extraConfig = {
-                Service = {
-                  RestartSec = "10";
-                  Restart = "on-failure";
-                };
-                Unit = {
-                  After = "appflowy_cloud.container";
-                  Requires = "appflowy_cloud.container";
-                };
+                volumes = [
+                  "/var/lib/containers/appflowy/postgres_data:/var/lib/postgresql/data"
+                ];
               };
 
-              image = "appflowyinc/appflowy_web:latest";
+              services.podman.containers.redis = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                };
+                image = "redis";
 
-              extraPodmanArgs = [
-                "--pod"
-                "appflowy_pod"
-              ];
-              environmentFile = [
-                "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/.env"
-              ];
-            };
+                environment = redisEnvironment;
 
-          };
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+              };
+
+              services.podman.containers.gotrue = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = [ "podman-postgres.service" ];
+                    Requires = [ "podman-postgres.service" ];
+                  };
+                  # REMOVED Health Check from extraConfig.Container
+                  # Container = {
+                  #   HealthcheckCommand = "CMD curl --fail http://127.0.0.1:9999/health || exit 1";
+                  #   HealthcheckInterval = "5s";
+                  #   HealthcheckTimeout = "5s";
+                  #   HealthcheckRetries = "12";
+                  # };
+                };
+                image = "appflowyinc_gotrue.build";
+
+                environment = gotrueEnvironment;
+                environmentFile = gotrueEnvironmentFile;
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+              };
+
+              services.podman.containers.appflowy_cloud = {
+                autoStart = true;
+                extraConfig = {
+
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  # UNCOMMENTED AND CONFIGURED
+                  Unit = {
+                    After = "podman-gotrue.service";
+                    Requires = "podman-gotrue.service";
+                  };
+                };
+                image = "appflowy_cloud_build.build";
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                # Health Check is commented in compose, so no change here
+                # healthCmd = "curl --fail http://127.0.0.1:9999/health || exit 1";
+                # healthInterval = "5s";
+                # healthTimeout = "5s";
+                # healthRetries = 12;
+
+                environment = appflowy_cloudVariables.environment;
+                environmentFile = appflowy_cloudVariables.environmentFile;
+
+              };
+
+              services.podman.containers.admin_frontend = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = [
+                      "gotrue.container"
+                      "appflowy_cloud.container"
+                    ];
+                    Requires = [
+                      "gotrue.container"
+                      "appflowy_cloud.container"
+                    ];
+                  };
+                };
+
+                image = "admin_frontend_build.build";
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                environment = admin_frontendEnvironment;
+              };
+
+              services.podman.containers.ai = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = "postgres.container";
+                    Requires = "postgres.container";
+                  };
+                };
+
+                image = "appflowyinc/appflowy_ai:latest";
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                environment = aiEnvironment.environment;
+                environmentFile = aiEnvironment.environmentFile;
+              };
+
+              services.podman.containers.appflowy_worker = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = "postgres.container";
+                    Requires = "postgres.container";
+                  };
+                };
+
+                image = "appflowy_worker_build.build";
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                environment = appflowy_workerEnvironment;
+                environmentFile = appflowy_workerEnvironmentFile;
+
+              };
+
+              services.podman.containers.appflowy_web = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = "appflowy_cloud.container";
+                    Requires = "appflowy_cloud.container";
+                  };
+                };
+
+                image = "appflowyinc/appflowy_web:latest";
+
+                environment = appflowy_webEnvironment;
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+              };
+
+              services.podman.containers.appflowy_nginx = {
+                autoStart = true;
+                extraConfig = {
+                  Service = {
+                    RestartSec = "10";
+                    Restart = "on-failure";
+                  };
+                  Unit = {
+                    After = "appflowy_cloud.container";
+                    Requires = "appflowy_cloud.container";
+                  };
+                };
+
+                image = "docker.io/library/nginx:latest";
+
+                ports = [ "4256:80" ];
+
+                network = [
+                  "podman"
+                  networks.appflowy_cloud
+                ];
+
+                volumes = [ "/var/lib/containers/appflowy/nginx/nginx.conf:/etc/nginx/nginx.conf" ];
+
+                environment = appflowy_nginxEnvironment;
+
+              };
+            }
+          );
         };
     };
 }

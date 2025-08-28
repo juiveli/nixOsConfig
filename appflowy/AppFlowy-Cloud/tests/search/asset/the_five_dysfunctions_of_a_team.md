@@ -6,7 +6,7 @@ DecisionTech, and its CEO Kathryn Petersen, Lencioni provides a practical framew
 commonly disrupt team cohesion and performance. Below is a chapter-by-chapter look at the book’s content, capturing its
 essential lessons and actionable insights.
 
----
+______________________________________________________________________
 
 ## Part I: Underachievement
 
@@ -19,7 +19,7 @@ realizes that the team’s challenges are deeply rooted in its dynamics rather t
 Through her initial observations, she identifies that turning around the team will require addressing foundational
 issues like trust, respect, and open communication.
 
----
+______________________________________________________________________
 
 ## Part II: Lighting the Fire
 
@@ -32,7 +32,7 @@ professional roles. She also introduces the idea of constructive conflict, encou
 disagreements and differing opinions. Despite the discomfort this causes for some team members who are used to
 individualistic work styles, Kathryn emphasizes that trust and openness are crucial for effective teamwork.
 
----
+______________________________________________________________________
 
 ## Part III: Heavy Lifting
 
@@ -45,7 +45,7 @@ each other accountable for their contributions. Through challenging conversation
 expectations and role clarity. Kathryn’s persistence helps the team understand that embracing accountability is
 essential for progress, even if it leads to uncomfortable discussions.
 
----
+______________________________________________________________________
 
 ## Part IV: Traction
 
@@ -58,61 +58,61 @@ achievements. Kathryn ensures that each member appreciates the value of prioriti
 Through this unified approach, the team’s motivation and performance visibly improve, demonstrating the power of
 cohesive collaboration.
 
----
+______________________________________________________________________
 
 ## The Model: Overcoming the Five Dysfunctions
 
 Lencioni introduces a model that identifies the five key dysfunctions of a team and provides strategies to overcome
 them:
 
-1. **Absence of Trust**  
+1. **Absence of Trust**\
    The lack of trust prevents team members from being vulnerable and open with each other. Lencioni suggests exercises
    that encourage personal sharing to build this essential foundation.
 
-2. **Fear of Conflict**  
+1. **Fear of Conflict**\
    Teams that avoid conflict miss out on critical discussions that lead to better decision-making. Lencioni recommends
    fostering a safe environment where team members feel comfortable challenging each other’s ideas without fear of
    reprisal.
 
-3. **Lack of Commitment**  
+1. **Lack of Commitment**\
    Without clarity and buy-in, team decisions become fragmented. Leaders should ensure everyone understands and agrees
    on goals to achieve genuine commitment.
 
-4. **Avoidance of Accountability**  
+1. **Avoidance of Accountability**\
    When team members don’t hold each other accountable, performance suffers. Regular check-ins and peer accountability
    encourage responsibility and consistency.
 
-5. **Inattention to Results**  
+1. **Inattention to Results**\
    Prioritizing individual goals over collective outcomes dilutes team success. Aligning rewards and recognition with
    team achievements helps refocus efforts on shared objectives.
 
----
+______________________________________________________________________
 
 ## Understanding and Overcoming Each Dysfunction
 
 Each dysfunction is further broken down with practical strategies:
 
-- **Building Trust**  
+- **Building Trust**\
   Kathryn’s personal history exercise is one example of building trust. By sharing backgrounds and opening up, team
   members foster a culture of vulnerability and connection.
 
-- **Encouraging Conflict**  
+- **Encouraging Conflict**\
   Constructive conflict allows ideas to be challenged and strengthened. Kathryn’s insistence on open debate helps the
   team reach better, more robust decisions.
 
-- **Ensuring Commitment**  
+- **Ensuring Commitment**\
   Lencioni highlights the importance of clarity and alignment, which Kathryn reinforces by facilitating discussions that
   ensure all team members are on the same page about their goals.
 
-- **Embracing Accountability**  
+- **Embracing Accountability**\
   Accountability becomes ingrained as team members regularly check in with each other, creating a culture of mutual
   responsibility and high standards.
 
-- **Focusing on Results**  
+- **Focusing on Results**\
   Kathryn’s focus on collective achievements over individual successes aligns with Lencioni’s advice to reward team
   efforts, ensuring the entire group works toward a shared purpose.
 
----
+______________________________________________________________________
 
 ## Final Thoughts
 

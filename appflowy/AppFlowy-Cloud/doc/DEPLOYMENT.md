@@ -11,8 +11,8 @@
   it's probably a good idea to run it on a non-end user device. It is best if you already have a home server (check
   software requirements),
   but if you don't, you can also deploy it on a cloud compute service as host server such as
-    - [Amazon EC2](https://aws.amazon.com/ec2/) or
-    - [Azure Virtual Machines](https://azure.microsoft.com/en-gb/products/virtual-machines/)
+  - [Amazon EC2](https://aws.amazon.com/ec2/) or
+  - [Azure Virtual Machines](https://azure.microsoft.com/en-gb/products/virtual-machines/)
 
 ## Software Requirements
 
@@ -75,7 +75,7 @@ If you would like to use one of the identity providers to log in, refer to the [
 
 If you would like to use magic link to log in, you will need to set up env variables related to SMTP.
 
-If neither of the above are configured, then the only was to sign in is via the admin portal (the home page), using the admin email
+If neither of the above are configured, then the only way to sign in is via the admin portal (the home page), using the admin email
 and password. After logging in as an admin, you can add users and set their passwords. The new user will be able to login to the admin
 portal using this credential.
 
@@ -101,13 +101,12 @@ admin/debug tasks.
 We include all services in the file `docker-compose.yml`. It is easier to start all services and remove orphan containers warning message.
 
 - `pgadmin` (Web UI to visualize the provided postgres database)
-- `portainer`/`portainer_init` (Web UI to provide some monitoring and ease of container management)
 - `tunnel` (Cloudflare tunnel to provide a secure way to connect AppFlowy to Cloudflare without a publicly routable IP
   address)
+
 ```
 docker compose --file docker-compose-extras.yml up -d
 ```
-
 
 > When using the `docker compose up -d` command without specifying a tag, Docker Compose will pull the `latest`
 > tag for the `appflowy_cloud` and `admin_frontend` images from Docker Hub by default. If you've set
@@ -140,7 +139,9 @@ docker logs <NAME>
   for more information.
 
 ### 7. AppFlowy Web
+
 - AppFlowy Web is provided as part of the docker compose setup, and should work out of the box. It is accessible via `/app` or `/`.
+
 - For existing self hosters who upgraded their setup to include AppFlowy Web in the docker compose, `/` might redirect them to `/web`
   instead of `/app`. This is because the home page `/` used to be occupied by the admin console, and redirects to `/web` by default.
   The browser cache might need to be cleared to see the new behavior. Alternatively, just access the AppFlowy Web directly via `/app`.
@@ -149,12 +150,15 @@ docker logs <NAME>
   to AppFlowy Cloud. If you are using only the Nginx service running within the official docker compose setup, then
   this is already taken care of and no further steps are required. Otherwise, if you have an external Nginx in front of
   the service, then make sure that you have the following:
+
   ```
   proxy_pass_request_headers on;
   underscores_in_headers on;
   ```
+
 - If AppFlowy Web is served on a separate domain, you will need to modify the nginx conf to prevent CORS issues.
   By default, we allow requests from `localhost:3000`, using the configuration below:
+
   ```
   map $http_origin $cors_origin {
     # AppFlowy Web origin
@@ -162,19 +166,22 @@ docker logs <NAME>
     default "null";
   }
   ```
+
   Replace `http://localhost:3000` with your AppFlowy Web origin.
+
 - If you wish to build you own AppFlowy Web docker image, then run the following commands from the root directory of this repository:
+
   ```
   docker build --build-arg VERSION=v<insert version here> docker/web -f docker/web/Dockerfile -t appflowy-web
   ```
-  The available versions can be found on [AppFlowy Web repository](https://github.com/AppFlowy-IO/AppFlowy-Web).
 
+  The available versions can be found on [AppFlowy Web repository](https://github.com/AppFlowy-IO/AppFlowy-Web).
 
 ## Ports
 
 - After Deployment, you should see that AppFlowy-Cloud is serving 2 ports
 - `443` (https)
-- `80`  (http)
+- `80` (http)
 - Your host server need to expose either of these ports.
 
 ## SSL Certificate
@@ -192,10 +199,12 @@ docker logs <NAME>
 ## FAQ
 
 ### How do I use a different `postgres`?
-  The default url is using the postgres in docker compose, in service `appflowy_cloud` and `gotrue` respectively.
-  However it is possible to use an external postgres, as long as it is accessible by the services. pgvector extension must also be installed.
+
+The default url is using the postgres in docker compose, in service `appflowy_cloud` and `gotrue` respectively.
+However it is possible to use an external postgres, as long as it is accessible by the services. pgvector extension must also be installed.
 
 - You need to change the following settings:
+
 ```
 POSTGRES_HOST=postgres
 POSTGRES_USER=postgres
@@ -220,13 +229,16 @@ Sign in via magic link will not be possible. Inviting users to workspace and acc
 performed via the admin portal as opposed to links provided in emails.
 
 ### I already have an Nginx server running on my host server. How do I configure it to work with AppFlowy-Cloud?
+
 - First, remove the `nginx` service from the `docker-compose.yml` file.
 - Update the docker compose file such that the ports for `appflowy_cloud`, `gotrue`, and `admin_frontend` are mapped to the different ports on the host server. If possible, use firewall to make sure that these ports are not accessible
   from the internet.
 - An example site configuration for Nginx has been provided in `external_proxy_config/nginx/appflowy.site.conf`. You can use this as a starting point for your own configuration, and include this in nginx.conf of your external Nginx server.
 
 ### I am using Nginx Proxy Manager (or similar UI based proxy manager), and I am not able to replicate the configuration in external_proxy_config/nginx/appflowy.site.conf easily.
+
 - Another alternative is to keep the `nginx` service in the `docker-compose.yml` file, then pass all the requests from the proxy manager to the `nginx` service. You have to turn on `Websockets Support`, or any equivalent options that adds a connection upgrade header.
 
 ### AppFlowy Web keeps redirecting to the desktop application after login.
+
 - Refer to the AppFlowy Web section in the deployment steps. Make sure that the necessary headers are present.

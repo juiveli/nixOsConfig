@@ -45,14 +45,15 @@ pub async fn insert_user_workspace(
   pg_pool: &PgPool,
   user_uuid: &Uuid,
   workspace_name: &str,
+  workspace_icon: &str,
   is_initialized: bool,
 ) -> Result<AFWorkspaceRow, AppError> {
   let workspace = sqlx::query_as!(
     AFWorkspaceRow,
     r#"
     WITH new_workspace AS (
-      INSERT INTO public.af_workspace (owner_uid, workspace_name, is_initialized)
-      VALUES ((SELECT uid FROM public.af_user WHERE uuid = $1), $2, $3)
+      INSERT INTO public.af_workspace (owner_uid, workspace_name, icon, is_initialized)
+      VALUES ((SELECT uid FROM public.af_user WHERE uuid = $1), $2, $3, $4)
       RETURNING *
     )
     SELECT
@@ -71,6 +72,7 @@ pub async fn insert_user_workspace(
     "#,
     user_uuid,
     workspace_name,
+    workspace_icon,
     is_initialized,
   )
   .fetch_one(pg_pool)
@@ -528,9 +530,11 @@ pub async fn select_workspace_member_list(
     FROM public.af_workspace_member
         JOIN public.af_user ON af_workspace_member.uid = af_user.uid
     WHERE af_workspace_member.workspace_id = $1
+    AND role_id != $2
     ORDER BY af_workspace_member.created_at ASC;
     "#,
-    workspace_id
+    workspace_id,
+    AFRole::Guest as i32,
   )
   .fetch_all(pg_pool)
   .await?;
