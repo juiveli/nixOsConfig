@@ -29,6 +29,11 @@
       url = "./nicehash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sshServerJohannes = {
+      url = "./sshServerJohannes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -41,6 +46,7 @@
       nicehash,
       mmx,
       chia,
+      sshServerJohannes,
       ...
     }@attrs:
     {
@@ -71,6 +77,7 @@
               mmx.homeManagerModules.quadlet
               chia.homeManagerModules.quadlet
               nicehash.homeManagerModules.quadlet
+              sshServerJohannes.homeManagerModules.quadlet
             ];
 
           };
