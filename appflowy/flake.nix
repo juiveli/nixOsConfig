@@ -157,8 +157,10 @@
             let
 
               globalCommonEnv = {
-                APPFLOWY_BASE_URL = "http://appflowy.juiveli.fi";
-                APPFLOWY_WEB_URL = "http://appflowy.juiveli.fi";
+                APPFLOWY_BASE_URL = "https://appflowy.juiveli.fi";
+                APPFLOWY_WEB_URL = "https://appflowy.juiveli.fi";
+                APPFLOWY_WEBSOCKET_BASE_URL="wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
+                APPFLOWY_WS_BASE_URL="wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
                 APPFLOWY_ENVIRONMENT = "production";
                 APPFLOWY_WORKER_ENVIRONMENT = "production";
                 APPFLOWY_ACCESS_CONTROL = "true";
@@ -176,8 +178,10 @@
                 AI_SERVER_HOST = "ai";
                 APPFLOWY_AI_SERVER_PORT = "8080";
 
-                APPFLOWY_GOTRUE_BASE_URL = "http://gotrue:9999";
-                ADMIN_FRONTEND_GOTRUE_URL = "http://gotrue:9999";
+                # APPFLOWY_GOTRUE_BASE_URL = "https://appflowy.juiveli.fi/gotrue";
+                APPFLOWY_GOTRUE_BASE_URL=http://gotrue:9999;
+
+                ADMIN_FRONTEND_GOTRUE_URL = "https://appflowy.juiveli.fi/gotrue";
                 ADMIN_FRONTEND_REDIS_URL = "redis://redis:6379";
                 ADMIN_FRONTEND_APPFLOWY_CLOUD_URL = "http://appflowy_cloud:8000";
                 ADMIN_FRONTEND_PATH_PREFIX = "/";
@@ -342,7 +346,7 @@
 
                   APPFLOWY_ACCESS_CONTROL = globalCommonEnv.APPFLOWY_ACCESS_CONTROL;
                   APPFLOWY_DATABASE_MAX_CONNECTIONS = "40";
-                  RUST_LOG = "info";
+                  RUST_LOG = "debug";
 
                   APPFLOWY_GOTRUE_JWT_EXP = gotrueSpecific.environment.GOTRUE_JWT_EXP; # Expiration is general
                 };
@@ -449,7 +453,7 @@
 
               appflowy_workerEnvironmentFile = appflowyMailer.environmentFile ++ dbCredsEnvBundle.environmentFile ++ appflowy_workerSpecific.environmentFile ++ minioCreds.environmentFile; 
 
-              appflowy_webEnvironment = globalCommonEnv;
+              appflowy_webEnvironment = globalCommonEnv // {APPFLOWY_GOTRUE_BASE_URL = "https://appflowy.juiveli.fi/gotrue";};
 
               appflowy_nginxEnvironment = globalCommonEnv;
 
@@ -467,14 +471,13 @@
               services.podman.builds = {
                 appflowyinc_gotrue = {
                   file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/docker/gotrue/Dockerfile";
-                  tags = [ "localhost/homemanager/appflowyinc_gotrue" ];
+                  tags = [ "appflowyinc_gotrue" ];
 
                 };
 
                 admin_frontend_build = {
                   file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/admin_frontend/Dockerfile";
                   tags = [ "admin_frontend_build" ];
-                  workingDirectory = "/home/joonas/tempo";
                 };
 
                 appflowy_worker_build = {

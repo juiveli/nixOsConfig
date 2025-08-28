@@ -129,14 +129,14 @@ Where:
   for transport purposes it's serialized as a string (as it's simpler to interop across languages).
 - `collab_type` is integer representing the type of the collab. It's required for compatibility purposes with existing
   system, possibly can be made obsolete in the future. Currently, this can be one of:
-  - `0` - **Document** - a regular rich text document that can be edited collaboratively.
-  - `1` - **Database** - database collab, similar to tabular data, which can contain multiple rows.
-  - `2` - **WorkspaceDatabase** - workspace database collab.
-  - `3` - **Folder** - a workspace folder collab, which in appflowy is used to maintain page tree hierarchy.
-  - `4` - **DatabaseRow** - a single row in the **Database** collab, which can be edited collaboratively or promoted
-    to Document-like view.
-  - `5` - **UserAwareness** - a special collab type used to maintain user information i.e. profile data or reminders.
-  - **Unknown** - used a placeholder for documents of different types.
+    - `0` - **Document** - a regular rich text document that can be edited collaboratively.
+    - `1` - **Database** - database collab, similar to tabular data, which can contain multiple rows.
+    - `2` - **WorkspaceDatabase** - workspace database collab.
+    - `3` - **Folder** - a workspace folder collab, which in appflowy is used to maintain page tree hierarchy.
+    - `4` - **DatabaseRow** - a single row in the **Database** collab, which can be edited collaboratively or promoted
+      to Document-like view.
+    - `5` - **UserAwareness** - a special collab type used to maintain user information i.e. profile data or reminders.
+    - **Unknown** - used a placeholder for documents of different types.
 
 The `data` field is one of the possible messages used in the collab synchronization process.
 
@@ -191,18 +191,18 @@ Where:
   server, client can omit this field.
 - `flags` is a number that can be used to indicate special properties of the update. A multiple flags can be
   combined in a single value using bitwise OR operation. Currently supported flags:
-  - `0x00` - update is encoded using lib0 v1 encoding, which is the default encoding used by Yjs.
-  - `0x01` - update is encoded using lib0 v2 encoding, which is a more efficient encoding that can be used for
-    larger updates, but slower and bigger for smaller (i.e. incremental) updates.
-  - In the future other flags may be added i.e. type of compression used.
+    - `0x00` - update is encoded using lib0 v1 encoding, which is the default encoding used by Yjs.
+    - `0x01` - update is encoded using lib0 v2 encoding, which is a more efficient encoding that can be used for
+      larger updates, but slower and bigger for smaller (i.e. incremental) updates.
+    - In the future other flags may be added i.e. type of compression used.
 
 Server sends all incremental updates related to the workspace, that current connection is established for, as this
 allows us:
 
 1. To scale to any arbitrary number of collabs.
-1. With the assumption that the client will eventually want to synchronize the entire
+2. With the assumption that the client will eventually want to synchronize the entire
    workspace (which is advantageous for offline & native apps) use without explicitly requesting for collabs one by one.
-1. Even with dozens of active users, it's still cheaper to send all updates (that may be eventually needed anyway) than
+3. Even with dozens of active users, it's still cheaper to send all updates (that may be eventually needed anyway) than
    to iterate stream of unmerged updates for each collab separately.
 
 #### AwarenessUpdate
@@ -245,8 +245,8 @@ Where:
 - `reason` is an integer value indicating the reason for the access change. This can be used to determine
   whether the access was changed by the user, by the server or due to some other reason (i.e. document deletion).
   Currently supported values:
-  - `0` - **PermissionDenied** - the user doesn't have permission to access the collab.
-  - `1` - **ObjectDeleted** - the collab was deleted and the user no longer has access to it.
+    - `0` - **PermissionDenied** - the user doesn't have permission to access the collab.
+    - `1` - **ObjectDeleted** - the collab was deleted and the user no longer has access to it.
 
 > In the future we also want to propose `Reset` message that would carry a full document state, whose goal is to force
 > the client to reset its own document state to the one provided.
@@ -268,7 +268,7 @@ in the context of the document update. Each rid can be represented as `{timestam
 Every collab update received from the server has a `Rid` field. It can be used for several potential features:
 
 1. A `timestamp` field can be used by the client to filter updates by date.
-1. A `timestamp` field can also be used to mark the last time when the collab update **was made public**. It's not the
+2. A `timestamp` field can also be used to mark the last time when the collab update **was made public**. It's not the
    same as when the document update was made though, since timestamp is assigned by the server for the first time it
    received a given update, while the updates themselves could have been made by the client while offline.
 

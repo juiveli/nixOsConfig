@@ -1,12 +1,11 @@
-______________________________________________________________________
-
+---
 name: Feature request
 about: Suggest an idea for this project
 title: "[FR] Untitled Feature Request"
 labels: ''
 assignees: ''
 
-______________________________________________________________________
+---
 
 **1~3 main use cases of the proposed feature**
 Ex: As a ... , I want to set a reminder for a checkbox item so that I can be reminded by the system at a specific time.
