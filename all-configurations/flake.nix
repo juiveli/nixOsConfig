@@ -139,7 +139,6 @@
               services.dns-ip-updater.dy-fi.enable = lib.mkDefault false;
 
               # Folder creations
-              services.nix-podman-caddy-quadlet.folder-creations.enable = lib.mkDefault false;
               services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
               services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
               services.nix-podman-appflowy-quadlet.folder-creations.enable = lib.mkDefault false;
