@@ -34,6 +34,7 @@
               PASSWORD=$(cat ${config.sops.secrets."dy-fi/password".path})
 
               SERVER_HOSTNAME=(
+                "appflowy.juiveli.fi"
                 "generic.tunk.org"
                 "test.generic.tunk.org"
                 "test2.generic.tunk.org"
