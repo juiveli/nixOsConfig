@@ -2,20 +2,33 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #lact.url = "/home/joonas/Documents/lact";
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
   };
 
   outputs =
     {
       self,
-      #lact,
       nixpkgs,
       nixpkgs-unstable,
+      vscode-server,
       ...
     }:
     {
       # Define reusable modules in `nixosModules`.
       nixosModules = {
+
+        imports = [
+          vscode-server.nixosModules.default
+          (
+            { config, pkgs, ... }:
+            {
+              services.vscode-server.enable = true;
+            }
+          )
+        ];
+
         packages =
           {
             config,

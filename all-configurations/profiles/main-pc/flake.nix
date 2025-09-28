@@ -231,10 +231,12 @@
               pkgs.vlc
               pkgs.inkscape-with-extensions
               pkgs.pinta
+              pkgs.python314
               pkgs.nvidia-container-toolkit
               pkgs.sops
               pkgs.sshfs
               melonDS.packages.${pkgs.system}.default
+
             ];
 
             programs.steam = {
