@@ -240,6 +240,7 @@
               pkgs.nvidia-container-toolkit
               pkgs.sops
               pkgs.sshfs
+              pkgs.steam-run
               melonDS.packages.${pkgs.system}.default
               nix-wfinfo.packages.${pkgs.system}.default
             ];
