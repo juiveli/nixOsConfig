@@ -263,6 +263,7 @@
         "melonDS": "melonDS",
         "nix-flatpak": "nix-flatpak",
         "nix-router-functionalities": "nix-router-functionalities",
+        "nix-wfinfo": "nix-wfinfo",
         "nixpkgs": [
           "all-configurations",
           "nixpkgs"
@@ -436,6 +437,26 @@
         "owner": "juiveli",
         "repo": "nix-router-functionalities",
         "type": "github"
+      }
+    },
+    "nix-wfinfo": {
+      "inputs": {
+        "nixpkgs": [
+          "all-configurations",
+          "main-pc",
+          "nixpkgs"
+        ],
+        "wfinfo-ng-src": "wfinfo-ng-src"
+      },
+      "locked": {
+        "lastModified": 1759381469,
+        "narHash": "sha256-AzrDdI3p1gswbgfUHSroJQ9TkOcLQDdI00r17o9Ykio=",
+        "path": "/home/joonas/Documents/git-projects/nix-wfinfo",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/joonas/Documents/git-projects/nix-wfinfo",
+        "type": "path"
       }
     },
     "nixos-test": {
@@ -887,6 +908,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "wfinfo-ng-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1729888224,
+        "narHash": "sha256-qXFpwoVp3qPWPCUsRxBbL3P111sWsq1CELwh9mBUit8=",
+        "owner": "knoellle",
+        "repo": "wfinfo-ng",
+        "rev": "c440b6b5a816270ac2eb4885fa193e19ce607864",
+        "type": "github"
+      },
+      "original": {
+        "owner": "knoellle",
+        "repo": "wfinfo-ng",
         "type": "github"
       }
     }

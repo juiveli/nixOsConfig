@@ -15,6 +15,11 @@
       url = "github:melonDS-emu/melonDS";
     };
 
+    nix-wfinfo = {
+      url = "path:/home/joonas/Documents/git-projects/nix-wfinfo";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -29,6 +34,7 @@
       nixpkgs,
       nix-router-functionalities,
       melonDS,
+      nix-wfinfo,
       sops-nix,
     }:
 
@@ -235,6 +241,7 @@
               pkgs.sops
               pkgs.sshfs
               melonDS.packages.${pkgs.system}.default
+              nix-wfinfo.packages.${pkgs.system}.default
             ];
 
             programs.steam = {
