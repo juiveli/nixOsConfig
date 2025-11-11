@@ -35,6 +35,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-router = {
+      url = "./profiles/nixos-router";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-test = {
       url = "./profiles/nixos-test";
     };
@@ -47,6 +52,7 @@
       dns-ip-updater,
       home-manager,
       main-pc,
+      nixos-router,
       nixos-test,
       nixpkgs,
       nix-gnome-configs,
@@ -209,6 +215,20 @@
               joonas = {
                 homeManagerModules = [
                   ./profiles/main-pc/shared-module-home-manager-config.nix
+                ];
+              };
+            };
+          };
+
+          nixos-router = profile {
+            profileModules = [
+              ./profiles/nixos-router/shared-module-config.nix
+              nixos-router.nixosModules.nixos-router-specific
+            ];
+            users = {
+              router = {
+                homeManagerModules = [
+
                 ];
               };
             };

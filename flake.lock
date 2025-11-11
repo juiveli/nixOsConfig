@@ -9,6 +9,7 @@
         "main-pc": "main-pc",
         "nix-gnome-configs": "nix-gnome-configs",
         "nix-podman-quadlet-collection": "nix-podman-quadlet-collection",
+        "nixos-router": "nixos-router",
         "nixos-test": "nixos-test",
         "nixpkgs": [
           "nixpkgs"
@@ -298,7 +299,6 @@
       "inputs": {
         "melonDS": "melonDS",
         "nix-flatpak": "nix-flatpak",
-        "nix-router-functionalities": "nix-router-functionalities",
         "nix-wfinfo": "nix-wfinfo",
         "nixpkgs": [
           "all-configurations",
@@ -512,6 +512,27 @@
         "path": "/home/joonas/Documents/git-projects/nix-wfinfo",
         "type": "path"
       }
+    },
+    "nixos-router": {
+      "inputs": {
+        "nix-router-functionalities": "nix-router-functionalities",
+        "nixpkgs": [
+          "all-configurations",
+          "nixpkgs"
+        ],
+        "sops-nix": "sops-nix_5"
+      },
+      "locked": {
+        "path": "./profiles/nixos-router",
+        "type": "path"
+      },
+      "original": {
+        "path": "./profiles/nixos-router",
+        "type": "path"
+      },
+      "parent": [
+        "all-configurations"
+      ]
     },
     "nixos-test": {
       "inputs": {
@@ -861,6 +882,28 @@
     "sops-nix_4": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1762812535,
+        "narHash": "sha256-A91a+K0Q9wfdPLwL06e/kbHeAWSzPYy2EGdTDsyfb+s=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "d75e4f89e58fdda39e4809f8c52013caa22483b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sops-nix_5": {
+      "inputs": {
+        "nixpkgs": [
+          "all-configurations",
+          "nixos-router",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1762812535,

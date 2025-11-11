@@ -9,8 +9,6 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
-
     melonDS = {
       url = "github:melonDS-emu/melonDS";
     };
@@ -32,7 +30,6 @@
       self,
       nix-flatpak,
       nixpkgs,
-      nix-router-functionalities,
       melonDS,
       nix-wfinfo,
       sops-nix,
@@ -53,7 +50,6 @@
               ./nixosModules/hardware-configuration.nix
               ./nixosModules/mount-points.nix
               nix-flatpak.nixosModules.nix-flatpak
-              nix-router-functionalities.nixosModules.dhcp
               sops-nix.nixosModules.sops
 
             ];
