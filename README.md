@@ -1,6 +1,10 @@
-# Downloading git repo directly to /etc/nixos
 
-### Init git (most likely need to run with super user priviledges, as in sudo for example)
+
+# Downloading git repo directly to /etc/nixos
+First enable git in current configuration under environment.systemPackages, and set a hostname
+As long as flakes are experimental feature, you need to add nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+### Init git (as directly in /etc/nixos sudo is needed)
 
 cd /etc/nixos
 
