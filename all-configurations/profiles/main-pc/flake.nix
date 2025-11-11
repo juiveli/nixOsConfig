@@ -217,6 +217,8 @@
             };
 
             environment.systemPackages = [
+
+              pkgs.bolt-launcher # runescape launcher
               pkgs.mkvtoolnix
 
               pkgs.element-desktop
@@ -238,6 +240,7 @@
               pkgs.inkscape-with-extensions
               pkgs.pinta
               pkgs.nvidia-container-toolkit
+              pkgs.runelite
               pkgs.sops
               pkgs.sshfs
               pkgs.steam-run
