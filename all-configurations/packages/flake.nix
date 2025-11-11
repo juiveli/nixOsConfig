@@ -3,6 +3,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     #lact.url = "/home/joonas/Documents/lact";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscodium.url = "path:./vscodium";
   };
 
   outputs =
@@ -11,6 +13,8 @@
       #lact,
       nixpkgs,
       nixpkgs-unstable,
+      vscode-server,
+      vscodium,
       ...
     }:
     {
@@ -36,7 +40,7 @@
               programs.firefox.enable = true;
 
               environment.systemPackages = [
-                pkgs.vscodium
+                vscodium.packages.${pkgs.system}.default
                 pkgs.nemo-with-extensions
                 pkgs.alacritty
                 pkgs-unstable.lact
@@ -78,11 +82,21 @@
                 pkgs.dconf2nix
                 pkgs.dig
               ];
+
+              services.vscode-server.enable = true;
+              services.vscode-server.installPath = [ "$HOME/.vscodium-server" ];
+
+              systemd.user.services.auto-fix-vscode-server = {
+                # This is the systemd equivalent of running 'systemctl --user enable'
+                wantedBy = [ "multi-user.target" ];
+              };
             };
 
           in
 
           {
+
+            imports = [ vscode-server.nixosModules.default ];
 
             options = {
               custom.packages.gui.enable = lib.mkEnableOption "Enable GUI-based packages I think are necessary defaults.";
