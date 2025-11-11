@@ -27,22 +27,24 @@
           serviceUser = serviceName;
           serviceGroup = serviceName;
 
+          hostnamesString = lib.concatStringsSep " " [
+            "appflowy.juiveli.fi"
+            "generic.tunk.org"
+            "test.generic.tunk.org"
+            "test2.generic.tunk.org"
+            "test.juiveli.fi"
+            "juiveli.fi"
+            "static.juiveli.fi"
+            "blog.juiveli.fi"
+          ];
+          
           dnsIpUpdaterScript = pkgs.writeShellScriptBin "${serviceName}" ''
               #!/bin/bash
 
               USERNAME=$(cat ${config.sops.secrets."dy-fi/username".path})
               PASSWORD=$(cat ${config.sops.secrets."dy-fi/password".path})
 
-              SERVER_HOSTNAME=(
-                "appflowy.juiveli.fi"
-                "generic.tunk.org"
-                "test.generic.tunk.org"
-                "test2.generic.tunk.org"
-                "test.juiveli.fi"
-                "juiveli.fi"
-                "static.juiveli.fi"
-                "blog.juiveli.fi"
-              )
+              SERVER_HOSTNAME=(${hostnamesString})
 
               URL_BASE="https://www.dy.fi/nic/update?hostname="
               IP_FILE="''${STATE_DIRECTORY}/current_ip.txt"
