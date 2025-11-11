@@ -104,11 +104,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1758895880,
-        "narHash": "sha256-FfSYjxUqdv+z0XsczvDG6ECC8y6Y1FMieBjJc5hPzgg=",
+        "lastModified": 1762894777,
+        "narHash": "sha256-HcyzPbPPnbhsyIk5OftYkt8wBVOLwHMm8IDIyQ/XeTg=",
         "owner": "juiveli",
         "repo": "dns-ip-updater",
-        "rev": "f01ed6c5245acc49b1b467ebb58ae773078e3b91",
+        "rev": "22785d7142e617304c0c22deb87f76bbbfecabf3",
         "type": "github"
       },
       "original": {
