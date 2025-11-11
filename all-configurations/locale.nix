@@ -31,5 +31,7 @@ in
           LC_TELEPHONE = lib.mkDefault "fi_FI.UTF-8";
           LC_TIME = lib.mkDefault "fi_FI.UTF-8";
         };
+
+        console.keyMap = lib.mkDefault "fi";
       };
 }

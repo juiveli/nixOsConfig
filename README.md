@@ -1,6 +1,5 @@
-
-
 # Downloading git repo directly to /etc/nixos
+
 First enable git in current configuration under environment.systemPackages, and set a hostname
 As long as flakes are experimental feature, you need to add nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

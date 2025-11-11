@@ -42,6 +42,5 @@ in
     ];
     documentation.nixos.enable = false; # I can google it...
 
-    console.keyMap = lib.mkDefault "fi";
   };
 }
