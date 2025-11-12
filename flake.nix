@@ -71,7 +71,7 @@
               user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
             };
 
-            custom.packages.gui.enable = lib.mkDefault true;
+            custom.packages.gui.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
             custom.packages.guiless.enable = lib.mkDefault true;
 
           };

@@ -233,15 +233,14 @@
         "vscodium": "vscodium"
       },
       "locked": {
-        "lastModified": 1762893407,
-        "narHash": "sha256-AojENVH1E7E/FcOpqkml2K0adbZMT62kdOjtBLz8/AQ=",
-        "path": "/etc/nixos/all-configurations/packages",
+        "path": "./packages",
         "type": "path"
       },
       "original": {
-        "path": "/etc/nixos/all-configurations/packages",
+        "path": "./packages",
         "type": "path"
-      }
+      },
+      "parent": []
     },
     "pre-commit-hooks": {
       "inputs": {
