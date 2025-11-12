@@ -40,6 +40,9 @@
       url = "./sshServerJohannes";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
+
   };
 
   outputs =
@@ -47,6 +50,7 @@
       self,
       nixpkgs,
       appflowy,
+      nix-dev-toolkit,
       quadlet-nix,
       testServer,
       caddy,
@@ -57,6 +61,10 @@
       ...
     }@attrs:
     {
+
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
 
       nixosModules = {
         quadlet-collection = {

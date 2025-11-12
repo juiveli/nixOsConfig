@@ -159,8 +159,8 @@
               globalCommonEnv = {
                 APPFLOWY_BASE_URL = "https://appflowy.juiveli.fi";
                 APPFLOWY_WEB_URL = "https://appflowy.juiveli.fi";
-                APPFLOWY_WEBSOCKET_BASE_URL="wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
-                APPFLOWY_WS_BASE_URL="wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
+                APPFLOWY_WEBSOCKET_BASE_URL = "wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
+                APPFLOWY_WS_BASE_URL = "wss://appflowy.juiveli.fi/ws/v2"; # actually on appflowy_web needs this
                 APPFLOWY_ENVIRONMENT = "production";
                 APPFLOWY_WORKER_ENVIRONMENT = "production";
                 APPFLOWY_ACCESS_CONTROL = "true";
@@ -179,7 +179,7 @@
                 APPFLOWY_AI_SERVER_PORT = "8080";
 
                 # APPFLOWY_GOTRUE_BASE_URL = "https://appflowy.juiveli.fi/gotrue";
-                APPFLOWY_GOTRUE_BASE_URL=http://gotrue:9999;
+                APPFLOWY_GOTRUE_BASE_URL = "http://gotrue:9999";
 
                 ADMIN_FRONTEND_GOTRUE_URL = "https://appflowy.juiveli.fi/gotrue";
                 ADMIN_FRONTEND_REDIS_URL = "redis://redis:6379";
@@ -192,7 +192,7 @@
 
               dbCredsEnvBundle = {
                 environmentFile = [
-                  config.sops.secrets.postgres-user.path # POSTGRES_USER 
+                  config.sops.secrets.postgres-user.path # POSTGRES_USER
                   config.sops.secrets.postgres-password.path # POSTGRES_PASSWORD
                 ];
 
@@ -200,7 +200,6 @@
                   POSTGRES_DB = "postgres";
                 };
               };
-
 
               minioCreds = {
                 environment = {
@@ -217,21 +216,20 @@
                   config.sops.secrets.minio-root-password.path # APPFLOWY_S3_SECRET_KEY
                 ];
 
-
               };
 
               appflowyMailer = {
 
                 environment = {
-                APPFLOWY_MAILER_SMTP_HOST = "smtp.gmail.com";
-                APPFLOWY_MAILER_SMTP_PORT = "465";
-                APPFLOWY_MAILER_SMTP_TLS_KIND = "wrapper";
+                  APPFLOWY_MAILER_SMTP_HOST = "smtp.gmail.com";
+                  APPFLOWY_MAILER_SMTP_PORT = "465";
+                  APPFLOWY_MAILER_SMTP_TLS_KIND = "wrapper";
                 };
 
                 environmentFile = [
-                 config.sops.secrets.appflowy-mailer-smtp-username.path # APPFLOWY_MAILER_SMTP_USERNAME
-                 config.sops.secrets.appflowy-mailer-smtp-email.path # APPFLOWY_MAILER_SMTP_EMAIL
-                 config.sops.secrets.appflowy-mailer-smtp-password.path # APPFLOWY_MAILER_SMTP_PASSWORD
+                  config.sops.secrets.appflowy-mailer-smtp-username.path # APPFLOWY_MAILER_SMTP_USERNAME
+                  config.sops.secrets.appflowy-mailer-smtp-email.path # APPFLOWY_MAILER_SMTP_EMAIL
+                  config.sops.secrets.appflowy-mailer-smtp-password.path # APPFLOWY_MAILER_SMTP_PASSWORD
                 ];
 
               };
@@ -248,57 +246,56 @@
 
               gotrueSpecific = {
 
-
                 environment = {
                   # There are a lot of options to configure GoTrue. You can reference the example config:
-                # https://github.com/supabase/auth/blob/master/example.env
+                  # https://github.com/supabase/auth/blob/master/example.env
 
-                # The initial GoTrue Admin user password to create, if not already exists.
-                # If the user already exists, the update will be skipped.
-                GOTRUE_DISABLE_SIGNUP = "false";
-                GOTRUE_SITE_URL = "appflowy-flutter://"; # redirected to AppFlowy application
-                GOTRUE_URI_ALLOW_LIST = "**";
-                GOTRUE_JWT_EXP = "7200";
-                # Without this environment variable, the createuser command will create an admin
-                # with the `admin` role as opposed to `supabase_admin`
-                GOTRUE_JWT_ADMIN_GROUP_NAME = "supabase_admin";
-                GOTRUE_DB_DRIVER = "postgres";
-                API_EXTERNAL_URL = "https://appflowy.juiveli.fi/gotrue";
-                # URL that connects to the postgres docker container. If your password contains special characters,
-                # instead of using ${POSTGRES_PASSWORD}, you will need to convert them into url encoded format.
-                # For example, `p@ssword` will become `p%40ssword`.
-                PORT = "9999";
-                GOTRUE_SMTP_HOST = "smtp.gmail.com";
-                GOTRUE_SMTP_PORT = "465";                
-                GOTRUE_MAILER_URLPATHS_CONFIRMATION = "/gotrue/verify";
-                GOTRUE_MAILER_URLPATHS_INVITE = "/gotrue/verify";
-                GOTRUE_MAILER_URLPATHS_RECOVERY = "/gotrue/verify";
-                GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE = "/gotrue/verify";
-                GOTRUE_MAILER_TEMPLATES_MAGIC_LINK = "default_magic_link_template";
-              
-                GOTRUE_SMTP_MAX_FREQUENCY = "1ns"; # set to 1ns for running tests
-                GOTRUE_RATE_LIMIT_EMAIL_SENT = "100"; # number of email sendable per minute
-                GOTRUE_MAILER_AUTOCONFIRM = "false"; # change this to true to skip email confirmation
+                  # The initial GoTrue Admin user password to create, if not already exists.
+                  # If the user already exists, the update will be skipped.
+                  GOTRUE_DISABLE_SIGNUP = "false";
+                  GOTRUE_SITE_URL = "appflowy-flutter://"; # redirected to AppFlowy application
+                  GOTRUE_URI_ALLOW_LIST = "**";
+                  GOTRUE_JWT_EXP = "7200";
+                  # Without this environment variable, the createuser command will create an admin
+                  # with the `admin` role as opposed to `supabase_admin`
+                  GOTRUE_JWT_ADMIN_GROUP_NAME = "supabase_admin";
+                  GOTRUE_DB_DRIVER = "postgres";
+                  API_EXTERNAL_URL = "https://appflowy.juiveli.fi/gotrue";
+                  # URL that connects to the postgres docker container. If your password contains special characters,
+                  # instead of using ${POSTGRES_PASSWORD}, you will need to convert them into url encoded format.
+                  # For example, `p@ssword` will become `p%40ssword`.
+                  PORT = "9999";
+                  GOTRUE_SMTP_HOST = "smtp.gmail.com";
+                  GOTRUE_SMTP_PORT = "465";
+                  GOTRUE_MAILER_URLPATHS_CONFIRMATION = "/gotrue/verify";
+                  GOTRUE_MAILER_URLPATHS_INVITE = "/gotrue/verify";
+                  GOTRUE_MAILER_URLPATHS_RECOVERY = "/gotrue/verify";
+                  GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE = "/gotrue/verify";
+                  GOTRUE_MAILER_TEMPLATES_MAGIC_LINK = "default_magic_link_template";
 
-                # Google OAuth2
-                GOTRUE_EXTERNAL_GOOGLE_ENABLED = "false";
-                GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+                  GOTRUE_SMTP_MAX_FREQUENCY = "1ns"; # set to 1ns for running tests
+                  GOTRUE_RATE_LIMIT_EMAIL_SENT = "100"; # number of email sendable per minute
+                  GOTRUE_MAILER_AUTOCONFIRM = "false"; # change this to true to skip email confirmation
 
-                # GitHub OAuth2
-                GOTRUE_EXTERNAL_GITHUB_ENABLED = "false";
-                GOTRUE_EXTERNAL_GITHUB_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+                  # Google OAuth2
+                  GOTRUE_EXTERNAL_GOOGLE_ENABLED = "false";
+                  GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
 
-                # Discord OAuth2
-                GOTRUE_EXTERNAL_DISCORD_ENABLED = "false";
-                GOTRUE_EXTERNAL_DISCORD_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+                  # GitHub OAuth2
+                  GOTRUE_EXTERNAL_GITHUB_ENABLED = "false";
+                  GOTRUE_EXTERNAL_GITHUB_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
 
-                # Apple OAuth2
-                GOTRUE_EXTERNAL_APPLE_ENABLED = "false";
-                GOTRUE_EXTERNAL_APPLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+                  # Discord OAuth2
+                  GOTRUE_EXTERNAL_DISCORD_ENABLED = "false";
+                  GOTRUE_EXTERNAL_DISCORD_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
 
-                # SAML 2.0. Refer to https://github.com/AppFlowy-IO/AppFlowy-Cloud/blob/main/doc/OKTA_SAML.md for example using Okta.
-                GOTRUE_SAML_ENABLED = "false";
-                
+                  # Apple OAuth2
+                  GOTRUE_EXTERNAL_APPLE_ENABLED = "false";
+                  GOTRUE_EXTERNAL_APPLE_REDIRECT_URI = "http://appflowy.juiveli.fi/gotrue/callback";
+
+                  # SAML 2.0. Refer to https://github.com/AppFlowy-IO/AppFlowy-Cloud/blob/main/doc/OKTA_SAML.md for example using Okta.
+                  GOTRUE_SAML_ENABLED = "false";
+
                 };
 
                 environmentFile = [
@@ -309,7 +306,7 @@
                   config.sops.secrets.gotrue-admin-email.path # GOTRUE_ADMIN_EMAIL
                   config.sops.secrets.gotrue-admin-password.path # GOTRUE_ADMIN_PASSWORD
                   config.sops.secrets.gotrue-jwt-secret.path # GOTRUE_JWT_SECRET
-                  
+
                   config.sops.secrets.gotrue-database-url.path
                   # DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
                   # GOTRUE_DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
@@ -321,7 +318,7 @@
                   # GitHub OAuth2 secrets
                   config.sops.secrets.gotrue-external-github-client-id.path # GOTRUE_EXTERNAL_GITHUB_CLIENT_ID
                   config.sops.secrets.gotrue-external-github-secret.path # GOTRUE_EXTERNAL_GITHUB_SECRET
-                  
+
                   # Discord OAuth2 secrets
                   config.sops.secrets.gotrue-external-discord-client-id.path # GOTRUE_EXTERNAL_DISCORD_CLIENT_ID
                   config.sops.secrets.gotrue-external-discord-secret.path # GOTRUE_EXTERNAL_DISCORD_SECRET
@@ -329,14 +326,12 @@
                   # Apple OAuth2
                   config.sops.secrets.gotrue-external-apple-client-id.path # GOTRUE_EXTERNAL_APPLE_CLIENT_ID
                   config.sops.secrets.gotrue-external-apple-secret.path # GOTRUE_EXTERNAL_APPLE_SECRET
-                  
+
                   # SAML 2.0
                   config.sops.secrets.gotrue-saml-private-key.path # GOTRUE_SAML_PRIVATE_KEY
 
                 ];
 
-
-                
               };
 
               appflowy_cloudSpecific = {
@@ -350,13 +345,12 @@
 
                   APPFLOWY_GOTRUE_JWT_EXP = gotrueSpecific.environment.GOTRUE_JWT_EXP; # Expiration is general
                 };
-                
+
                 environmentFile = [
                   config.sops.secrets.appflowy-database-url.path # APPFLOWY_DATABASE_URL = "${networkHostEnv.POSTGRES_HOST}://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
                   config.sops.secrets.gotrue-jwt-secret.path # APPFLOWY_GOTRUE_JWT_SECRET gotrueSpecific.environmentFile.GOTRUE_JWT_SECRET;
-                  
-                ];
 
+                ];
 
               };
 
@@ -373,15 +367,14 @@
                   APPFLOWY_WORKER_DATABASE_NAME = dbCredsEnvBundle.environment.POSTGRES_DB;
                 };
 
-                environmentFile = [config.sops.secrets.appflowy-worker-database-url.path # APPFLOWY_WORKER_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public"; 
+                environmentFile = [
+                  config.sops.secrets.appflowy-worker-database-url.path # APPFLOWY_WORKER_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
                 ];
 
               };
 
-              
-
               aiApiKeys = {
-                environmentFile = [config.sops.secrets.openai-api-key.path];
+                environmentFile = [ config.sops.secrets.openai-api-key.path ];
                 # OPENAI_API_KEY
                 # AI_OPENAI_API_KEY
               };
@@ -391,10 +384,10 @@
                   APPFLOWY_AI_REDIS_URL = "redis://${networkHostEnv.REDIS_HOST}:${networkHostEnv.REDIS_PORT}";
                 };
 
-                environmentFile = [config.sops.secrets.appflowy-ai-database-url.path # APPFLOWY_AI_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                environmentFile = [
+                  config.sops.secrets.appflowy-ai-database-url.path # APPFLOWY_AI_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
                 ];
-                
-                
+
               };
 
               minioVariables = {
@@ -405,44 +398,53 @@
               };
 
               postgresVariables = {
-                environment = networkHostEnv // dbCredsEnvBundle.environment; 
+                environment = networkHostEnv // dbCredsEnvBundle.environment;
 
                 environmentFile = dbCredsEnvBundle.environmentFile;
               };
 
               redisEnvironment = networkHostEnv;
 
-              gotrueEnvironment = globalCommonEnv // networkHostEnv // dbCredsEnvBundle.environment // gotrueSpecific.environment;
+              gotrueEnvironment =
+                globalCommonEnv // networkHostEnv // dbCredsEnvBundle.environment // gotrueSpecific.environment;
               gotrueEnvironmentFile = gotrueSpecific.environmentFile ++ dbCredsEnvBundle.environmentFile;
 
               appflowy_cloudVariables =
 
-              {
-                environment = globalCommonEnv
-                // networkHostEnv
-                // dbCredsEnvBundle.environment
-                // minioCreds.environment
-                // appflowyMailer.environment
-                // appflowy_cloudSpecific.environment;
+                {
+                  environment =
+                    globalCommonEnv
+                    // networkHostEnv
+                    // dbCredsEnvBundle.environment
+                    // minioCreds.environment
+                    // appflowyMailer.environment
+                    // appflowy_cloudSpecific.environment;
 
-                environmentFile = appflowyMailer.environmentFile ++ appflowy_cloudSpecific.environmentFile ++ dbCredsEnvBundle.environmentFile ++ minioCreds.environmentFile ++ aiApiKeys.environmentFile;
-              };
+                  environmentFile =
+                    appflowyMailer.environmentFile
+                    ++ appflowy_cloudSpecific.environmentFile
+                    ++ dbCredsEnvBundle.environmentFile
+                    ++ minioCreds.environmentFile
+                    ++ aiApiKeys.environmentFile;
+                };
 
               admin_frontendEnvironment = networkHostEnv // globalCommonEnv;
 
-              aiEnvironment =
-                {
-                  environment = networkHostEnv  # For AI connecting to Postgres/MinIO
-                  // dbCredsEnvBundle.environment      # If AI uses Postgres for embeddings              
+              aiEnvironment = {
+                environment =
+                  networkHostEnv # For AI connecting to Postgres/MinIO
+                  // dbCredsEnvBundle.environment # If AI uses Postgres for embeddings
 
-                  // minioCreds.environment         # If AI stores/retrieves from S3        
+                  // minioCreds.environment # If AI stores/retrieves from S3
 
-                  
                   // aiSpecific.environment;
 
-                  environmentFile = dbCredsEnvBundle.environmentFile ++ aiSpecific.environmentFile ++ minioCreds.environmentFile ++ aiApiKeys.environmentFile;
-                };
-
+                environmentFile =
+                  dbCredsEnvBundle.environmentFile
+                  ++ aiSpecific.environmentFile
+                  ++ minioCreds.environmentFile
+                  ++ aiApiKeys.environmentFile;
+              };
 
               appflowy_workerEnvironment =
                 networkHostEnv
@@ -451,9 +453,15 @@
                 // appflowyMailer.environment
                 // appflowy_workerSpecific.environment;
 
-              appflowy_workerEnvironmentFile = appflowyMailer.environmentFile ++ dbCredsEnvBundle.environmentFile ++ appflowy_workerSpecific.environmentFile ++ minioCreds.environmentFile; 
+              appflowy_workerEnvironmentFile =
+                appflowyMailer.environmentFile
+                ++ dbCredsEnvBundle.environmentFile
+                ++ appflowy_workerSpecific.environmentFile
+                ++ minioCreds.environmentFile;
 
-              appflowy_webEnvironment = globalCommonEnv // {APPFLOWY_GOTRUE_BASE_URL = "https://appflowy.juiveli.fi/gotrue";};
+              appflowy_webEnvironment = globalCommonEnv // {
+                APPFLOWY_GOTRUE_BASE_URL = "https://appflowy.juiveli.fi/gotrue";
+              };
 
               appflowy_nginxEnvironment = globalCommonEnv;
 

@@ -12,15 +12,15 @@
 ## Aim High and Iterate
 
 1. We strive for excellence with a growth mindset.
-2. We dream big, start small, and move fast.
-3. We take smaller steps and ship smaller, simpler features.
-4. We don’t wait, but instead iterate and work as part of the community.
-5. We focus on results over process and prioritize progress over perfection.
+1. We dream big, start small, and move fast.
+1. We take smaller steps and ship smaller, simpler features.
+1. We don’t wait, but instead iterate and work as part of the community.
+1. We focus on results over process and prioritize progress over perfection.
 
 ## Transparency
 
 1. We make information about AppFlowy public by default unless there is a compelling reason not to.
-2. We are straightforward and kind with ourselves and each other.
+1. We are straightforward and kind with ourselves and each other.
 
 - We surface issues constructively and proactively.
 - We say “why” and provide sufficient context for our actions rather than just disclosing the “what.”
@@ -28,19 +28,14 @@
 ## Collaboration
 
 > We pride ourselves on being a great team.
->
 
 > We foster collaboration, value diversity and inclusion, and encourage sharing.
->
 
 > We thrive as individuals within the context of our team and succeed together.
->
 
 > We play very effectively with people of diverse backgrounds and cultures.
->
 
 > We make time to help each other in pursuit of our common goals.
->
 
 Honesty
 

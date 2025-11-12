@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
-    
+
     hugo-blog = {
       url = "github:juiveli/hugo-blog";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +17,15 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, hugo-blog, hugo-mainsite, quadlet-nix, ... }@attrs:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      hugo-blog,
+      hugo-mainsite,
+      quadlet-nix,
+      ...
+    }@attrs:
     let
       system = "x86_64-linux";
       # It's cleaner to import pkgs here
@@ -34,15 +42,11 @@
             enable = lib.mkEnableOption "nix-podman-caddy-quadlet";
           };
 
-
           imports = [ quadlet-nix.nixosModules.quadlet ];
 
-          config = lib.mkIf cfg.enable
-          {
+          config = lib.mkIf cfg.enable {
 
-            
-            
-            users.groups.caddy = {};
+            users.groups.caddy = { };
             users.users.caddy = {
               isNormalUser = true;
               group = "caddy";
@@ -101,17 +105,25 @@
             };
 
             home-manager.users.caddy = {
-                # Import the homeManagerModules from this same flake
-                imports = [ self.homeManagerModules.quadlet quadlet-nix.homeManagerModules.quadlet ];
-                # Enable the Home Manager module
-                services.nix-podman-caddy-quadlet.enable = true;
-                home.stateVersion = "25.05"; # Remove this when possible
-              };
+              # Import the homeManagerModules from this same flake
+              imports = [
+                self.homeManagerModules.quadlet
+                quadlet-nix.homeManagerModules.quadlet
+              ];
+              # Enable the Home Manager module
+              services.nix-podman-caddy-quadlet.enable = true;
+              home.stateVersion = "25.05"; # Remove this when possible
+            };
           };
         };
 
       homeManagerModules.quadlet =
-        { config, lib, pkgs, ... }:
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
         let
           cfg = config.services.nix-podman-caddy-quadlet;
         in

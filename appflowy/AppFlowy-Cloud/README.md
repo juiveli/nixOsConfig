@@ -59,13 +59,15 @@ and the script will safely merge them in.
 **You don't need to understand all the environment variables.** For most development setups, simply:
 
 1. Copy the development secrets template:
+
    ```bash
    cp env.dev.secret.example .env.dev.secret
    ```
 
-2. Edit `.env.dev.secret` and fill in only the values you need (like API keys, passwords, etc.)
+1. Edit `.env.dev.secret` and fill in only the values you need (like API keys, passwords, etc.)
 
-3. Run the generator:
+1. Run the generator:
+
    ```bash
    ./script/generate_env.sh
    ```

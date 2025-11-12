@@ -17,10 +17,10 @@ graph TD
 ### Key Components
 
 1. **Indexer**: Interface that defines methods for creating and embedding content chunks
-2. **DocumentIndexer**: Implementation of Indexer specifically for document content
-3. **IndexerProvider**: Factory that resolves the appropriate Indexer based on content type
-4. **Scheduler**: Manages embedding tasks and coordinates the embedding process
-5. **AFEmbedder**: Provides embedding capabilities through OpenAI or Azure OpenAI APIs
+1. **DocumentIndexer**: Implementation of Indexer specifically for document content
+1. **IndexerProvider**: Factory that resolves the appropriate Indexer based on content type
+1. **Scheduler**: Manages embedding tasks and coordinates the embedding process
+1. **AFEmbedder**: Provides embedding capabilities through OpenAI or Azure OpenAI APIs
 
 ## Embedding Process Flow
 
@@ -113,18 +113,18 @@ sequenceDiagram
 In all these paths, the content goes through similar processing steps:
 
 1. Document content extraction (paragraphs from document)
-2. Text chunking (grouping paragraphs into manageable chunks)
-3. Embedding generation via the AI service
-4. Storage in the database
+1. Text chunking (grouping paragraphs into manageable chunks)
+1. Embedding generation via the AI service
+1. Storage in the database
 
 ### 2. Chunking Strategy
 
 Documents are broken into manageable chunks for effective embedding:
 
 1. The system extracts paragraphs from the document
-2. Paragraphs are grouped into chunks of approximately 8000 characters
-3. A consistent hash is generated for each chunk to avoid duplicate processing
-4. Each chunk is prepared as an `AFCollabEmbeddedChunk` with metadata
+1. Paragraphs are grouped into chunks of approximately 8000 characters
+1. A consistent hash is generated for each chunk to avoid duplicate processing
+1. Each chunk is prepared as an `AFCollabEmbeddedChunk` with metadata
 
 ```mermaid
 graph LR
@@ -139,9 +139,9 @@ graph LR
 The actual embedding creation happens via OpenAI or Azure's API:
 
 1. Chunks are sent to the embedding service (OpenAI or Azure)
-2. The API returns vectors for each chunk
-3. Vectors are associated with their original chunks
-4. Complete embeddings are stored in the database
+1. The API returns vectors for each chunk
+1. Vectors are associated with their original chunks
+1. Complete embeddings are stored in the database
 
 ## Technical Implementation
 
