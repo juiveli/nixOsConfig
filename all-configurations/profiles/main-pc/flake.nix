@@ -80,15 +80,13 @@
                 sops.defaultSopsFormat = "yaml";
                 sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
-                sops.secrets.nonRootTest = { };
-                sops.secrets.kakkonen = { };
+                system.stateVersion = "24.11";
+
               };
 
             sops.defaultSopsFile = ./secrets/root.yaml;
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
-
-            sops.secrets.kakkosavain = { };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
@@ -99,32 +97,11 @@
               80
               443
               3030 # Heroes3
-              47984 # Sunshine
-              47989 # Sunshine
-              47990 # Sunshine
-              48010 # Sunshine
               17693 # Johanneksen ssh-server
             ];
             networking.firewall.allowedUDPPorts = [
               80
               443
-
-              # sunshine ports
-              8000
-              8001
-              8002
-              8003
-              8004
-              8005
-              8006
-              8007
-              8008
-              8009
-              8010
-              47998
-              47999
-              48000
-
             ];
 
             # Or disable the firewall altogether.

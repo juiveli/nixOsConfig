@@ -42,7 +42,12 @@
 
             ];
 
-            users.users.router = {
+            system.stateVersion = "25.05";
+
+            # Disabling tpm, so in start it does not use time to try to find it
+            systemd.tpm2.enable = false;
+
+            users.users.joonas = {
               # ...
               # required for auto start before user login
               linger = true;
@@ -51,7 +56,20 @@
               uid = 1000;
             };
 
-            home-manager.users.router =
+            networking.interfaces.enp6s0.useDHCP = false;
+            networking.interfaces.enp6s0.ipv4.addresses = [
+              {
+                address = "192.168.1.2";
+                prefixLength = 24;
+              }
+            ];
+
+            networking.nameservers = [
+              "9.9.9.9"
+              "149.112.112.112"
+            ];
+
+            home-manager.users.joonas =
               {
                 pkgs,
                 config,
@@ -65,13 +83,15 @@
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
                 sops.defaultSopsFormat = "yaml";
-                sops.age.keyFile = "/home/router/.config/sops/age/keys.txt";
+                sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
+
+                home.stateVersion = "25.05";
 
               };
 
             sops.defaultSopsFile = ./secrets/root.yaml;
             sops.defaultSopsFormat = "yaml";
-            sops.age.keyFile = "/home/router/.config/sops/age/keys.txt";
+            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 

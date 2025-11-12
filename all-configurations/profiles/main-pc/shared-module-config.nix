@@ -16,5 +16,7 @@
     services.dns-ip-updater.dy-fi.enable = true;
     services.nix-podman-caddy-quadlet.enable = true;
 
+    custom.desktop-environment.gnome.enable = true;
+
   };
 }

@@ -85,5 +85,12 @@
           all-configurations.nixosModules.main-pc
         ];
       };
+
+      nixosConfigurations.nixos-router = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          all-configurations.nixosModules.nixos-router
+        ];
+      };
     };
 }

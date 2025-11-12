@@ -122,7 +122,9 @@
                 "nix-command"
                 "flakes"
               ];
-              system.stateVersion = lib.mkDefault "24.11";
+
+              # Intentionally commented out, so every system needs to set it themselfs
+              # system.stateVersion = "25.05";
 
               custom.boot.loader.defaultSettings.enable = lib.mkDefault true;
               custom.defaultLocale.enable = lib.mkDefault true;
@@ -130,7 +132,8 @@
               custom.networking.defaultSettings.enable = lib.mkDefault true;
 
               custom.users.joonas.enable = lib.mkDefault true;
-              custom.desktop-environment.gnome.enable = lib.mkDefault true;
+
+              custom.desktop-environment.gnome.enable = lib.mkDefault false;
 
               services.openssh.enable = lib.mkDefault true;
 
@@ -181,9 +184,11 @@
 
                   home.username = lib.mkDefault username;
                   home.homeDirectory = lib.mkDefault config.users.users.${username}.home;
-                  home.stateVersion = lib.mkDefault "25.05";
 
-                  custom.gnome.dconfSettings.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
+                  # Could not read value directly, as home-manager evaluation happens at the same time as non-homemanager, so if it is false, it would give error
+                  custom.gnome.dconfSettings.enable = lib.mkDefault (
+                    lib.attrByPath [ "custom" "desktop-environment" "gnome" "enable" ] false config
+                  );
 
                   # Podman quadlet enables
                   services.nix-podman-caddy-quadlet.enable = lib.mkDefault false;
@@ -226,9 +231,9 @@
               nixos-router.nixosModules.nixos-router-specific
             ];
             users = {
-              router = {
+              joonas = {
                 homeManagerModules = [
-
+                  ./profiles/nixos-router/shared-module-home-manager-config.nix
                 ];
               };
             };
