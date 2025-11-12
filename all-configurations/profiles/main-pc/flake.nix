@@ -54,6 +54,8 @@
 
             ];
 
+            system.stateVersion = "24.11";
+
             users.users.joonas = {
               # ...
               # required for auto start before user login
@@ -80,7 +82,7 @@
                 sops.defaultSopsFormat = "yaml";
                 sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
-                system.stateVersion = "24.11";
+                home.stateVersion = "24.11";
 
               };
 
