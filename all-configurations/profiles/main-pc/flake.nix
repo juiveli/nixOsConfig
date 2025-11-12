@@ -4,6 +4,12 @@
 
 {
   inputs = {
+
+    dns-ip-updater = {
+      url = "github:juiveli/dns-ip-updater";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # ...
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
@@ -11,6 +17,11 @@
 
     melonDS = {
       url = "github:melonDS-emu/melonDS";
+    };
+
+    nix-podman-quadlet-collection = {
+      url = "github:juiveli/nix-podman-quadlet-collection";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-wfinfo = {
@@ -28,9 +39,11 @@
   outputs =
     {
       self,
+      dns-ip-updater,
       nix-flatpak,
       nixpkgs,
       melonDS,
+      nix-podman-quadlet-collection,
       nix-wfinfo,
       sops-nix,
     }:
@@ -49,6 +62,8 @@
               # Include the results of the hardware scan.
               ./nixosModules/hardware-configuration.nix
               ./nixosModules/mount-points.nix
+              dns-ip-updater.nixosModules.quadlet
+              nix-podman-quadlet-collection.nixosModules.quadlet-collection
               nix-flatpak.nixosModules.nix-flatpak
               sops-nix.nixosModules.sops
 
@@ -74,6 +89,7 @@
               }:
               {
                 imports = [
+                  nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   sops-nix.homeManagerModules.sops
                   ./homeManagerModules/sshfs.nix
                 ];
@@ -83,6 +99,19 @@
                 sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
                 home.stateVersion = "24.11";
+
+                # Podman quadlet enables
+                services.nix-podman-chia-quadlet.enable = true;
+                services.nix-podman-mmx-quadlet.enable = true;
+                services.nix-podman-testServer-quadlet.enable = true;
+                services.nix-podman-appflowy-quadlet.enable = true;
+                services.nix-podman-sshServerJohannes-quadlet.enable = true;
+                services.nix-podman-nicehash-quadlet = {
+                  workerName = "main-pc";
+                  enable = false;
+                  nvidia = true;
+                  amd = false;
+                };
 
               };
 
@@ -110,6 +139,16 @@
             networking.firewall.enable = true;
 
             services.mount-points.enable = true;
+
+            services.dns-ip-updater.dy-fi.enable = true;
+
+            # Folder creations
+            services.nix-podman-chia-quadlet.folder-creations.enable = true;
+            services.nix-podman-mmx-quadlet.folder-creations.enable = true;
+            # testServer does not need folders to be created
+            # nicehash does not need folder to be created
+
+            services.nix-podman-caddy-quadlet.enable = true;
 
             system.autoUpgrade.enable = true;
             system.autoUpgrade.allowReboot = false;

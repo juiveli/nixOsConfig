@@ -18,6 +18,10 @@
               nix-flatpak.nixosModules.nix-flatpak
             ];
 
+            system.stateVersion = "24.11";
+            #TODO CHANGE THIS
+            custom.desktop-environment.gnome.enable = true;
+
             networking.hostName = "nixos-test"; # Define your hostname.
 
             system.autoUpgrade.enable = false;

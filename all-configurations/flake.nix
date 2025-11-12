@@ -7,18 +7,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dns-ip-updater = {
-      url = "github:juiveli/dns-ip-updater";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-gnome-configs = {
       url = "github:juiveli/nix-gnome-configs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-podman-quadlet-collection = {
-      url = "github:juiveli/nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,6 +32,7 @@
 
     nixos-test = {
       url = "./profiles/nixos-test";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -49,14 +40,12 @@
   outputs =
     {
       self,
-      dns-ip-updater,
       home-manager,
       main-pc,
       nixos-router,
       nixos-test,
       nixpkgs,
       nix-gnome-configs,
-      nix-podman-quadlet-collection,
       packages,
     }@attrs:
     {
@@ -109,9 +98,7 @@
                 ./locale.nix
                 ./networking.nix
                 ./users/joonas.nix
-                dns-ip-updater.nixosModules.quadlet
                 home-manager.nixosModules.home-manager
-                nix-podman-quadlet-collection.nixosModules.quadlet-collection
                 packages.nixosModules.packages
               ]
               ++ profileModules;
@@ -145,15 +132,6 @@
               custom.packages.gui.enable = lib.mkDefault true;
               custom.packages.guiless.enable = lib.mkDefault true;
 
-              services.dns-ip-updater.dy-fi.enable = lib.mkDefault false;
-
-              # Folder creations
-              services.nix-podman-chia-quadlet.folder-creations.enable = lib.mkDefault false;
-              services.nix-podman-mmx-quadlet.folder-creations.enable = lib.mkDefault false;
-              services.nix-podman-appflowy-quadlet.folder-creations.enable = lib.mkDefault false;
-              # testServer does not need folders to be created
-              # nicehash does not need folder to be created
-
               ##################################################################
 
               # home-manager global settings
@@ -177,7 +155,6 @@
                 {
                   imports = (userConfig.homeManagerModules or [ ]) ++ [
                     nix-gnome-configs.homeManagerModules.nix-gnome-home-configs
-                    nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   ];
 
                   services.podman.enable = true;
@@ -189,21 +166,6 @@
                   custom.gnome.dconfSettings.enable = lib.mkDefault (
                     lib.attrByPath [ "custom" "desktop-environment" "gnome" "enable" ] false config
                   );
-
-                  # Podman quadlet enables
-                  services.nix-podman-caddy-quadlet.enable = lib.mkDefault false;
-                  services.nix-podman-chia-quadlet.enable = lib.mkDefault false;
-                  services.nix-podman-mmx-quadlet.enable = lib.mkDefault false;
-                  services.nix-podman-testServer-quadlet.enable = lib.mkDefault false;
-                  services.nix-podman-appflowy-quadlet.enable = lib.mkDefault false;
-                  services.nix-podman-sshServerJohannes-quadlet.enable = lib.mkDefault false;
-
-                  services.nix-podman-nicehash-quadlet = {
-                    workerName = lib.mkDefault config.network.hostName;
-                    enable = lib.mkDefault false;
-                    nvidia = lib.mkDefault false;
-                    amd = lib.mkDefault false;
-                  };
 
                 }
               ) users; # Map users to their Home Manager configurations
@@ -227,13 +189,12 @@
 
           nixos-router = profile {
             profileModules = [
-              ./profiles/nixos-router/shared-module-config.nix
               nixos-router.nixosModules.nixos-router-specific
             ];
             users = {
               joonas = {
                 homeManagerModules = [
-                  ./profiles/nixos-router/shared-module-home-manager-config.nix
+
                 ];
               };
             };
@@ -241,7 +202,6 @@
 
           nixos-test = profile {
             profileModules = [
-              ./profiles/nixos-test/shared-module-config.nix
               nixos-test.nixosModules.nixos-test-specific
             ];
           };

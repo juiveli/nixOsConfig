@@ -5,9 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # Treefmt module: provides utilities for code formatting
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-
-    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    treefmt-nix.url = "github:juiveli/treefmt-configs";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -31,46 +29,14 @@
       ...
     }@inputs:
 
-    let
-      # Small tool to iterate over each system
-      eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
-
-      # Eval the treefmt modules from ./treefmt.nix
-      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
-
-    in
     {
       # for `nix fmt`
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
 
-      checks = eachSystem (
-        pkgs:
-        let
-          # Cache the pre-commit-check evaluation
-          preCommitCheck = inputs.pre-commit-hooks.lib.${pkgs.system}.run {
-            src = ./.;
-            hooks = {
-              nixfmt-rfc-style.enable = true;
-              mdformat.enable = true;
-            };
-          };
-        in
-        {
-          formatting = treefmtEval.${pkgs.system}.config.build.check self;
+      formatter = treefmt-nix.formatter;
 
-          pre-commit-check = preCommitCheck;
+      checks = treefmt-nix.checks;
 
-          # Optimize enabledPackages by filtering for critical dependencies
-          enabledPackages = builtins.filter (pkg: pkg.isCritical == true) preCommitCheck.enabledPackages;
-        }
-      );
-
-      devShells = eachSystem (pkgs: {
-        default = nixpkgs.legacyPackages.${pkgs.system}.mkShell {
-          inherit (self.checks.${pkgs.system}.pre-commit-check) shellHook;
-          buildInputs = self.checks.${pkgs.system}.pre-commit-check.enabledPackages;
-        };
-      });
+      devShells = treefmt-nix.devShells;
 
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
