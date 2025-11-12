@@ -4,8 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
-    # Treefmt module: provides utilities for code formatting
-    treefmt-nix.url = "github:juiveli/treefmt-configs";
+    # Utility providing formatter and checker
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -25,18 +25,14 @@
       nixpkgs,
       all-configurations,
       systems,
-      treefmt-nix,
+      nix-dev-toolkit,
       ...
     }@inputs:
 
     {
-      # for `nix fmt`
-
-      formatter = treefmt-nix.formatter;
-
-      checks = treefmt-nix.checks;
-
-      devShells = treefmt-nix.devShells;
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
 
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
