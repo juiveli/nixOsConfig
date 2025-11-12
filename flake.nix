@@ -3,7 +3,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     packages = {
-      url = "/etc/nixos/all-configurations/packages";
+      url = "./packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
