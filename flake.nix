@@ -2,11 +2,24 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     sops-nix.url = "github:Mic92/sops-nix";
+
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
+
   };
 
   outputs =
-    { nixpkgs, sops-nix, ... }:
     {
+      nixpkgs,
+      nix-dev-toolkit,
+      sops-nix,
+      ...
+    }:
+    {
+
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
+
       nixosModules.quadlet =
         {
           config,
@@ -16,6 +29,7 @@
         }:
 
         let
+
           cfg = config.services.dns-ip-updater.dy-fi;
 
           # Creates <serviceName>-checked and <serviceName>-forced services and timers. For example. dns-ip-updater-forced.service
@@ -37,7 +51,7 @@
             "static.juiveli.fi"
             "blog.juiveli.fi"
           ];
-          
+
           dnsIpUpdaterScript = pkgs.writeShellScriptBin "${serviceName}" ''
               #!/bin/bash
 
