@@ -33,7 +33,7 @@
       systems,
       nix-dev-toolkit,
       ...
-    }@inputs:
+    }:
 
     {
       formatter = nix-dev-toolkit.formatter;

@@ -28,7 +28,6 @@
 
   outputs =
     {
-      self,
       home-manager,
       nixpkgs,
       nix-router-functionalities,

@@ -52,7 +52,6 @@
 
   outputs =
     {
-      self,
       dns-ip-updater,
       home-manager,
       melonDS,

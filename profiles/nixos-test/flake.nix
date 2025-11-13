@@ -14,7 +14,6 @@
 
   outputs =
     {
-      self,
       nix-flatpak,
       nix-template-config,
       ...
