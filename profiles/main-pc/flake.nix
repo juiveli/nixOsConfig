@@ -10,10 +10,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # ...
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-gnome-configs = {
+      url = "github:juiveli/nix-gnome-configs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     melonDS = {
       url = "github:melonDS-emu/melonDS";
@@ -34,18 +43,27 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-template-config = {
+      url = "github:juiveli/nix-template-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
     {
       self,
       dns-ip-updater,
-      nix-flatpak,
-      nixpkgs,
+      home-manager,
       melonDS,
+      nix-flatpak,
+      nix-gnome-configs,
+      nixpkgs,
+      nix-template-config,
       nix-podman-quadlet-collection,
       nix-wfinfo,
       sops-nix,
+      ...
     }:
 
     {
@@ -63,13 +81,22 @@
               ./nixosModules/hardware-configuration.nix
               ./nixosModules/mount-points.nix
               dns-ip-updater.nixosModules.quadlet
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+              }
               nix-podman-quadlet-collection.nixosModules.quadlet-collection
               nix-flatpak.nixosModules.nix-flatpak
               sops-nix.nixosModules.sops
 
+              nix-template-config.nixosModules.nixos-fundamentals
+
             ];
 
             system.stateVersion = "24.11";
+
+            custom.desktop-environment.gnome.enable = true;
 
             users.users.joonas = {
               # ...
@@ -89,10 +116,13 @@
               }:
               {
                 imports = [
+                  nix-gnome-configs.homeManagerModules.nix-gnome-home-configs
                   nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
                   sops-nix.homeManagerModules.sops
                   ./homeManagerModules/sshfs.nix
                 ];
+
+                custom.gnome.dconfSettings.enable = true;
 
                 sops.defaultSopsFile = ./secrets/rootless.yaml;
                 sops.defaultSopsFormat = "yaml";
