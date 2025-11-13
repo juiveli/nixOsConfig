@@ -7,15 +7,19 @@
     # Utility providing formatter and checker
     nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+    main-pc = {
+      url = "./profiles/main-pc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    all-configurations = {
-      url = "./all-configurations";
+    nixos-router = {
+      url = "./profiles/nixos-router";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
+    };
+
+    nixos-test = {
+      url = "./profiles/nixos-test";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -23,7 +27,9 @@
     {
       self,
       nixpkgs,
-      all-configurations,
+      main-pc,
+      nixos-router,
+      nixos-test,
       systems,
       nix-dev-toolkit,
       ...
@@ -37,21 +43,21 @@
       nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          all-configurations.nixosModules.nixos-test
+          nixos-test.nixosModules.nixos-test-specific
         ];
       };
 
       nixosConfigurations.main-pc = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          all-configurations.nixosModules.main-pc
+          main-pc.nixosModules.main-pc-specific
         ];
       };
 
       nixosConfigurations.nixos-router = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          all-configurations.nixosModules.nixos-router
+          nixos-router.nixosModules.nixos-router-specific
         ];
       };
     };

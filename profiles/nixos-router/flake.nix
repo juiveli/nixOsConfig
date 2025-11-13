@@ -5,9 +5,19 @@
 {
   inputs = {
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
+
+    nix-template-config = {
+      url = "github:juiveli/nix-template-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -19,9 +29,12 @@
   outputs =
     {
       self,
+      home-manager,
       nixpkgs,
       nix-router-functionalities,
+      nix-template-config,
       sops-nix,
+      ...
     }:
 
     {
@@ -38,7 +51,17 @@
               # Include the results of the hardware scan.
               ./nixosModules/hardware-configuration.nix
               nix-router-functionalities.nixosModules.dhcp
+              nix-template-config.nixosModules.nixos-fundamentals
               sops-nix.nixosModules.sops
+
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+
+                # Optionally, use home-manager.extraSpecialArgs to pass
+                # arguments to home.nix
+              }
 
             ];
 
