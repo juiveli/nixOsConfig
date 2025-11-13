@@ -5,11 +5,6 @@
 {
   inputs = {
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
@@ -19,20 +14,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
     {
-      home-manager,
       nixpkgs,
       nix-router-functionalities,
       nix-template-config,
-      sops-nix,
       ...
     }:
 
@@ -51,16 +39,6 @@
               ./nixosModules/hardware-configuration.nix
               nix-router-functionalities.nixosModules.dhcp
               nix-template-config.nixosModules.nixos-fundamentals
-              sops-nix.nixosModules.sops
-
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-
-                # Optionally, use home-manager.extraSpecialArgs to pass
-                # arguments to home.nix
-              }
 
             ];
 
@@ -91,30 +69,6 @@
               "149.112.112.112"
             ];
 
-            home-manager.users.joonas =
-              {
-                pkgs,
-                config,
-                lib,
-                ...
-              }:
-              {
-                imports = [
-                  sops-nix.homeManagerModules.sops
-                ];
-
-                sops.defaultSopsFile = ./secrets/rootless.yaml;
-                sops.defaultSopsFormat = "yaml";
-                sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
-
-                home.stateVersion = "25.05";
-
-              };
-
-            sops.defaultSopsFile = ./secrets/root.yaml;
-            sops.defaultSopsFormat = "yaml";
-            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
-
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
             networking.hostName = "nixos-router"; # Define your hostname.
@@ -138,10 +92,6 @@
 
             services.avahi.publish.enable = true;
 
-            environment.systemPackages = [
-              pkgs.sops
-
-            ];
           };
       };
     };
