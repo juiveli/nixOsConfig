@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
 
@@ -86,6 +87,8 @@
 
         in
         {
+
+          imports = [ sops-nix.nixosModules.sops ];
 
           options.services.dns-ip-updater.dy-fi = {
             enable = lib.mkEnableOption "Dns Ip updater";
