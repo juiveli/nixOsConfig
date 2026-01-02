@@ -10,15 +10,61 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       nix-dev-toolkit,
       sops-nix,
       ...
     }:
+
+    let
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      # Standard helper to generate attributes for each system
+      eachSystem = nixpkgs.lib.genAttrs supportedSystems;
+
+    in
     {
 
       formatter = nix-dev-toolkit.formatter;
-      checks = nix-dev-toolkit.checks;
+      checks = eachSystem (
+        system:
+
+        let
+          # 1. Grab the existing checks for this specific system from the toolkit
+          baseChecks = nix-dev-toolkit.checks.${system};
+
+          # 2. Define your project-specific logic tests
+          logicTests = {
+
+            test-enabled = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet;
+              config = {
+                config.services.dns-ip-updater.dy-fi.enable = true;
+                config.sops.age.keyFile = "/tmp/dummy-key.txt";
+              };
+            };
+
+            test-didabled = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet;
+              config = {
+                config.services.dns-ip-updater.dy-fi.enable = false;
+              };
+            };
+
+          };
+
+        in
+        baseChecks // logicTests
+      );
+
       devShells = nix-dev-toolkit.devShells;
 
       nixosModules.quadlet =
