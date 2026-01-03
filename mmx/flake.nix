@@ -193,6 +193,11 @@
               type = lib.types.str;
               description = "The stateVersion for the Home Manager user.";
             };
+
+            keyFile = lib.mkOption {
+              type = lib.types.str;
+              description = "The age key file location";
+            };
           };
 
           imports = [
@@ -223,6 +228,7 @@
 
               home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-mmx-quadlet.enable = true;
+              sops.age.keyFile = cfg.keyFile;
             };
           };
         };

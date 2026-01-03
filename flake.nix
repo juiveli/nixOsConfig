@@ -129,8 +129,8 @@
                 config.services.nix-podman-appflowy-service = {
                   enable = true;
                   homeStateVersion = "25.05";
+                  keyFile = "/tmp/dummy-key.txt";
                 };
-                config.home-manager.users.appflowy-user.sops.age.keyFile = "/tmp/dummy-key.txt";
               };
             };
 
@@ -154,8 +154,8 @@
                 config.services.nix-podman-chia-service = {
                   enable = true;
                   homeStateVersion = "25.05";
+                  keyFile = "/tmp/dummy-key.txt";
                 };
-                config.home-manager.users.chia-user.sops.age.keyFile = "/tmp/dummy-key.txt";
               };
             };
 
@@ -167,8 +167,8 @@
                 config.services.nix-podman-mmx-service = {
                   enable = true;
                   homeStateVersion = "25.05";
+                  keyFile = "/tmp/dummy-key.txt";
                 };
-                config.home-manager.users.mmx-user.sops.age.keyFile = "/tmp/dummy-key.txt";
               };
             };
 
