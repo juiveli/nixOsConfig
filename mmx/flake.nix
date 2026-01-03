@@ -2,11 +2,29 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    sops-nix.url = "github:Mic92/sops-nix";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, sops-nix, ... }:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      quadlet-nix,
+      sops-nix,
+      ...
+    }:
     {
       homeManagerModules.quadlet =
         {
@@ -50,6 +68,11 @@
           options.services.nix-podman-mmx-quadlet = {
             enable = lib.mkEnableOption "nix-podman-mmx-quadlet";
           };
+
+          imports = [
+            quadlet-nix.homeManagerModules.quadlet
+            sops-nix.homeManagerModules.sops
+          ];
 
           config = lib.mkIf cfg.enable {
 
@@ -96,7 +119,7 @@
           };
         };
 
-      nixosModules.quadlet =
+      nixosModules.folders =
         {
           config,
           lib,
@@ -105,23 +128,20 @@
         }:
         let
 
-          cfg = config.services.nix-podman-mmx-quadlet;
+          cfg = config.services.nix-podman-mmx-infra;
         in
         {
 
-          options.services.nix-podman-mmx-quadlet = {
-            folder-creations.enable = lib.mkEnableOption "nix-podman-mmx-quadlet.folder-creations";
-            username = lib.mkOption {
-              type = lib.types.str;
-              default = "joonas";
-            };
+          options.services.nix-podman-mmx-infra = {
+            enable = lib.mkEnableOption "mmx directory structure";
+            username = lib.mkOption { type = lib.types.str; };
             usergroup = lib.mkOption {
               type = lib.types.str;
-              default = "users";
+              default = cfg.username;
             };
           };
 
-          config = lib.mkIf cfg.folder-creations.enable {
+          config = lib.mkIf cfg.enable {
 
             systemd.tmpfiles.settings = {
               "containers_folder" = {
@@ -152,6 +172,50 @@
                   };
                 };
               };
+            };
+          };
+        };
+
+      nixosModules.service =
+        { config, lib, ... }:
+        let
+          cfg = config.services.nix-podman-mmx-service;
+        in
+        {
+          options.services.nix-podman-mmx-service = {
+            enable = lib.mkEnableOption "MMX Service User and HM setup";
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "mmx-user";
+            };
+          };
+
+          imports = [
+            home-manager.nixosModules.home-manager
+            quadlet-nix.nixosModules.quadlet
+            self.nixosModules.folders
+          ];
+
+          config = lib.mkIf cfg.enable {
+
+            services.nix-podman-mmx-infra = {
+              enable = true;
+              username = cfg.user;
+            };
+
+            users.groups.${cfg.user} = { };
+            users.users.${cfg.user} = {
+              isNormalUser = true;
+              group = cfg.user;
+              description = "Dedicated MMX Service User";
+              home = "/var/lib/containers/mmx";
+              createHome = true;
+              linger = true; # Required for Podman to run without login
+            };
+
+            home-manager.users.${cfg.user} = {
+              imports = [ self.homeManagerModules.quadlet ];
+              services.nix-podman-mmx-quadlet.enable = true;
             };
           };
         };

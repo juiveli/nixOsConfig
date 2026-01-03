@@ -2,18 +2,26 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
 
     sops-nix.url = "github:Mic92/sops-nix";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
   };
 
   outputs =
     {
-      nixpkgs,
       self,
+      home-manager,
+      nixpkgs,
+      quadlet-nix,
+      sops-nix,
       systems,
-      treefmt-nix,
       ...
     }@attrs:
     let
@@ -28,9 +36,6 @@
 
       # Small tool to iterate over each system
       eachSystem = f: nixpkgs.lib.genAttrs (import systems) (system: f nixpkgs.legacyPackages.${system});
-
-      # Eval the treefmt modules from ./treefmt.nix
-      treefmtEval = eachSystem (pkgs: treefmt-nix.lib.evalModule pkgs ./treefmt.nix);
 
       packages = forAllSystems (
         { pkgs }:
@@ -51,13 +56,11 @@
     in
     {
 
-      formatter = eachSystem (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
-
       packages = packages;
 
       #
 
-      nixosModules.quadlet =
+      nixosModules.folders =
         {
           config,
           lib,
@@ -66,26 +69,24 @@
         }:
         let
 
-          cfg = config.services.nix-podman-appflowy-quadlet;
+          cfg = config.services.nix-podman-appflowy-infra;
 
         in
         {
 
-          options.services.nix-podman-appflowy-quadlet = {
-            folder-creations.enable = lib.mkEnableOption "nix-podman-appflowy-quadlet.folder-creations";
+          options.services.nix-podman-appflowy-infra = {
+            enable = lib.mkEnableOption "create necessary folders for appflowy";
 
-            username = lib.mkOption {
-              type = lib.types.str;
-              default = "joonas";
-            };
+            username = lib.mkOption { type = lib.types.str; };
 
             usergroup = lib.mkOption {
               type = lib.types.str;
-              default = "users";
+              default = cfg.username;
             };
+
           };
 
-          config = lib.mkIf cfg.folder-creations.enable {
+          config = lib.mkIf cfg.enable {
 
             systemd.tmpfiles.settings = {
               "containers_folder" = {
@@ -151,6 +152,11 @@
           options.services.nix-podman-appflowy-quadlet = {
             enable = lib.mkEnableOption "Enable nix-podman-appflowy-quadlet service.";
           };
+
+          imports = [
+            quadlet-nix.homeManagerModules.quadlet
+            sops-nix.homeManagerModules.sops
+          ];
 
           config = lib.mkIf cfg.enable (
 
@@ -773,5 +779,50 @@
             }
           );
         };
+
+      nixosModules.service =
+        { config, lib, ... }:
+        let
+          cfg = config.services.nix-podman-appflowy-service;
+        in
+        {
+          options.services.nix-podman-appflowy-service = {
+            enable = lib.mkEnableOption "Appflowy Service User and HM setup";
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "appflowy-user";
+            };
+          };
+
+          imports = [
+            home-manager.nixosModules.home-manager
+            quadlet-nix.nixosModules.quadlet
+            self.nixosModules.folders
+          ];
+
+          config = lib.mkIf cfg.enable {
+
+            services.nix-podman-appflowy-infra = {
+              enable = true;
+              username = cfg.user;
+            };
+
+            users.groups.${cfg.user} = { };
+            users.users.${cfg.user} = {
+              isNormalUser = true;
+              group = cfg.user;
+              description = "Dedicated appflowy Service User";
+              home = "/var/lib/containers/appflowy";
+              createHome = true;
+              linger = true; # Required for Podman to run without login
+            };
+
+            home-manager.users.${cfg.user} = {
+              imports = [ self.homeManagerModules.quadlet ];
+              services.nix-podman-appflowy-quadlet.enable = true;
+            };
+          };
+        };
+
     };
 }

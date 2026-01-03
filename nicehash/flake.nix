@@ -2,9 +2,23 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
   };
   outputs =
-    { nixpkgs, ... }@attrs:
+    {
+      self,
+      home-manager,
+      nixpkgs,
+      quadlet-nix,
+      ...
+    }@attrs:
     {
       homeManagerModules.quadlet =
         {
@@ -93,5 +107,47 @@
 
           };
         };
+
+      nixosModules.service =
+        { config, lib, ... }:
+        let
+          cfg = config.services.nix-podman-nicehash-service;
+        in
+        {
+          options.services.nix-podman-nicehash-service = {
+            enable = lib.mkEnableOption "Nicehash Service User and HM setup";
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "nicehash-user";
+            };
+          };
+
+          imports = [
+            home-manager.nixosModules.home-manager
+            quadlet-nix.nixosModules.quadlet
+          ];
+
+          config = lib.mkIf cfg.enable {
+
+            users.groups.${cfg.user} = { };
+            users.users.${cfg.user} = {
+              isNormalUser = true;
+              group = cfg.user;
+              description = "Dedicated nicehash Service User";
+              home = "/var/lib/containers/Nicehash";
+              createHome = true;
+              linger = true; # Required for Podman to run without login
+            };
+
+            home-manager.users.${cfg.user} = {
+              imports = [
+                self.homeManagerModules.quadlet
+                quadlet-nix.homeManagerModules.quadlet
+              ];
+              services.nix-podman-nicehash-quadlet.enable = true;
+            };
+          };
+        };
+
     };
 }

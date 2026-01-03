@@ -2,9 +2,29 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
   outputs =
-    { nixpkgs, ... }@attrs:
+    {
+      self,
+      home-manager,
+      nixpkgs,
+      quadlet-nix,
+      sops-nix,
+      ...
+    }@attrs:
     {
       homeManagerModules.quadlet =
         {
@@ -22,6 +42,11 @@
           options.services.nix-podman-chia-quadlet = {
             enable = lib.mkEnableOption "nix-podman-chia-quadlet";
           };
+
+          imports = [
+            quadlet-nix.homeManagerModules.quadlet
+            sops-nix.homeManagerModules.sops
+          ];
 
           config = lib.mkIf cfg.enable {
 
@@ -66,72 +91,85 @@
           };
         };
 
-      nixosModules.quadlet =
-        {
-          config,
-          lib,
-          pkgs,
-          ...
-        }:
+      nixosModules.folders =
+        { config, lib, ... }:
         let
-
-          cfg = config.services.nix-podman-chia-quadlet;
+          cfg = config.services.nix-podman-chia-infra;
         in
         {
-
-          options.services.nix-podman-chia-quadlet = {
-            folder-creations.enable = lib.mkEnableOption "nix-podman-chia-quadlet.folder-creations";
-            username = lib.mkOption {
-              type = lib.types.str;
-              default = "joonas";
-            };
+          options.services.nix-podman-chia-infra = {
+            enable = lib.mkEnableOption "Chia directory structure";
+            username = lib.mkOption { type = lib.types.str; };
             usergroup = lib.mkOption {
               type = lib.types.str;
-              default = "users";
+              default = cfg.username;
             };
           };
 
-          config = lib.mkIf cfg.folder-creations.enable {
-
-            systemd.tmpfiles.settings = {
-              "containers_folder" = {
-                "/var/lib/containers" = {
-
-                  d = {
-                    group = cfg.usergroup;
-                    mode = "0755";
-                    user = cfg.username;
-                  };
-                };
+          config = lib.mkIf cfg.enable {
+            systemd.tmpfiles.settings."chia-folders" = {
+              "/var/lib/containers/chia".d = {
+                user = cfg.username;
+                group = cfg.usergroup;
+                mode = "0755";
               };
-
-              "chia_folders" = {
-                "/var/lib/containers/chia" = {
-                  d = {
-                    group = cfg.usergroup;
-                    mode = "0755";
-                    user = cfg.username;
-                  };
-                };
-
-                "/var/lib/containers/chia/chiaPlots" = {
-                  d = {
-                    group = cfg.usergroup;
-                    mode = "0755";
-                    user = cfg.username;
-                  };
-                };
-
-                "/var/lib/containers/chia/.chia" = {
-                  d = {
-                    group = cfg.usergroup;
-                    mode = "0755";
-                    user = cfg.username;
-                  };
-                };
+              "/var/lib/containers/chia/chiaPlots".d = {
+                user = cfg.username;
+                group = cfg.usergroup;
+                mode = "0755";
+              };
+              "/var/lib/containers/chia/.chia".d = {
+                user = cfg.username;
+                group = cfg.usergroup;
+                mode = "0755";
               };
             };
           };
         };
+
+      nixosModules.service =
+        { config, lib, ... }:
+        let
+          cfg = config.services.nix-podman-chia-service;
+        in
+        {
+          options.services.nix-podman-chia-service = {
+            enable = lib.mkEnableOption "Chia Service User and HM setup";
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "chia-user";
+            };
+          };
+
+          imports = [
+            home-manager.nixosModules.home-manager
+            quadlet-nix.nixosModules.quadlet
+            self.nixosModules.folders
+          ];
+
+          config = lib.mkIf cfg.enable {
+
+            services.nix-podman-chia-infra = {
+              enable = true;
+              username = cfg.user;
+            };
+
+            users.groups.${cfg.user} = { };
+            users.users.${cfg.user} = {
+              isNormalUser = true;
+              group = cfg.user;
+              description = "Dedicated Chia Service User";
+              home = "/var/lib/containers/chia";
+              createHome = true;
+              linger = true; # Required for Podman to run without login
+            };
+
+            home-manager.users.${cfg.user} = {
+              imports = [ self.homeManagerModules.quadlet ];
+              services.nix-podman-chia-quadlet.enable = true;
+            };
+          };
+        };
+
     };
 }

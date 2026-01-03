@@ -2,9 +2,23 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
   };
   outputs =
-    { nixpkgs, ... }@attrs:
+    {
+      self,
+      home-manager,
+      nixpkgs,
+      quadlet-nix,
+      ...
+    }@attrs:
     {
       homeManagerModules.quadlet =
         {
@@ -40,5 +54,47 @@
             };
           };
         };
+
+      nixosModules.service =
+        { config, lib, ... }:
+        let
+          cfg = config.services.nix-podman-testServer-service;
+        in
+        {
+          options.services.nix-podman-testServer-service = {
+            enable = lib.mkEnableOption "testServer Service User and HM setup";
+            user = lib.mkOption {
+              type = lib.types.str;
+              default = "testServer-user";
+            };
+          };
+
+          imports = [
+            home-manager.nixosModules.home-manager
+            quadlet-nix.nixosModules.quadlet
+          ];
+
+          config = lib.mkIf cfg.enable {
+
+            users.groups.${cfg.user} = { };
+            users.users.${cfg.user} = {
+              isNormalUser = true;
+              group = cfg.user;
+              description = "Dedicated testServer Service User";
+              home = "/var/lib/containers/testServer";
+              createHome = true;
+              linger = true; # Required for Podman to run without login
+            };
+
+            home-manager.users.${cfg.user} = {
+              imports = [
+                self.homeManagerModules.quadlet
+                quadlet-nix.homeManagerModules.quadlet
+              ];
+              services.nix-podman-testServer-quadlet.enable = true;
+            };
+          };
+        };
+
     };
 }

@@ -1,47 +1,75 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # Due to https://github.com/hercules-ci/flake-parts/pull/251 this needs to be here, and not in invidual flakes.
-    quadlet-nix = {
-      url = "github:SEIAROTg/quadlet-nix";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+
+    nix-dev-toolkit = {
+      url = "github:juiveli/nix-dev-toolkit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     appflowy = {
       url = "./appflowy";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
     testServer = {
       url = "./testServer";
+      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
+
     caddy = {
       url = "./caddy";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
     mmx = {
       url = "./mmx";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.sops-nix.follows = "sops-nix";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
     chia = {
       url = "./chia";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.sops-nix.follows = "sops-nix";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
+
     nicehash = {
       url = "./nicehash";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
     sshServerJohannes = {
       url = "./sshServerJohannes";
+      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
-
-    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
 
   };
 
@@ -51,7 +79,6 @@
       nixpkgs,
       appflowy,
       nix-dev-toolkit,
-      quadlet-nix,
       testServer,
       caddy,
       nicehash,
@@ -60,44 +87,132 @@
       sshServerJohannes,
       ...
     }@attrs:
+
+    let
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      # Standard helper to generate attributes for each system
+      eachSystem = nixpkgs.lib.genAttrs supportedSystems;
+
+    in
+
     {
 
       formatter = nix-dev-toolkit.formatter;
-      checks = nix-dev-toolkit.checks;
+
+      checks = eachSystem (
+        system:
+
+        let
+          # 1. Grab the existing checks for this specific system from the toolkit
+          baseChecks = nix-dev-toolkit.checks.${system};
+
+          # 2. Define your project-specific logic tests
+          logicTests = {
+
+            test-empty-config = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+              };
+            };
+
+            test-appflowy = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-appflowy-service.enable = true;
+                config.home-manager.users.appflowy-user.sops.age.keyFile = "/tmp/dummy-key.txt";
+                config.home-manager.users.appflowy-user.home.stateVersion = "25.05";
+              };
+            };
+
+            test-caddy = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-caddy-quadlet.enable = true;
+              };
+            };
+
+            test-chia = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-chia-service.enable = true;
+                config.home-manager.users.chia-user.sops.age.keyFile = "/tmp/dummy-key.txt";
+                config.home-manager.users.chia-user.home.stateVersion = "25.05";
+              };
+            };
+
+            test-mmx = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-mmx-service.enable = true;
+                config.home-manager.users.mmx-user.sops.age.keyFile = "/tmp/dummy-key.txt";
+                config.home-manager.users.mmx-user.home.stateVersion = "25.05";
+              };
+            };
+
+            test-nicehash = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-nicehash-service.enable = true;
+                config.home-manager.users.nicehash-user.home.stateVersion = "25.05";
+              };
+            };
+
+            test-sshServerJohannes = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-sshServerJohannes-service.enable = true;
+                config.home-manager.users.sshServerJohannes-user.home.stateVersion = "25.05";
+              };
+            };
+
+            test-testServer = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-testServer-service.enable = true;
+                config.home-manager.users.testServer-user.home.stateVersion = "25.05";
+              };
+            };
+
+          };
+
+        in
+        baseChecks // logicTests
+      );
+
       devShells = nix-dev-toolkit.devShells;
 
       nixosModules = {
         quadlet-collection = {
           imports = [
-            appflowy.nixosModules.quadlet
-            quadlet-nix.nixosModules.quadlet
+            appflowy.nixosModules.service
             caddy.nixosModules.quadlet
-            chia.nixosModules.quadlet
-            # nicehash does not have folders that need to be created
-            mmx.nixosModules.quadlet
-            # testServer does not have any folders that need to be created
+            chia.nixosModules.service
+            nicehash.nixosModules.service
+            mmx.nixosModules.service
+            sshServerJohannes.nixosModules.service
+            testServer.nixosModules.service
           ];
         };
-      };
-
-      homeManagerModules = {
-        quadlet-collection =
-          { config, pkgs, ... }:
-
-          {
-
-            imports = [
-              appflowy.homeManagerModules.quadlet
-              quadlet-nix.homeManagerModules.quadlet
-              testServer.homeManagerModules.quadlet
-              caddy.homeManagerModules.quadlet
-              mmx.homeManagerModules.quadlet
-              chia.homeManagerModules.quadlet
-              nicehash.homeManagerModules.quadlet
-              sshServerJohannes.homeManagerModules.quadlet
-            ];
-
-          };
       };
     };
 }

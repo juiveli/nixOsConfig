@@ -1,7 +1,11 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hugo-blog = {
       url = "github:juiveli/hugo-blog";
@@ -42,7 +46,10 @@
             enable = lib.mkEnableOption "nix-podman-caddy-quadlet";
           };
 
-          imports = [ quadlet-nix.nixosModules.quadlet ];
+          imports = [
+            quadlet-nix.nixosModules.quadlet
+            home-manager.nixosModules.home-manager
+          ];
 
           config = lib.mkIf cfg.enable {
 
@@ -55,6 +62,17 @@
               createHome = true;
               linger = true;
               autoSubUidGidRange = true;
+            };
+
+            home-manager.users.caddy = {
+              # Import the homeManagerModules from this same flake
+              imports = [
+                self.homeManagerModules.quadlet
+                quadlet-nix.homeManagerModules.quadlet
+              ];
+              # Enable the Home Manager module
+              services.nix-podman-caddy-quadlet.enable = true;
+              home.stateVersion = "25.05"; # Remove this when possible
             };
 
             systemd.tmpfiles.settings = {
@@ -101,18 +119,8 @@
                     user = "caddy";
                   };
                 };
-              };
-            };
 
-            home-manager.users.caddy = {
-              # Import the homeManagerModules from this same flake
-              imports = [
-                self.homeManagerModules.quadlet
-                quadlet-nix.homeManagerModules.quadlet
-              ];
-              # Enable the Home Manager module
-              services.nix-podman-caddy-quadlet.enable = true;
-              home.stateVersion = "25.05"; # Remove this when possible
+              };
             };
           };
         };
