@@ -120,10 +120,20 @@
               type = lib.types.str;
               default = "nicehash-user";
             };
+            homeStateVersion = lib.mkOption { type = lib.types.str; };
 
-            homeStateVersion = lib.mkOption {
+            # Mirror the options here
+            nvidia = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+            };
+            amd = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+            };
+            workerName = lib.mkOption {
               type = lib.types.str;
-              description = "The stateVersion for the Home Manager user.";
+              default = "DEFAULT NAME";
             };
           };
 

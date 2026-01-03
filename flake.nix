@@ -172,14 +172,32 @@
               };
             };
 
-            test-nicehash = nix-dev-toolkit.lib.mkLogicCheck {
+            test-nicehash-nvidia = nix-dev-toolkit.lib.mkLogicCheck {
               system = system;
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
                 config.services.nix-podman-nicehash-service = {
-                  enable = true;
+                  workerName = "main-pc";
+                  enable = false;
+                  nvidia = true;
+                  amd = false;
                   homeStateVersion = "25.05";
+                };
+              };
+            };
+
+            test-nicehash-amd = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-nicehash-service = {
+                  workerName = "main-pc";
+                  enable = false;
+                  nvidia = false;
+                  amd = true;
+                  homeStateVersion = "25.11";
                 };
               };
             };
