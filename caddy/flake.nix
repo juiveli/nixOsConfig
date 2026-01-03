@@ -44,6 +44,12 @@
         {
           options.services.nix-podman-caddy-quadlet = {
             enable = lib.mkEnableOption "nix-podman-caddy-quadlet";
+
+            homeStateVersion = lib.mkOption {
+              type = lib.types.str;
+              description = "The stateVersion for the Home Manager user.";
+            };
+
           };
 
           imports = [
@@ -70,9 +76,10 @@
                 self.homeManagerModules.quadlet
                 quadlet-nix.homeManagerModules.quadlet
               ];
-              # Enable the Home Manager module
+
+              home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-caddy-quadlet.enable = true;
-              home.stateVersion = "25.05"; # Remove this when possible
+
             };
 
             systemd.tmpfiles.settings = {

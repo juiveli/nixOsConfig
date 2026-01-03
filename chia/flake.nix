@@ -139,6 +139,12 @@
               type = lib.types.str;
               default = "chia-user";
             };
+
+            homeStateVersion = lib.mkOption {
+              type = lib.types.str;
+              description = "The stateVersion for the Home Manager user.";
+            };
+
           };
 
           imports = [
@@ -166,6 +172,8 @@
 
             home-manager.users.${cfg.user} = {
               imports = [ self.homeManagerModules.quadlet ];
+
+              home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-chia-quadlet.enable = true;
             };
           };

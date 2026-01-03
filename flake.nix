@@ -126,9 +126,11 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-appflowy-service.enable = true;
+                config.services.nix-podman-appflowy-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
                 config.home-manager.users.appflowy-user.sops.age.keyFile = "/tmp/dummy-key.txt";
-                config.home-manager.users.appflowy-user.home.stateVersion = "25.05";
               };
             };
 
@@ -137,7 +139,10 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-caddy-quadlet.enable = true;
+                config.services.nix-podman-caddy-quadlet = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
               };
             };
 
@@ -146,9 +151,11 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-chia-service.enable = true;
+                config.services.nix-podman-chia-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
                 config.home-manager.users.chia-user.sops.age.keyFile = "/tmp/dummy-key.txt";
-                config.home-manager.users.chia-user.home.stateVersion = "25.05";
               };
             };
 
@@ -157,9 +164,11 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-mmx-service.enable = true;
+                config.services.nix-podman-mmx-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
                 config.home-manager.users.mmx-user.sops.age.keyFile = "/tmp/dummy-key.txt";
-                config.home-manager.users.mmx-user.home.stateVersion = "25.05";
               };
             };
 
@@ -168,8 +177,10 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-nicehash-service.enable = true;
-                config.home-manager.users.nicehash-user.home.stateVersion = "25.05";
+                config.services.nix-podman-nicehash-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
               };
             };
 
@@ -178,8 +189,10 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-sshServerJohannes-service.enable = true;
-                config.home-manager.users.sshServerJohannes-user.home.stateVersion = "25.05";
+                config.services.nix-podman-sshServerJohannes-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
               };
             };
 
@@ -188,8 +201,10 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-                config.services.nix-podman-testServer-service.enable = true;
-                config.home-manager.users.testServer-user.home.stateVersion = "25.05";
+                config.services.nix-podman-testServer-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
               };
             };
 

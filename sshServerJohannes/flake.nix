@@ -150,6 +150,11 @@
               type = lib.types.str;
               default = "sshServerJohannes-user";
             };
+
+            homeStateVersion = lib.mkOption {
+              type = lib.types.str;
+              description = "The stateVersion for the Home Manager user.";
+            };
           };
 
           imports = [
@@ -181,6 +186,7 @@
                 quadlet-nix.homeManagerModules.quadlet
               ];
 
+              home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-sshServerJohannes-quadlet.enable = true;
             };
           };

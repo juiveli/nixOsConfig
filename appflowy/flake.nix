@@ -787,10 +787,16 @@
         in
         {
           options.services.nix-podman-appflowy-service = {
+
             enable = lib.mkEnableOption "Appflowy Service User and HM setup";
             user = lib.mkOption {
               type = lib.types.str;
               default = "appflowy-user";
+            };
+
+            homeStateVersion = lib.mkOption {
+              type = lib.types.str;
+              description = "The stateVersion for the Home Manager user.";
             };
           };
 
@@ -819,6 +825,8 @@
 
             home-manager.users.${cfg.user} = {
               imports = [ self.homeManagerModules.quadlet ];
+
+              home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-appflowy-quadlet.enable = true;
             };
           };

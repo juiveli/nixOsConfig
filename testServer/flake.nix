@@ -67,6 +67,11 @@
               type = lib.types.str;
               default = "testServer-user";
             };
+
+            homeStateVersion = lib.mkOption {
+              type = lib.types.str;
+              description = "The stateVersion for the Home Manager user.";
+            };
           };
 
           imports = [
@@ -91,6 +96,8 @@
                 self.homeManagerModules.quadlet
                 quadlet-nix.homeManagerModules.quadlet
               ];
+
+              home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-testServer-quadlet.enable = true;
             };
           };
