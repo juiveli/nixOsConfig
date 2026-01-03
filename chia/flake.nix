@@ -107,21 +107,33 @@
           };
 
           config = lib.mkIf cfg.enable {
-            systemd.tmpfiles.settings."chia-folders" = {
-              "/var/lib/containers/chia".d = {
-                user = cfg.username;
-                group = cfg.usergroup;
-                mode = "0755";
+            systemd.tmpfiles.settings = {
+
+              "containers_folder" = {
+                "/var/lib/containers" = {
+
+                  d = {
+                  };
+                };
               };
-              "/var/lib/containers/chia/chiaPlots".d = {
-                user = cfg.username;
-                group = cfg.usergroup;
-                mode = "0755";
-              };
-              "/var/lib/containers/chia/.chia".d = {
-                user = cfg.username;
-                group = cfg.usergroup;
-                mode = "0755";
+
+              "chia-folders" = {
+                "/var/lib/containers/chia".d = {
+                  user = cfg.username;
+                  group = cfg.usergroup;
+                  mode = "0755";
+                };
+                "/var/lib/containers/chia/chiaPlots".d = {
+                  user = cfg.username;
+                  group = cfg.usergroup;
+                  mode = "0755";
+                };
+                "/var/lib/containers/chia/.chia".d = {
+                  user = cfg.username;
+                  group = cfg.usergroup;
+                  mode = "0755";
+                };
+
               };
             };
           };

@@ -93,9 +93,6 @@
                 "/var/lib/containers" = {
 
                   d = {
-                    group = cfg.usergroup;
-                    mode = "0755";
-                    user = cfg.username;
                   };
                 };
               };
