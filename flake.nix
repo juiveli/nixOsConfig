@@ -25,6 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
       inputs.quadlet-nix.follows = "quadlet-nix";
+      inputs.sops-nix.follows = "sops-nix";
     };
 
     testServer = {
