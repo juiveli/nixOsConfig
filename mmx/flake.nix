@@ -67,21 +67,19 @@
 
           options.services.nix-podman-mmx-quadlet = {
             enable = lib.mkEnableOption "nix-podman-mmx-quadlet";
+
+            mnemonicPath = lib.mkOption {
+              type = lib.types.path;
+              description = "Path to the decrypted mnemonic file";
+            };
+
           };
 
           imports = [
             quadlet-nix.homeManagerModules.quadlet
-            sops-nix.homeManagerModules.sops
           ];
 
           config = lib.mkIf cfg.enable {
-
-            sops.secrets = {
-              mmx-mnemonic = {
-                sopsFile = ./mnemonic.yaml;
-                format = "yaml";
-              };
-            };
 
             systemd.user.startServices = "sd-switch";
 
@@ -89,19 +87,15 @@
             virtualisation.quadlet.containers = {
               mmx = {
                 autoStart = true;
-
-                # Service-specific configurations
                 serviceConfig = {
                   RestartSec = "10";
                   Restart = "always";
                 };
 
                 unitConfig = {
-                  After = "sops-nix.service";
-                  Requires = "sops-nix.service";
+                  After = [ "network-online.target" ];
                 };
 
-                # Container-specific configurations
                 containerConfig = {
                   image = "ghcr.io/madmax43v3r/mmx-node:edge"; # MMX container image
                   networks = [ "host" ]; # Use host networking
@@ -109,7 +103,7 @@
                     "/var/lib/containers/mmx/data/:/data" # Persistent data storage
                     "/var/lib/containers/mmx/mmxPlots/:/mmxPlots" # Plots directory
                     "${createWalletScript}:/usr/local/bin/create-wallet-and-start-mmx.sh" # Correctly mount the script file
-                    "${config.sops.secrets.mmx-mnemonic.path}:/mnemonic.yaml"
+                    "${toString cfg.mnemonicPath}:/mnemonic.yaml"
                     "${./Harvester.json}:/data/config/local/Harvester.json"
                   ];
                   entrypoint = "/usr/local/bin/create-wallet-and-start-mmx.sh"; # Script itself is the entrypoint
@@ -133,7 +127,7 @@
         {
 
           options.services.nix-podman-mmx-infra = {
-            enable = lib.mkEnableOption "mmx directory structure";
+            enable = lib.mkEnableOption "create necessary folders";
             username = lib.mkOption { type = lib.types.str; };
             usergroup = lib.mkOption {
               type = lib.types.str;
@@ -191,16 +185,13 @@
               description = "The stateVersion for the Home Manager user.";
             };
 
-            keyFile = lib.mkOption {
-              type = lib.types.str;
-              description = "The age key file location";
-            };
           };
 
           imports = [
             home-manager.nixosModules.home-manager
             quadlet-nix.nixosModules.quadlet
             self.nixosModules.folders
+            sops-nix.nixosModules.sops
           ];
 
           config = lib.mkIf cfg.enable {
@@ -220,12 +211,27 @@
               linger = true; # Required for Podman to run without login
             };
 
+            sops.secrets = {
+              mmx-mnemonic = {
+                sopsFile = ./mnemonic.yaml;
+                format = "yaml";
+                owner = cfg.user;
+                group = cfg.user;
+                mode = "0400";
+              };
+            };
+
             home-manager.users.${cfg.user} = {
               imports = [ self.homeManagerModules.quadlet ];
 
               home.stateVersion = cfg.homeStateVersion;
-              services.nix-podman-mmx-quadlet.enable = true;
-              sops.age.keyFile = cfg.keyFile;
+
+              services.nix-podman-mmx-quadlet = {
+                enable = true;
+                mnemonicPath = config.sops.secrets.mmx-mnemonic.path;
+
+              };
+
             };
           };
         };

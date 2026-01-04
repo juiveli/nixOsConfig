@@ -129,8 +129,8 @@
                 config.services.nix-podman-appflowy-service = {
                   enable = true;
                   homeStateVersion = "25.05";
-                  keyFile = "/tmp/dummy-key.txt";
                 };
+                config.sops.age.keyFile = "/tmp/dummy-key.txt"; # only needed in testing
               };
             };
 
@@ -154,8 +154,8 @@
                 config.services.nix-podman-chia-service = {
                   enable = true;
                   homeStateVersion = "25.05";
-                  keyFile = "/tmp/dummy-key.txt";
                 };
+                config.sops.age.keyFile = "/tmp/dummy-key.txt"; # Needed only in testing
               };
             };
 
@@ -167,8 +167,8 @@
                 config.services.nix-podman-mmx-service = {
                   enable = true;
                   homeStateVersion = "25.05";
-                  keyFile = "/tmp/dummy-key.txt";
                 };
+                config.sops.age.keyFile = "/tmp/dummy-key.txt"; # Needed only in testing
               };
             };
 

@@ -41,21 +41,18 @@
 
           options.services.nix-podman-chia-quadlet = {
             enable = lib.mkEnableOption "nix-podman-chia-quadlet";
+
+            mnemonicPath = lib.mkOption {
+              type = lib.types.path;
+              description = "Path to the decrypted mnemonic file";
+            };
           };
 
           imports = [
             quadlet-nix.homeManagerModules.quadlet
-            sops-nix.homeManagerModules.sops
           ];
 
           config = lib.mkIf cfg.enable {
-
-            sops.secrets = {
-              chia-mnemonic = {
-                sopsFile = ./mnemonic.yaml;
-                format = "yaml";
-              };
-            };
 
             systemd.user.startServices = "sd-switch";
 
@@ -68,8 +65,7 @@
                 };
 
                 unitConfig = {
-                  After = "sops-nix.service";
-                  Requires = "sops-nix.service";
+                  After = [ "network-online.target" ];
                 };
 
                 containerConfig = {
@@ -77,7 +73,7 @@
                   publishPorts = [ "8444:8444" ];
 
                   volumes = [
-                    "${config.sops.secrets.chia-mnemonic.path}:/mnemonic.txt"
+                    "${toString cfg.mnemonicPath}:/mnemonic.txt"
                     "/var/lib/containers/chia/chiaPlots:/plots"
                     "/var/lib/containers/chia/.chia:/root/.chia"
                   ];
@@ -97,8 +93,9 @@
           cfg = config.services.nix-podman-chia-infra;
         in
         {
+
           options.services.nix-podman-chia-infra = {
-            enable = lib.mkEnableOption "Chia directory structure";
+            enable = lib.mkEnableOption "Create necessart folders for appflowy";
             username = lib.mkOption { type = lib.types.str; };
             usergroup = lib.mkOption {
               type = lib.types.str;
@@ -107,6 +104,7 @@
           };
 
           config = lib.mkIf cfg.enable {
+
             systemd.tmpfiles.settings = {
 
               "containers_folder" = {
@@ -146,7 +144,7 @@
         in
         {
           options.services.nix-podman-chia-service = {
-            enable = lib.mkEnableOption "Chia Service User and HM setup";
+            enable = lib.mkEnableOption "Chia Service User, sops-nix, and HM setup with";
             user = lib.mkOption {
               type = lib.types.str;
               default = "chia-user";
@@ -157,17 +155,13 @@
               description = "The stateVersion for the Home Manager user.";
             };
 
-            keyFile = lib.mkOption {
-              type = lib.types.str;
-              description = "The age key file location";
-            };
-
           };
 
           imports = [
             home-manager.nixosModules.home-manager
             quadlet-nix.nixosModules.quadlet
             self.nixosModules.folders
+            sops-nix.nixosModules.sops
           ];
 
           config = lib.mkIf cfg.enable {
@@ -187,12 +181,24 @@
               linger = true; # Required for Podman to run without login
             };
 
+            sops.secrets = {
+              chia-mnemonic = {
+                sopsFile = ./mnemonic.yaml;
+                format = "yaml";
+                owner = cfg.user;
+                group = cfg.user;
+                mode = "0400";
+              };
+            };
+
             home-manager.users.${cfg.user} = {
               imports = [ self.homeManagerModules.quadlet ];
 
               home.stateVersion = cfg.homeStateVersion;
-              services.nix-podman-chia-quadlet.enable = true;
-              sops.age.keyFile = cfg.keyFile;
+              services.nix-podman-chia-quadlet = {
+                enable = true;
+                mnemonicPath = config.sops.secrets.chia-mnemonic.path;
+              };
             };
           };
         };

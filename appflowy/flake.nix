@@ -75,7 +75,7 @@
         {
 
           options.services.nix-podman-appflowy-infra = {
-            enable = lib.mkEnableOption "create necessary folders for appflowy";
+            enable = lib.mkEnableOption "create necessary folders for appflowy with sops-nix";
 
             username = lib.mkOption { type = lib.types.str; };
 
@@ -86,7 +86,17 @@
 
           };
 
+          imports = [ sops-nix.nixosModules.sops ];
+
           config = lib.mkIf cfg.enable {
+
+            sops.secrets = builtins.mapAttrs (name: _: {
+              sopsFile = ./secrets/${name};
+              format = "binary";
+              owner = cfg.username;
+              group = cfg.usergroup;
+              mode = "0400";
+            }) (lib.attrsets.filterAttrs (name: type: type == "regular") (builtins.readDir ./secrets));
 
             systemd.tmpfiles.settings = {
               "containers_folder" = {
@@ -152,7 +162,6 @@
 
           imports = [
             quadlet-nix.homeManagerModules.quadlet
-            sops-nix.homeManagerModules.sops
           ];
 
           config = lib.mkIf cfg.enable (
@@ -470,11 +479,6 @@
 
             in
             {
-
-              sops.secrets = builtins.mapAttrs (name: _: {
-                sopsFile = ./secrets/${name};
-                format = "binary";
-              }) (lib.attrsets.filterAttrs (name: type: type == "regular") (builtins.readDir ./secrets));
 
               home.packages = [ self.packages.x86_64-linux.appflowySource ];
               systemd.user.startServices = "sd-switch";
@@ -796,10 +800,6 @@
               description = "The stateVersion for the Home Manager user.";
             };
 
-            keyFile = lib.mkOption {
-              type = lib.types.str;
-              description = "The age key file location";
-            };
           };
 
           imports = [
@@ -830,7 +830,6 @@
 
               home.stateVersion = cfg.homeStateVersion;
               services.nix-podman-appflowy-quadlet.enable = true;
-              sops.age.keyFile = cfg.keyFile;
             };
           };
         };
