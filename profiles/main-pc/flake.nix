@@ -292,8 +292,8 @@
               pkgs.sops
               pkgs.sshfs
               pkgs.steam-run
-              melonDS.packages.${pkgs.system}.default
-              nix-wfinfo.packages.${pkgs.system}.default
+              melonDS.packages.${pkgs.stdenv.hostPlatform.system}.default
+              nix-wfinfo.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
 
             programs.steam = {
