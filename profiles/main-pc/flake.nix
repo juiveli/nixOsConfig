@@ -8,10 +8,11 @@
     dns-ip-updater = {
       url = "github:juiveli/dns-ip-updater";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.sops-nix.follows = "sops-nix";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -22,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     melonDS = {
       url = "github:melonDS-emu/melonDS";
@@ -31,21 +32,24 @@
     nix-podman-quadlet-collection = {
       url = "github:juiveli/nix-podman-quadlet-collection";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
     nix-wfinfo = {
-      url = "path:/home/joonas/Documents/git-projects/nix-wfinfo";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "path:/home/joonas/Documents/wfinfo-ng";
     };
 
     nix-template-config = {
       url = "github:juiveli/nix-template-config";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -61,7 +65,6 @@
       nix-template-config,
       nix-podman-quadlet-collection,
       nix-wfinfo,
-      sops-nix,
       ...
     }:
 
@@ -87,7 +90,6 @@
               }
               nix-podman-quadlet-collection.nixosModules.quadlet-collection
               nix-flatpak.nixosModules.nix-flatpak
-              sops-nix.nixosModules.sops
 
               nix-template-config.nixosModules.nixos-fundamentals
 
@@ -116,37 +118,14 @@
               {
                 imports = [
                   nix-gnome-configs.homeManagerModules.nix-gnome-home-configs
-                  nix-podman-quadlet-collection.homeManagerModules.quadlet-collection
-                  sops-nix.homeManagerModules.sops
                   ./homeManagerModules/sshfs.nix
                 ];
 
                 custom.gnome.dconfSettings.enable = true;
 
-                sops.defaultSopsFile = ./secrets/rootless.yaml;
-                sops.defaultSopsFormat = "yaml";
-                sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
-
                 home.stateVersion = "24.11";
 
-                # Podman quadlet enables
-                services.nix-podman-chia-quadlet.enable = true;
-                services.nix-podman-mmx-quadlet.enable = true;
-                services.nix-podman-testServer-quadlet.enable = true;
-                services.nix-podman-appflowy-quadlet.enable = true;
-                services.nix-podman-sshServerJohannes-quadlet.enable = true;
-                services.nix-podman-nicehash-quadlet = {
-                  workerName = "main-pc";
-                  enable = false;
-                  nvidia = true;
-                  amd = false;
-                };
-
               };
-
-            sops.defaultSopsFile = ./secrets/root.yaml;
-            sops.defaultSopsFormat = "yaml";
-            sops.age.keyFile = "/home/joonas/.config/sops/age/keys.txt";
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
 
@@ -169,15 +148,41 @@
 
             services.mount-points.enable = true;
 
-            services.dns-ip-updater.dy-fi.enable = true;
+            services.dns-ip-updater.dy-fi = {
+              enable = true;
+            };
 
-            # Folder creations
-            services.nix-podman-chia-quadlet.folder-creations.enable = true;
-            services.nix-podman-mmx-quadlet.folder-creations.enable = true;
-            # testServer does not need folders to be created
-            # nicehash does not need folder to be created
-
-            services.nix-podman-caddy-quadlet.enable = true;
+            services.nix-podman-appflowy-service = {
+              enable = true;
+              homeStateVersion = "25.05";
+            };
+            services.nix-podman-caddy-quadlet = {
+              enable = true;
+              homeStateVersion = "25.11";
+            };
+            services.nix-podman-chia-service = {
+              enable = true;
+              homeStateVersion = "25.11";
+            };
+            services.nix-podman-mmx-service = {
+              enable = true;
+              homeStateVersion = "25.11";
+            };
+            services.nix-podman-nicehash-service = {
+              workerName = "main-pc";
+              enable = false;
+              nvidia = true;
+              amd = false;
+              homeStateVersion = "25.11";
+            };
+            services.nix-podman-testServer-service = {
+              enable = true;
+              homeStateVersion = "25.11";
+            };
+            services.nix-podman-sshServerJohannes-service = {
+              enable = true;
+              homeStateVersion = "25.11";
+            };
 
             system.autoUpgrade.enable = true;
             system.autoUpgrade.allowReboot = false;
@@ -272,7 +277,7 @@
 
                 # Change Java runtimes available to Prism Launcher
                 jdks = [
-                  pkgs.graalvm-ce
+                  pkgs.graalvmPackages.graalvm-ce
                   pkgs.zulu8
                   pkgs.zulu17
                   pkgs.zulu

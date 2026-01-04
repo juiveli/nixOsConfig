@@ -9,17 +9,14 @@
 
     main-pc = {
       url = "./profiles/main-pc";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-router = {
       url = "./profiles/nixos-router";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixos-test = {
       url = "./profiles/nixos-test";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -40,21 +37,21 @@
       checks = nix-dev-toolkit.checks;
       devShells = nix-dev-toolkit.devShells;
 
-      nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos-test = nixos-test.inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           nixos-test.nixosModules.nixos-test-specific
         ];
       };
 
-      nixosConfigurations.main-pc = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.main-pc = main-pc.inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           main-pc.nixosModules.main-pc-specific
         ];
       };
 
-      nixosConfigurations.nixos-router = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos-router = nixos-router.inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           nixos-router.nixosModules.nixos-router-specific
