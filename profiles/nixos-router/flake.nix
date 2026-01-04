@@ -5,7 +5,7 @@
 {
   inputs = {
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
 
