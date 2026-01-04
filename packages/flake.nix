@@ -31,7 +31,7 @@
           let
 
             pkgs-unstable = import nixpkgs-unstable {
-              inherit (pkgs) system; # Use the system from the stable pkgs (e.g., "x86_64-linux")
+              system = pkgs.stdenv.hostPlatform.system;
               config = pkgs.config; # Inherit the config from the stable pkgs (e.g., allowUnfree)
             };
 
@@ -40,7 +40,7 @@
               programs.firefox.enable = true;
 
               environment.systemPackages = [
-                vscodium.packages.${pkgs.system}.default
+                vscodium.packages.${pkgs.stdenv.hostPlatform.system}.default
                 pkgs.nemo-with-extensions
                 pkgs.alacritty
                 pkgs-unstable.lact
