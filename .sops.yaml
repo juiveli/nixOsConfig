@@ -4,8 +4,10 @@
 # for a more complex example.
 keys:
   - &joonas age13fdytn5v9r7g20s39u5446tfvelv5tvxcaejl4z9szhdsyspc3uqld8w0e
+  - &main_pc age1334wa5zt2jk5t2wwwwlxusztpdtgyxn4hp0atuc5qzxe0wvczytqfh8dw3
 creation_rules:
   - path_regex: ^[^/]+\.(yaml|json|env|ini)$
     key_groups:
     - age:
       - *joonas
+      - *main_pc
