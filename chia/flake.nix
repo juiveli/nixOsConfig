@@ -181,6 +181,8 @@
               linger = true; # Required for Podman to run without login
             };
 
+            virtualisation.quadlet.enable = true;
+
             sops.secrets = {
               chia-mnemonic = {
                 sopsFile = ./mnemonic.yaml;

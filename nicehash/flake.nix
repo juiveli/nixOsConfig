@@ -154,6 +154,8 @@
               linger = true; # Required for Podman to run without login
             };
 
+            virtualisation.quadlet.enable = true;
+
             home-manager.users.${cfg.user} = {
               imports = [
                 self.homeManagerModules.quadlet

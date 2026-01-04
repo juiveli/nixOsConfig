@@ -70,6 +70,8 @@
               autoSubUidGidRange = true;
             };
 
+            virtualisation.quadlet.enable = true;
+
             home-manager.users.caddy = {
               # Import the homeManagerModules from this same flake
               imports = [
