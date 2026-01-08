@@ -29,6 +29,17 @@
         }:
         let
           cfg = config.services.nix-podman-sshServerJohannes-quadlet;
+
+          fixPermsScript = pkgs.writeScript "fix-johannes-perms" ''
+            #!/with-contenv bash
+            echo "Setting up folder permissions: Mapping to Internal UID 1000, GID 1000 for data/config..."
+
+            chown -R 1000:1000 /data
+            chmod -R 700 /data
+
+            echo "Permissions verified."
+          '';
+
         in
         {
 
@@ -48,23 +59,23 @@
                 };
                 containerConfig = {
                   environments = {
-                    # We can not tell user puid or pgid before user is created.
-                    # We could get around this by assigning puid and pgid manually when creating user, but decided not to
-                    # PUID = 1005;
-                    # PGID = 1005;
+                    PGID = "1000";
+                    PUID = "1000";
                     PUBLIC_KEY_DIR = "/pubkeys";
                     SUDO_ACCESS = "true";
                     PASSWORD_ACCESS = "false";
                     USER_NAME = "johannes";
                   };
+
                   image = "lscr.io/linuxserver/openssh-server:latest";
                   publishPorts = [ "17693:2222" ];
 
                   volumes = [
                     "/media/noob/config/:/config"
-                    "/media/noob/system/:/system"
+                    "/media/noob/system/:/system:U"
                     "/media/noob/data/:/data"
-                    "/media/noob/pubkeys/:/pubkeys"
+                    "/media/noob/pubkeys/:/pubkeys:U"
+                    "${fixPermsScript}:/custom-cont-init.d/fix-perms.sh:ro"
                   ];
                 };
               };
@@ -101,7 +112,7 @@
               "sshServerJohannes_folders" = {
 
                 "/media/noob/config" = {
-                  d = {
+                  z = {
                     group = cfg.usergroup;
                     mode = "0700";
                     user = cfg.username;
@@ -109,7 +120,7 @@
                 };
 
                 "/media/noob/system/" = {
-                  d = {
+                  z = {
                     group = cfg.usergroup;
                     mode = "0700";
                     user = cfg.username;
@@ -117,7 +128,7 @@
                 };
 
                 "/media/noob/data" = {
-                  d = {
+                  z = {
                     group = cfg.usergroup;
                     mode = "0700";
                     user = cfg.username;
@@ -125,7 +136,7 @@
                 };
 
                 "/media/noob/pubkeys" = {
-                  d = {
+                  z = {
                     group = cfg.usergroup;
                     mode = "0700";
                     user = cfg.username;
@@ -173,6 +184,7 @@
             users.groups.${cfg.user} = { };
             users.users.${cfg.user} = {
               isNormalUser = true;
+              autoSubUidGidRange = true;
               group = cfg.user;
               description = "Dedicated sshServerJohannes Service User";
               home = "/media/noob/sshServerJohannes";
