@@ -43,7 +43,7 @@
           appflowySource = pkgs.stdenv.mkDerivation {
             pname = "appflowy-source";
             version = "1.0";
-            src = /home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud;
+            src = /etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud;
             unpackPhase = "true";
             installPhase = ''
               mkdir -p $out
@@ -485,24 +485,24 @@
 
               services.podman.builds = {
                 appflowyinc_gotrue = {
-                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/docker/gotrue/Dockerfile";
+                  file = "/etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud/docker/gotrue/Dockerfile";
                   tags = [ "appflowyinc_gotrue" ];
 
                 };
 
                 admin_frontend_build = {
-                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/admin_frontend/Dockerfile";
+                  file = "/etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud/admin_frontend/Dockerfile";
                   tags = [ "admin_frontend_build" ];
                 };
 
                 appflowy_worker_build = {
-                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/services/appflowy-worker/Dockerfile";
+                  file = "/etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud/services/appflowy-worker/Dockerfile";
                   tags = [ "appflowy_worker_build" ];
-                  workingDirectory = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud";
+                  workingDirectory = "/etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud";
                 };
 
                 appflowy_cloud_build = {
-                  file = "/home/joonas/Documents/git-projects/nix-podman-quadlet-collection/appflowy/AppFlowy-Cloud/Dockerfile";
+                  file = "/etc/nixos/sharedModules/podman-quadlets/appflowy/AppFlowy-Cloud/Dockerfile";
                   tags = [ "appflowy_cloud_build" ];
                   # annotations = [ "FEATURES=" ];
                 };
