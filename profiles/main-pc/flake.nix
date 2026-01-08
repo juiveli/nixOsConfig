@@ -6,7 +6,7 @@
   inputs = {
 
     dns-ip-updater = {
-      url = "github:juiveli/dns-ip-updater";
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/dns-ip-updater";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
     };
@@ -34,6 +34,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
       inputs.quadlet-nix.follows = "quadlet-nix";
+      inputs.sops-nix.follows = "sops-nix";
     };
 
     nix-wfinfo = {
