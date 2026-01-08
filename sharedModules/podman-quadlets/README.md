@@ -1,58 +1,44 @@
- # nix-podman-quadlet-collection
+# nix-podman-quadlet-collection
 
-
-A library of rootless Podman services for NixOS. 
-
+A library of rootless Podman services for NixOS.
 
 ## Model
 
 All services here follow a model
 
-* **Rootless:** Services run as a dedicated system user by default. However, the homeManagerModule can be imported separately to run under your own user account
+- **Rootless:** Services run as a dedicated system user by default. However, the homeManagerModule can be imported separately to run under your own user account
 
-* **Locked:** If folders are created, they have `0700` permissions. It is possible also to create your own folders.
-
-  
-
+- **Locked:** If folders are created, they have `0700` permissions. It is possible also to create your own folders.
 
 ## Generic Debugging Pattern
 
 If using system user
 
-
 **systemctl:**
 
 `sudo systemctl --machine=<USER>@.host --user status <SERVICE>.service`
-
 
 **journalctl:**
 
 `sudo -u <USER> DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u <USER>)/bus journalctl --user -u <SERVICE>.service -f`
 
-
----
+______________________________________________________________________
 
 ## Service Index
 
 Each service has its own `README.md` with specifics of them
 
-* [appflowy](./appflowy/README.md)
-* [caddy](./caddy/README.md)
-* [chia](./chia/README.md)
-* [mmx](./mmx/README.md)
-* [nicehash](./nicehash/README.md)
-* [sshServerJohannes](./sshServerJohannes/README.md)
-* [testServer](./testServer/README.md)
-
+- [appflowy](./appflowy/README.md)
+- [caddy](./caddy/README.md)
+- [chia](./chia/README.md)
+- [mmx](./mmx/README.md)
+- [nicehash](./nicehash/README.md)
+- [sshServerJohannes](./sshServerJohannes/README.md)
+- [testServer](./testServer/README.md)
 
 ## Usage:
 
-
 ### 1. Add to your Flake inputs
-
-   
-
-   
 
 ```
 
@@ -94,34 +80,25 @@ Each service has its own `README.md` with specifics of them
 
 ```
 
-
-
-
 ### 2. in config, you have options
-
 
 #### Option A: Import everything:
 
 `imports = [nix-podman-quadlet-collection.nixosModules.quadlet-collection] ` for all, or if you want specific, then:
 
-
 #### Option B: Import a specific service:
 
 `imports = [nix-podman-quadlet-collection.nixosModules.<containersFolderName>.nixosModules.service] `
-
 
 #### Option C: Use with homeManager
 
 if you want to use homeManagerModule instead, please check each services own documentation page
 
-
 ### 3. in config, activate the module after importing
 
 Refer to each services manual page
 
-
 For example:
-
 
 ```
 
@@ -133,4 +110,4 @@ For example:
 
     };
 
-``` 
+```
