@@ -2,7 +2,6 @@
   description = "A flake with multiple pc nixosConfigurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
     # Utility providing formatter and checker
     nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
@@ -22,12 +21,9 @@
 
   outputs =
     {
-      self,
-      nixpkgs,
       main-pc,
       nixos-router,
       nixos-test,
-      systems,
       nix-dev-toolkit,
       ...
     }:
