@@ -11,6 +11,11 @@
       inputs.sops-nix.follows = "sops-nix";
     };
 
+    fundamentals = {
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,11 +46,6 @@
       url = "path:/home/joonas/Documents/wfinfo-ng";
     };
 
-    nix-template-config = {
-      url = "github:juiveli/nix-template-config";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
     sops-nix = {
@@ -58,12 +58,12 @@
   outputs =
     {
       dns-ip-updater,
+      fundamentals,
       home-manager,
       melonDS,
       nix-flatpak,
       nix-gnome-configs,
       nixpkgs,
-      nix-template-config,
       nix-podman-quadlet-collection,
       nix-wfinfo,
       ...
@@ -92,7 +92,7 @@
               nix-podman-quadlet-collection.nixosModules.quadlet-collection
               nix-flatpak.nixosModules.nix-flatpak
 
-              nix-template-config.nixosModules.nixos-fundamentals
+              fundamentals.nixosModules.nixos-fundamentals
 
             ];
 

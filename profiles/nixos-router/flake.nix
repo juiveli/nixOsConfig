@@ -5,14 +5,14 @@
 {
   inputs = {
 
+    fundamentals = {
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
-
-    nix-template-config = {
-      url = "github:juiveli/nix-template-config";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
   };
 
@@ -20,7 +20,7 @@
     {
       nixpkgs,
       nix-router-functionalities,
-      nix-template-config,
+      fundamentals,
       ...
     }:
 
@@ -38,7 +38,7 @@
               # Include the results of the hardware scan.
               ./nixosModules/hardware-configuration.nix
               nix-router-functionalities.nixosModules.dhcp
-              nix-template-config.nixosModules.nixos-fundamentals
+              fundamentals.nixosModules.nixos-fundamentals
 
             ];
 

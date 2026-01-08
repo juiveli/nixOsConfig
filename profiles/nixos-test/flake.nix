@@ -3,8 +3,8 @@
     # ...
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
-    nix-template-config = {
-      url = "github:juiveli/nix-template-config";
+    fundamentals = {
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -14,8 +14,8 @@
 
   outputs =
     {
+      fundamentals,
       nix-flatpak,
-      nix-template-config,
       ...
     }:
 
@@ -28,7 +28,7 @@
               # Include the results of the hardware scan.
               ./hardware-configuration.nix
               nix-flatpak.nixosModules.nix-flatpak
-              nix-template-config.nixosModules.nixos-fundamentals
+              fundamentals.nixosModules.nixos-fundamentals
             ];
 
             system.stateVersion = "24.11";
