@@ -34,8 +34,8 @@
       url = "github:melonDS-emu/melonDS";
     };
 
-    nix-podman-quadlet-collection = {
-      url = "github:juiveli/nix-podman-quadlet-collection";
+    podman-quadlets = {
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/podman-quadlets";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
       inputs.quadlet-nix.follows = "quadlet-nix";
@@ -64,8 +64,8 @@
       nix-flatpak,
       nix-gnome-configs,
       nixpkgs,
-      nix-podman-quadlet-collection,
       nix-wfinfo,
+      podman-quadlets,
       ...
     }:
 
@@ -89,7 +89,7 @@
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
               }
-              nix-podman-quadlet-collection.nixosModules.quadlet-collection
+              podman-quadlets.nixosModules.quadlet-collection
               nix-flatpak.nixosModules.nix-flatpak
 
               fundamentals.nixosModules.nixos-fundamentals

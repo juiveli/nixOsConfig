@@ -4,22 +4,22 @@
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ],
         "sops-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "sops-nix"
         ],
         "systems": "systems_7"
@@ -34,26 +34,26 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "caddy": {
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "hugo-blog": "hugo-blog",
         "hugo-mainsite": "hugo-mainsite",
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ]
       },
@@ -67,29 +67,29 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "chia": {
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ],
         "sops-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "sops-nix"
         ]
       },
@@ -103,7 +103,7 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "dns-ip-updater": {
@@ -120,11 +120,11 @@
       },
       "locked": {
         "dir": "sharedModules/dns-ip-updater",
-        "lastModified": 1767891378,
-        "narHash": "sha256-+bdQsN67DloTSnw5DpzcM7meQmov24FFG4U40kwBdwA=",
+        "lastModified": 1767895973,
+        "narHash": "sha256-xf8T0HMccyGCIP4Ndwo3uSAeEeXtLKanT9ea6eTkUSA=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "fe6fa8fa0b0c91c654ad4ded018da5bdbf38d094",
+        "rev": "a3188e364e46dd4468b07ef68d232056a3e41c4b",
         "type": "github"
       },
       "original": {
@@ -399,11 +399,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1767891378,
-        "narHash": "sha256-+bdQsN67DloTSnw5DpzcM7meQmov24FFG4U40kwBdwA=",
+        "lastModified": 1767895973,
+        "narHash": "sha256-xf8T0HMccyGCIP4Ndwo3uSAeEeXtLKanT9ea6eTkUSA=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "fe6fa8fa0b0c91c654ad4ded018da5bdbf38d094",
+        "rev": "a3188e364e46dd4468b07ef68d232056a3e41c4b",
         "type": "github"
       },
       "original": {
@@ -424,11 +424,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1767891378,
-        "narHash": "sha256-+bdQsN67DloTSnw5DpzcM7meQmov24FFG4U40kwBdwA=",
+        "lastModified": 1767895973,
+        "narHash": "sha256-xf8T0HMccyGCIP4Ndwo3uSAeEeXtLKanT9ea6eTkUSA=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "fe6fa8fa0b0c91c654ad4ded018da5bdbf38d094",
+        "rev": "a3188e364e46dd4468b07ef68d232056a3e41c4b",
         "type": "github"
       },
       "original": {
@@ -449,11 +449,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1767891378,
-        "narHash": "sha256-+bdQsN67DloTSnw5DpzcM7meQmov24FFG4U40kwBdwA=",
+        "lastModified": 1767895973,
+        "narHash": "sha256-xf8T0HMccyGCIP4Ndwo3uSAeEeXtLKanT9ea6eTkUSA=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "fe6fa8fa0b0c91c654ad4ded018da5bdbf38d094",
+        "rev": "a3188e364e46dd4468b07ef68d232056a3e41c4b",
         "type": "github"
       },
       "original": {
@@ -539,7 +539,7 @@
       "inputs": {
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nix-dev-toolkit",
           "pre-commit-hooks",
           "nixpkgs"
@@ -679,7 +679,7 @@
       "inputs": {
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "caddy",
           "nixpkgs"
         ]
@@ -702,7 +702,7 @@
       "inputs": {
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "caddy",
           "nixpkgs"
         ]
@@ -729,9 +729,9 @@
         "melonDS": "melonDS",
         "nix-flatpak": "nix-flatpak",
         "nix-gnome-configs": "nix-gnome-configs",
-        "nix-podman-quadlet-collection": "nix-podman-quadlet-collection",
         "nix-wfinfo": "nix-wfinfo",
-        "nixpkgs": "nixpkgs_16",
+        "nixpkgs": "nixpkgs_14",
+        "podman-quadlets": "podman-quadlets",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix"
       },
@@ -768,22 +768,22 @@
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ],
         "sops-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "sops-nix"
         ]
       },
@@ -797,24 +797,24 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "nicehash": {
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ]
       },
@@ -828,7 +828,7 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "nix-dev-toolkit": {
@@ -860,11 +860,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1767282955,
-        "narHash": "sha256-6QZTCeUjoPHZ+J98/Be29BPqEhvTpWORbf5ZiJufsjY=",
+        "lastModified": 1767524713,
+        "narHash": "sha256-3VqV63hOicdN4aVPyd59ttzXMOfnaFVWNq2zGwPs8Ho=",
         "owner": "juiveli",
         "repo": "nix-dev-toolkit",
-        "rev": "a92b1bc5b5e6d45c61dccab483ededbec7046d0e",
+        "rev": "51db9e4e0ec05f61fe8e062def83fd6ff790f355",
         "type": "github"
       },
       "original": {
@@ -898,7 +898,7 @@
       "inputs": {
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "pre-commit-hooks": "pre-commit-hooks_4",
@@ -948,11 +948,11 @@
         "treefmt-nix": "treefmt-nix_6"
       },
       "locked": {
-        "lastModified": 1767282955,
-        "narHash": "sha256-6QZTCeUjoPHZ+J98/Be29BPqEhvTpWORbf5ZiJufsjY=",
+        "lastModified": 1767524713,
+        "narHash": "sha256-3VqV63hOicdN4aVPyd59ttzXMOfnaFVWNq2zGwPs8Ho=",
         "owner": "juiveli",
         "repo": "nix-dev-toolkit",
-        "rev": "a92b1bc5b5e6d45c61dccab483ededbec7046d0e",
+        "rev": "51db9e4e0ec05f61fe8e062def83fd6ff790f355",
         "type": "github"
       },
       "original": {
@@ -990,11 +990,11 @@
         "treefmt-nix": "treefmt-nix_8"
       },
       "locked": {
-        "lastModified": 1767282955,
-        "narHash": "sha256-6QZTCeUjoPHZ+J98/Be29BPqEhvTpWORbf5ZiJufsjY=",
+        "lastModified": 1767524713,
+        "narHash": "sha256-3VqV63hOicdN4aVPyd59ttzXMOfnaFVWNq2zGwPs8Ho=",
         "owner": "juiveli",
         "repo": "nix-dev-toolkit",
-        "rev": "a92b1bc5b5e6d45c61dccab483ededbec7046d0e",
+        "rev": "51db9e4e0ec05f61fe8e062def83fd6ff790f355",
         "type": "github"
       },
       "original": {
@@ -1055,47 +1055,6 @@
         "type": "github"
       }
     },
-    "nix-podman-quadlet-collection": {
-      "inputs": {
-        "appflowy": "appflowy",
-        "caddy": "caddy",
-        "chia": "chia",
-        "home-manager": [
-          "main-pc",
-          "home-manager"
-        ],
-        "mmx": "mmx",
-        "nicehash": "nicehash",
-        "nix-dev-toolkit": "nix-dev-toolkit_4",
-        "nixpkgs": [
-          "main-pc",
-          "nixpkgs"
-        ],
-        "quadlet-nix": [
-          "main-pc",
-          "quadlet-nix"
-        ],
-        "sops-nix": [
-          "main-pc",
-          "sops-nix"
-        ],
-        "sshServerJohannes": "sshServerJohannes",
-        "testServer": "testServer"
-      },
-      "locked": {
-        "lastModified": 1767875659,
-        "narHash": "sha256-aKr7NOr5pxlKOEYwkar0PdD+PMIYfj65WStDw/se5rY=",
-        "owner": "juiveli",
-        "repo": "nix-podman-quadlet-collection",
-        "rev": "b87b1e01c58f350dae5d7643354375ead5660931",
-        "type": "github"
-      },
-      "original": {
-        "owner": "juiveli",
-        "repo": "nix-podman-quadlet-collection",
-        "type": "github"
-      }
-    },
     "nix-router-functionalities": {
       "inputs": {
         "nix-dev-toolkit": "nix-dev-toolkit_7"
@@ -1119,11 +1078,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1767838417,
-        "narHash": "sha256-UJ6qBXzOh/FMYgP/OlM8QeKolpQYN0198onIu8oB6dM=",
+        "lastModified": 1767893235,
+        "narHash": "sha256-lEQWUbMZF9NvsdjPNXCqy7EeSU/N8N5MSy7ousqUWBQ=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "4e92639f25e4f530990a99a32da696ee9117eb1e",
+        "rev": "842ee6c0a54cd4d0ed53ab5c8df88368cd1f382f",
         "type": "github"
       },
       "original": {
@@ -1137,11 +1096,11 @@
         "nixpkgs": "nixpkgs_24"
       },
       "locked": {
-        "lastModified": 1767838417,
-        "narHash": "sha256-UJ6qBXzOh/FMYgP/OlM8QeKolpQYN0198onIu8oB6dM=",
+        "lastModified": 1767893235,
+        "narHash": "sha256-lEQWUbMZF9NvsdjPNXCqy7EeSU/N8N5MSy7ousqUWBQ=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "4e92639f25e4f530990a99a32da696ee9117eb1e",
+        "rev": "842ee6c0a54cd4d0ed53ab5c8df88368cd1f382f",
         "type": "github"
       },
       "original": {
@@ -1155,11 +1114,11 @@
         "nixpkgs": "nixpkgs_33"
       },
       "locked": {
-        "lastModified": 1767838417,
-        "narHash": "sha256-UJ6qBXzOh/FMYgP/OlM8QeKolpQYN0198onIu8oB6dM=",
+        "lastModified": 1767893235,
+        "narHash": "sha256-lEQWUbMZF9NvsdjPNXCqy7EeSU/N8N5MSy7ousqUWBQ=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "4e92639f25e4f530990a99a32da696ee9117eb1e",
+        "rev": "842ee6c0a54cd4d0ed53ab5c8df88368cd1f382f",
         "type": "github"
       },
       "original": {
@@ -1170,7 +1129,7 @@
     },
     "nix-wfinfo": {
       "inputs": {
-        "nixpkgs": "nixpkgs_15",
+        "nixpkgs": "nixpkgs_13",
         "wfinfo-ng": "wfinfo-ng"
       },
       "locked": {
@@ -1330,38 +1289,6 @@
     },
     "nixpkgs_13": {
       "locked": {
-        "lastModified": 1764947035,
-        "narHash": "sha256-EYHSjVM4Ox4lvCXUMiKKs2vETUSL5mx+J2FfutM7T9w=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "a672be65651c80d3f592a89b3945466584a22069",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_14": {
-      "locked": {
-        "lastModified": 1761236834,
-        "narHash": "sha256-+pthv6hrL5VLW2UqPdISGuLiUZ6SnAXdd2DdUE+fV2Q=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "d5faa84122bc0a1fd5d378492efce4e289f8eac1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_15": {
-      "locked": {
         "lastModified": 1767051569,
         "narHash": "sha256-0MnuWoN+n1UYaGBIpqpPs9I9ZHW4kynits4mrnh1Pk4=",
         "owner": "NixOS",
@@ -1376,7 +1303,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_16": {
+    "nixpkgs_14": {
       "locked": {
         "lastModified": 1767799921,
         "narHash": "sha256-r4GVX+FToWVE2My8VVZH4V0pTIpnu2ZE8/Z4uxGEMBE=",
@@ -1388,6 +1315,38 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_15": {
+      "locked": {
+        "lastModified": 1764947035,
+        "narHash": "sha256-EYHSjVM4Ox4lvCXUMiKKs2vETUSL5mx+J2FfutM7T9w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a672be65651c80d3f592a89b3945466584a22069",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_16": {
+      "locked": {
+        "lastModified": 1761236834,
+        "narHash": "sha256-+pthv6hrL5VLW2UqPdISGuLiUZ6SnAXdd2DdUE+fV2Q=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "d5faa84122bc0a1fd5d378492efce4e289f8eac1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1458,16 +1417,16 @@
     },
     "nixpkgs_20": {
       "locked": {
-        "lastModified": 1767051569,
-        "narHash": "sha256-0MnuWoN+n1UYaGBIpqpPs9I9ZHW4kynits4mrnh1Pk4=",
+        "lastModified": 1767325753,
+        "narHash": "sha256-yA/CuWyqm+AQo2ivGy6PlYrjZBQm7jfbe461+4HF2fo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "40ee5e1944bebdd128f9fbada44faefddfde29bd",
+        "rev": "64049ca74d63e971b627b5f3178d95642e61cedd",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.05",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1600,16 +1559,16 @@
     },
     "nixpkgs_29": {
       "locked": {
-        "lastModified": 1767051569,
-        "narHash": "sha256-0MnuWoN+n1UYaGBIpqpPs9I9ZHW4kynits4mrnh1Pk4=",
+        "lastModified": 1767325753,
+        "narHash": "sha256-yA/CuWyqm+AQo2ivGy6PlYrjZBQm7jfbe461+4HF2fo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "40ee5e1944bebdd128f9fbada44faefddfde29bd",
+        "rev": "64049ca74d63e971b627b5f3178d95642e61cedd",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.05",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1710,16 +1669,16 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1767051569,
-        "narHash": "sha256-0MnuWoN+n1UYaGBIpqpPs9I9ZHW4kynits4mrnh1Pk4=",
+        "lastModified": 1767325753,
+        "narHash": "sha256-yA/CuWyqm+AQo2ivGy6PlYrjZBQm7jfbe461+4HF2fo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "40ee5e1944bebdd128f9fbada44faefddfde29bd",
+        "rev": "64049ca74d63e971b627b5f3178d95642e61cedd",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.05",
+        "ref": "nixos-25.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1874,6 +1833,49 @@
         "fundamentals"
       ]
     },
+    "podman-quadlets": {
+      "inputs": {
+        "appflowy": "appflowy",
+        "caddy": "caddy",
+        "chia": "chia",
+        "home-manager": [
+          "main-pc",
+          "home-manager"
+        ],
+        "mmx": "mmx",
+        "nicehash": "nicehash",
+        "nix-dev-toolkit": "nix-dev-toolkit_4",
+        "nixpkgs": [
+          "main-pc",
+          "nixpkgs"
+        ],
+        "quadlet-nix": [
+          "main-pc",
+          "quadlet-nix"
+        ],
+        "sops-nix": [
+          "main-pc",
+          "sops-nix"
+        ],
+        "sshServerJohannes": "sshServerJohannes",
+        "testServer": "testServer"
+      },
+      "locked": {
+        "dir": "sharedModules/podman-quadlets",
+        "lastModified": 1767895973,
+        "narHash": "sha256-xf8T0HMccyGCIP4Ndwo3uSAeEeXtLKanT9ea6eTkUSA=",
+        "owner": "juiveli",
+        "repo": "nixOsConfig",
+        "rev": "a3188e364e46dd4468b07ef68d232056a3e41c4b",
+        "type": "github"
+      },
+      "original": {
+        "dir": "sharedModules/podman-quadlets",
+        "owner": "juiveli",
+        "repo": "nixOsConfig",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -1938,7 +1940,7 @@
       "inputs": {
         "flake-compat": "flake-compat_4",
         "gitignore": "gitignore_4",
-        "nixpkgs": "nixpkgs_13"
+        "nixpkgs": "nixpkgs_15"
       },
       "locked": {
         "lastModified": 1767281941,
@@ -2082,17 +2084,17 @@
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ]
       },
@@ -2106,7 +2108,7 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "systems": {
@@ -2352,17 +2354,17 @@
       "inputs": {
         "home-manager": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "home-manager"
         ],
         "nixpkgs": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "nixpkgs"
         ],
         "quadlet-nix": [
           "main-pc",
-          "nix-podman-quadlet-collection",
+          "podman-quadlets",
           "quadlet-nix"
         ]
       },
@@ -2376,7 +2378,7 @@
       },
       "parent": [
         "main-pc",
-        "nix-podman-quadlet-collection"
+        "podman-quadlets"
       ]
     },
     "treefmt-nix": {
@@ -2435,7 +2437,7 @@
     },
     "treefmt-nix_4": {
       "inputs": {
-        "nixpkgs": "nixpkgs_14"
+        "nixpkgs": "nixpkgs_16"
       },
       "locked": {
         "lastModified": 1767122417,
