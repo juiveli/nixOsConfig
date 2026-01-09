@@ -831,6 +831,7 @@
               imports = [ self.homeManagerModules.quadlet ];
 
               home.stateVersion = cfg.homeStateVersion;
+              services.podman.enable = true;
               services.nix-podman-appflowy-quadlet.enable = true;
             };
           };
