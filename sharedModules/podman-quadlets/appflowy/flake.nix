@@ -90,14 +90,6 @@
 
           config = lib.mkIf cfg.enable {
 
-            sops.secrets = builtins.mapAttrs (name: _: {
-              sopsFile = ./secrets/${name};
-              format = "binary";
-              owner = cfg.username;
-              group = cfg.usergroup;
-              mode = "0400";
-            }) (lib.attrsets.filterAttrs (name: type: type == "regular") (builtins.readDir ./secrets));
-
             systemd.tmpfiles.settings = {
               "containers_folder" = {
                 "/var/lib/containers" = {
@@ -146,6 +138,7 @@
 
         let
           cfg = config.services.nix-podman-appflowy-quadlet;
+          envPaths = cfg.envPaths;
           networks = {
             appflowy_cloud = "appflowy_cloud";
           };
@@ -158,6 +151,12 @@
 
           options.services.nix-podman-appflowy-quadlet = {
             enable = lib.mkEnableOption "Enable nix-podman-appflowy-quadlet service.";
+
+            envPaths = lib.mkOption {
+              type = lib.types.attrsOf lib.types.path;
+              default = { };
+              description = "Mapping of env names to their decrypted paths on disk.";
+            };
           };
 
           imports = [
@@ -204,8 +203,8 @@
 
               dbCredsEnvBundle = {
                 environmentFile = [
-                  config.sops.secrets.postgres-user.path # POSTGRES_USER
-                  config.sops.secrets.postgres-password.path # POSTGRES_PASSWORD
+                  envPaths.postgres-user # POSTGRES_USER
+                  envPaths.postgres-password # POSTGRES_PASSWORD
                 ];
 
                 environment = {
@@ -224,8 +223,8 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.minio-root-user.path # APPFLOWY_S3_ACCESS_KEY
-                  config.sops.secrets.minio-root-password.path # APPFLOWY_S3_SECRET_KEY
+                  envPaths.minio-root-user # APPFLOWY_S3_ACCESS_KEY
+                  envPaths.minio-root-password # APPFLOWY_S3_SECRET_KEY
                 ];
 
               };
@@ -239,9 +238,9 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.appflowy-mailer-smtp-username.path # APPFLOWY_MAILER_SMTP_USERNAME
-                  config.sops.secrets.appflowy-mailer-smtp-email.path # APPFLOWY_MAILER_SMTP_EMAIL
-                  config.sops.secrets.appflowy-mailer-smtp-password.path # APPFLOWY_MAILER_SMTP_PASSWORD
+                  envPaths.appflowy-mailer-smtp-username # APPFLOWY_MAILER_SMTP_USERNAME
+                  envPaths.appflowy-mailer-smtp-email # APPFLOWY_MAILER_SMTP_EMAIL
+                  envPaths.appflowy-mailer-smtp-password # APPFLOWY_MAILER_SMTP_PASSWORD
                 ];
 
               };
@@ -251,8 +250,8 @@
                   MINIO_BROWSER_REDIRECT_URL = "${globalCommonEnv.APPFLOWY_BASE_URL}/minio";
                 };
                 environmentFile = [
-                  config.sops.secrets.minio-root-user.path # MINIO_ROOT_USER
-                  config.sops.secrets.minio-root-password.path # MINIO_ROOT_PASSWORD
+                  envPaths.minio-root-user # MINIO_ROOT_USER
+                  envPaths.minio-root-password # MINIO_ROOT_PASSWORD
                 ];
               };
 
@@ -311,36 +310,36 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.gotrue-smtp-user.path # GOTRUE_SMTP_USER
-                  config.sops.secrets.gotrue-smtp-pass.path # GOTRUE_SMTP_PASS
-                  config.sops.secrets.gotrue-smtp-admin-email.path # GOTRUE_SMTP_ADMIN_EMAIL
+                  envPaths.gotrue-smtp-user # GOTRUE_SMTP_USER
+                  envPaths.gotrue-smtp-pass # GOTRUE_SMTP_PASS
+                  envPaths.gotrue-smtp-admin-email # GOTRUE_SMTP_ADMIN_EMAIL
                   # The initial GoTrue Admin user to create, if not already exists.
-                  config.sops.secrets.gotrue-admin-email.path # GOTRUE_ADMIN_EMAIL
-                  config.sops.secrets.gotrue-admin-password.path # GOTRUE_ADMIN_PASSWORD
-                  config.sops.secrets.gotrue-jwt-secret.path # GOTRUE_JWT_SECRET
+                  envPaths.gotrue-admin-email # GOTRUE_ADMIN_EMAIL
+                  envPaths.gotrue-admin-password # GOTRUE_ADMIN_PASSWORD
+                  envPaths.gotrue-jwt-secret # GOTRUE_JWT_SECRET
 
-                  config.sops.secrets.gotrue-database-url.path
+                  envPaths.gotrue-database-url
                   # DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
                   # GOTRUE_DATABASE_URL = "postgres://postgres:password@postgres:5432/postgres?search_path=auth";
 
                   # Google OAuth2 secrets
-                  config.sops.secrets.gotrue-external-google-client-id.path # GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID
-                  config.sops.secrets.gotrue-external-google-secret.path # GOTRUE_EXTERNAL_GOOGLE_SECRET
+                  envPaths.gotrue-external-google-client-id # GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID
+                  envPaths.gotrue-external-google-secret # GOTRUE_EXTERNAL_GOOGLE_SECRET
 
                   # GitHub OAuth2 secrets
-                  config.sops.secrets.gotrue-external-github-client-id.path # GOTRUE_EXTERNAL_GITHUB_CLIENT_ID
-                  config.sops.secrets.gotrue-external-github-secret.path # GOTRUE_EXTERNAL_GITHUB_SECRET
+                  envPaths.gotrue-external-github-client-id # GOTRUE_EXTERNAL_GITHUB_CLIENT_ID
+                  envPaths.gotrue-external-github-secret # GOTRUE_EXTERNAL_GITHUB_SECRET
 
                   # Discord OAuth2 secrets
-                  config.sops.secrets.gotrue-external-discord-client-id.path # GOTRUE_EXTERNAL_DISCORD_CLIENT_ID
-                  config.sops.secrets.gotrue-external-discord-secret.path # GOTRUE_EXTERNAL_DISCORD_SECRET
+                  envPaths.gotrue-external-discord-client-id # GOTRUE_EXTERNAL_DISCORD_CLIENT_ID
+                  envPaths.gotrue-external-discord-secret # GOTRUE_EXTERNAL_DISCORD_SECRET
 
                   # Apple OAuth2
-                  config.sops.secrets.gotrue-external-apple-client-id.path # GOTRUE_EXTERNAL_APPLE_CLIENT_ID
-                  config.sops.secrets.gotrue-external-apple-secret.path # GOTRUE_EXTERNAL_APPLE_SECRET
+                  envPaths.gotrue-external-apple-client-id # GOTRUE_EXTERNAL_APPLE_CLIENT_ID
+                  envPaths.gotrue-external-apple-secret # GOTRUE_EXTERNAL_APPLE_SECRET
 
                   # SAML 2.0
-                  config.sops.secrets.gotrue-saml-private-key.path # GOTRUE_SAML_PRIVATE_KEY
+                  envPaths.gotrue-saml-private-key # GOTRUE_SAML_PRIVATE_KEY
 
                 ];
 
@@ -359,8 +358,8 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.appflowy-database-url.path # APPFLOWY_DATABASE_URL = "${networkHostEnv.POSTGRES_HOST}://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
-                  config.sops.secrets.gotrue-jwt-secret.path # APPFLOWY_GOTRUE_JWT_SECRET gotrueSpecific.environmentFile.GOTRUE_JWT_SECRET;
+                  envPaths.appflowy-database-url # APPFLOWY_DATABASE_URL = "${networkHostEnv.POSTGRES_HOST}://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                  envPaths.gotrue-jwt-secret # APPFLOWY_GOTRUE_JWT_SECRET gotrueSpecific.environmentFile.GOTRUE_JWT_SECRET;
 
                 ];
 
@@ -380,13 +379,13 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.appflowy-worker-database-url.path # APPFLOWY_WORKER_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                  envPaths.appflowy-worker-database-url # APPFLOWY_WORKER_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
                 ];
 
               };
 
               aiApiKeys = {
-                environmentFile = [ config.sops.secrets.openai-api-key.path ];
+                environmentFile = [ envPaths.openai-api-key ];
                 # OPENAI_API_KEY
                 # AI_OPENAI_API_KEY
               };
@@ -397,7 +396,7 @@
                 };
 
                 environmentFile = [
-                  config.sops.secrets.appflowy-ai-database-url.path # APPFLOWY_AI_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
+                  envPaths.appflowy-ai-database-url # APPFLOWY_AI_DATABASE_URL = "postgres://${dbCredsEnvBundle.POSTGRES_USER}:${dbCredsEnvBundle.POSTGRES_PASSWORD}@${networkHostEnv.POSTGRES_HOST}:${networkHostEnv.POSTGRES_PORT}/${dbCredsEnvBundle.POSTGRES_DB}?search_path=public";
                 ];
 
               };
@@ -657,12 +656,12 @@
                   };
                   Unit = {
                     After = [
-                      "gotrue.container"
-                      "appflowy_cloud.container"
+                      "podman-gotrue.service"
+                      "podman-appflowy_cloud.service"
                     ];
                     Requires = [
-                      "gotrue.container"
-                      "appflowy_cloud.container"
+                      "podman-gotrue.service"
+                      "podman-appflowy_cloud.service"
                     ];
                   };
                 };
@@ -685,8 +684,8 @@
                     Restart = "on-failure";
                   };
                   Unit = {
-                    After = "postgres.container";
-                    Requires = "postgres.container";
+                    After = "podman-postgres.service";
+                    Requires = "podman-postgres.service";
                   };
                 };
 
@@ -709,8 +708,8 @@
                     Restart = "on-failure";
                   };
                   Unit = {
-                    After = "postgres.container";
-                    Requires = "postgres.container";
+                    After = "podman-postgres.service";
+                    Requires = "podman-postgres.service";
                   };
                 };
 
@@ -734,8 +733,8 @@
                     Restart = "on-failure";
                   };
                   Unit = {
-                    After = "appflowy_cloud.container";
-                    Requires = "appflowy_cloud.container";
+                    After = "podman-appflowy_cloud.service";
+                    Requires = "podman-appflowy_cloud.service";
                   };
                 };
 
@@ -758,8 +757,8 @@
                     Restart = "on-failure";
                   };
                   Unit = {
-                    After = "appflowy_cloud.container";
-                    Requires = "appflowy_cloud.container";
+                    After = "podman-appflowy_cloud.service";
+                    Requires = "podman-appflowy_cloud.service";
                   };
                 };
 
@@ -785,12 +784,28 @@
         { config, lib, ... }:
         let
           cfg = config.services.nix-podman-appflowy-service;
+
+          appflowySecretDefinitions = builtins.mapAttrs (name: _: {
+            sopsFile = ./secrets/${name};
+            format = "binary";
+            owner = cfg.user;
+            group = cfg.usergroup;
+            mode = "0400";
+          }) (lib.attrsets.filterAttrs (name: type: type == "regular") (builtins.readDir ./secrets));
+
+          appflowySecretNames = builtins.attrNames appflowySecretDefinitions;
+
         in
         {
           options.services.nix-podman-appflowy-service = {
 
             enable = lib.mkEnableOption "Appflowy Service User and HM setup";
             user = lib.mkOption {
+              type = lib.types.str;
+              default = "appflowy-user";
+            };
+
+            usergroup = lib.mkOption {
               type = lib.types.str;
               default = "appflowy-user";
             };
@@ -810,9 +825,12 @@
 
           config = lib.mkIf cfg.enable {
 
+            sops.secrets = appflowySecretDefinitions;
+
             services.nix-podman-appflowy-infra = {
               enable = true;
               username = cfg.user;
+              usergroup = cfg.usergroup;
             };
 
             users.groups.${cfg.user} = { };
@@ -832,7 +850,11 @@
 
               home.stateVersion = cfg.homeStateVersion;
               services.podman.enable = true;
-              services.nix-podman-appflowy-quadlet.enable = true;
+              services.nix-podman-appflowy-quadlet = {
+                enable = true;
+                envPaths = lib.genAttrs appflowySecretNames (name: config.sops.secrets.${name}.path);
+              };
+
             };
           };
         };
