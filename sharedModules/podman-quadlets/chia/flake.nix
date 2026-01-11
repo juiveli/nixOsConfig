@@ -95,7 +95,7 @@
         {
 
           options.services.nix-podman-chia-infra = {
-            enable = lib.mkEnableOption "Create necessart folders for appflowy";
+            enable = lib.mkEnableOption "Create necessart folders for chia";
             username = lib.mkOption { type = lib.types.str; };
             usergroup = lib.mkOption {
               type = lib.types.str;
