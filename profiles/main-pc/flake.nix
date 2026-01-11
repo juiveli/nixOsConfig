@@ -154,7 +154,7 @@
             };
 
             services.nix-podman-appflowy-service = {
-              enable = true;
+              enable = false;
               homeStateVersion = "25.05";
             };
             services.nix-podman-caddy-quadlet = {
