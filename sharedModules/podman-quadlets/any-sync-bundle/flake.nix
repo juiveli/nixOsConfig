@@ -80,11 +80,11 @@
                   ];
                   volumes = [
                     "/var/lib/containers/any-sync-bundle/data:/data"
-                    "${toString cfg.bundle-configPath}:/data/bundle-config.yml:ro"
                   ];
 
                   environments = {
-                    ANY_SYNC_BUNDLE_INIT_EXTERNAL_ADDRS = "192.168.1.117";
+                    ANY_SYNC_BUNDLE_INIT_EXTERNAL_ADDRS = "192.168.1.117, juiveli.fi";
+                    ANY_SYNC_BUNDLE_CONFIG = "${cfg.bundle-configPath}";
                   };
 
                 };
