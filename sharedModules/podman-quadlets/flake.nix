@@ -20,14 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    appflowy = {
-      url = "./appflowy";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-      inputs.quadlet-nix.follows = "quadlet-nix";
-      inputs.sops-nix.follows = "sops-nix";
-    };
-
     testServer = {
       url = "./testServer";
       inputs.home-manager.follows = "home-manager";
@@ -78,7 +70,6 @@
     {
       self,
       nixpkgs,
-      appflowy,
       nix-dev-toolkit,
       testServer,
       caddy,
@@ -119,19 +110,6 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
-              };
-            };
-
-            test-appflowy = nix-dev-toolkit.lib.mkLogicCheck {
-              system = system;
-              nixpkgs = nixpkgs;
-              module = self.nixosModules.quadlet-collection;
-              config = {
-                config.services.nix-podman-appflowy-service = {
-                  enable = true;
-                  homeStateVersion = "25.05";
-                };
-                config.sops.age.keyFile = "/tmp/dummy-key.txt"; # only needed in testing
               };
             };
 
@@ -238,7 +216,6 @@
       nixosModules = {
         quadlet-collection = {
           imports = [
-            appflowy.nixosModules.service
             caddy.nixosModules.quadlet
             chia.nixosModules.service
             nicehash.nixosModules.service
