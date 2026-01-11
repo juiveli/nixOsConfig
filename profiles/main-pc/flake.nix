@@ -153,10 +153,6 @@
               enable = true;
             };
 
-            services.nix-podman-appflowy-service = {
-              enable = false;
-              homeStateVersion = "25.05";
-            };
             services.nix-podman-caddy-quadlet = {
               enable = true;
               homeStateVersion = "25.11";
@@ -246,11 +242,6 @@
               }
               {
                 appId = "eu.vcmi.VCMI";
-                origin = "flathub";
-              }
-
-              {
-                appId = "io.appflowy.AppFlowy";
                 origin = "flathub";
               }
 
