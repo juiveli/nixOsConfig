@@ -266,6 +266,7 @@
 
             environment.systemPackages = [
 
+              pkgs.anytype
               pkgs.bolt-launcher # runescape launcher
               pkgs.mkvtoolnix
 
