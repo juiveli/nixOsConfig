@@ -80,8 +80,7 @@
                   ];
                   volumes = [
                     "/var/lib/containers/any-sync-bundle/data:/data"
-                    "bundle-configPath:/data/"
-
+                    "${toString cfg.bundle-configPath}:/data/bundle-config.yml:ro"
                   ];
 
                   environments = {
