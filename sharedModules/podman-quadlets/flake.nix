@@ -27,6 +27,13 @@
       inputs.quadlet-nix.follows = "quadlet-nix";
     };
 
+    any-sync-bundle = {
+      url = "./any-sync-bundle";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.quadlet-nix.follows = "quadlet-nix";
+    };
+
     caddy = {
       url = "./caddy";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -72,6 +79,7 @@
       nixpkgs,
       nix-dev-toolkit,
       testServer,
+      any-sync-bundle,
       caddy,
       nicehash,
       mmx,
@@ -110,6 +118,19 @@
               nixpkgs = nixpkgs;
               module = self.nixosModules.quadlet-collection;
               config = {
+              };
+            };
+
+            test-any-sync-bundle = nix-dev-toolkit.lib.mkLogicCheck {
+              system = system;
+              nixpkgs = nixpkgs;
+              module = self.nixosModules.quadlet-collection;
+              config = {
+                config.services.nix-podman-any-sync-bundle-service = {
+                  enable = true;
+                  homeStateVersion = "25.05";
+                };
+                config.sops.age.keyFile = "/tmp/dummy-key.txt"; # Needed only in testing
               };
             };
 
@@ -216,6 +237,7 @@
       nixosModules = {
         quadlet-collection = {
           imports = [
+            any-sync-bundle.nixosModules.service
             caddy.nixosModules.quadlet
             chia.nixosModules.service
             nicehash.nixosModules.service

@@ -137,11 +137,14 @@
               80
               443
               3030 # Heroes3
+              33010 # DRPC Protocol (Anytype)
               17693 # Johanneksen ssh-server
+
             ];
             networking.firewall.allowedUDPPorts = [
               80
               443
+              33020 # QUIC Protocol (Anytype)
             ];
 
             # Or disable the firewall altogether.
@@ -151,6 +154,11 @@
 
             services.dns-ip-updater.dy-fi = {
               enable = true;
+            };
+
+            services.nix-podman-any-sync-bundle-service = {
+              enable = true;
+              homeStateVersion = "25.05";
             };
 
             services.nix-podman-caddy-quadlet = {
