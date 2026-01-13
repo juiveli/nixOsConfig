@@ -1,12 +1,15 @@
 {
   inputs = {
-    # ...
-    nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
     fundamentals = {
       url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
+    # ...
+    nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 

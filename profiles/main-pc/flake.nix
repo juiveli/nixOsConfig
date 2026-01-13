@@ -7,12 +7,14 @@
 
     dns-ip-updater = {
       url = "github:juiveli/nixOsConfig?dir=sharedModules/dns-ip-updater";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.sops-nix.follows = "sops-nix";
     };
 
     fundamentals = {
       url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,10 +23,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
     nix-gnome-configs = {
       url = "github:juiveli/nix-gnome-configs";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -36,6 +41,7 @@
 
     podman-quadlets = {
       url = "github:juiveli/nixOsConfig?dir=sharedModules/podman-quadlets";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
       inputs.quadlet-nix.follows = "quadlet-nix";

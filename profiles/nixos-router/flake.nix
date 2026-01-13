@@ -7,12 +7,18 @@
 
     fundamentals = {
       url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-dev-toolkit.url = "github:juiveli/nix-dev-toolkit";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
-    nix-router-functionalities.url = "github:juiveli/nix-router-functionalities";
+    nix-router-functionalities = {
+      url = "github:juiveli/nix-router-functionalities";
+      inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
+    };
 
   };
 
