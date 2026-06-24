@@ -90,6 +90,8 @@
                 # This is the systemd equivalent of running 'systemctl --user enable'
                 wantedBy = [ "multi-user.target" ];
               };
+
+              documentation.nixos.enable = false; # I can google it...
             };
 
           in

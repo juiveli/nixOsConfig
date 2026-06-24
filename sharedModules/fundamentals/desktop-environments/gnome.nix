@@ -40,7 +40,6 @@ in
       pkgs.gnome-tour # GNOME Shell detects the .desktop file on first log-in.
       pkgs.gnome-shell-extensions # This a collection of extensions.
     ];
-    documentation.nixos.enable = false; # I can google it...
 
   };
 }
