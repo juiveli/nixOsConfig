@@ -88,7 +88,7 @@
 
             imports = [
               ./bootloader.nix
-              ./desktop-environment.nix
+              ./desktop-environments/gnome.nix
               ./locale.nix
               ./networking.nix
               ./users/joonas.nix
