@@ -122,11 +122,11 @@
       },
       "locked": {
         "dir": "sharedModules/dns-ip-updater",
-        "lastModified": 1768172526,
-        "narHash": "sha256-CubK8Hwy453ReBTYOqzUiYYBlgT8JKnXyNuz/PLL/Os=",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "78fa92c429b296d48a65f9c3f06aae5bb3c3cd53",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
@@ -340,11 +340,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1768172526,
-        "narHash": "sha256-CubK8Hwy453ReBTYOqzUiYYBlgT8JKnXyNuz/PLL/Os=",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "78fa92c429b296d48a65f9c3f06aae5bb3c3cd53",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
@@ -368,11 +368,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1768172526,
-        "narHash": "sha256-CubK8Hwy453ReBTYOqzUiYYBlgT8JKnXyNuz/PLL/Os=",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "78fa92c429b296d48a65f9c3f06aae5bb3c3cd53",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1768172526,
-        "narHash": "sha256-CubK8Hwy453ReBTYOqzUiYYBlgT8JKnXyNuz/PLL/Os=",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "78fa92c429b296d48a65f9c3f06aae5bb3c3cd53",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
@@ -806,16 +806,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1762973909,
-        "narHash": "sha256-JQXAiA47BrK/J6cyy/wgF+Qt2qf0Kk3TGOqzCvEb/zE=",
+        "dir": "sharedModules/homeManagerModules/nix-gnome-configs",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
-        "repo": "nix-gnome-configs",
-        "rev": "25df41b6469da6f6605eb8466d9882e1ad380e3a",
+        "repo": "nixOsConfig",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
+        "dir": "sharedModules/homeManagerModules/nix-gnome-configs",
         "owner": "juiveli",
-        "repo": "nix-gnome-configs",
+        "repo": "nixOsConfig",
         "type": "github"
       }
     },
@@ -1458,11 +1460,11 @@
       },
       "locked": {
         "dir": "sharedModules/podman-quadlets",
-        "lastModified": 1768172526,
-        "narHash": "sha256-CubK8Hwy453ReBTYOqzUiYYBlgT8JKnXyNuz/PLL/Os=",
+        "lastModified": 1782306697,
+        "narHash": "sha256-9Fob2Wcc30U4/Mi9cgxWNAfXUkU1Z0bSP0wzXLQsOB4=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "78fa92c429b296d48a65f9c3f06aae5bb3c3cd53",
+        "rev": "53531f02d02397d95978b4056080cbd5420e0d57",
         "type": "github"
       },
       "original": {
