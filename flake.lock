@@ -122,16 +122,17 @@
       },
       "locked": {
         "dir": "sharedModules/dns-ip-updater",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/dns-ip-updater",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
@@ -340,16 +341,17 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/fundamentals",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
@@ -368,16 +370,17 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/fundamentals",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
@@ -396,16 +399,17 @@
       },
       "locked": {
         "dir": "sharedModules/fundamentals",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/fundamentals",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
@@ -807,16 +811,17 @@
       },
       "locked": {
         "dir": "sharedModules/homeManagerModules/nix-gnome-configs",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/homeManagerModules/nix-gnome-configs",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
@@ -1460,16 +1465,17 @@
       },
       "locked": {
         "dir": "sharedModules/podman-quadlets",
-        "lastModified": 1782308333,
-        "narHash": "sha256-uTKwwG+CFwbn2oLqBL0rUn3LOwigmfQLJdchGHseaXA=",
+        "lastModified": 1782315197,
+        "narHash": "sha256-GWoA/iP7tTuUNdtlDvtSF4ojiwH2MDyaMvpRRcnyJtU=",
         "owner": "juiveli",
         "repo": "nixOsConfig",
-        "rev": "e16b7c0329935115902f877fa40f797db64fa5eb",
+        "rev": "9d7d565a5491842c921744315a6d5a7400f3f0e7",
         "type": "github"
       },
       "original": {
         "dir": "sharedModules/podman-quadlets",
         "owner": "juiveli",
+        "ref": "staging",
         "repo": "nixOsConfig",
         "type": "github"
       }
