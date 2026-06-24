@@ -28,7 +28,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak"; # unstable branch. Use github:gmodena/nix-flatpak/?ref=<tag> to pin releases.
 
     nix-gnome-configs = {
-      url = "github:juiveli/nix-gnome-configs";
+      url = "github:juiveli/nixOsConfig?dir=sharedModules/homeManagerModules/nix-gnome-configs";
       inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
