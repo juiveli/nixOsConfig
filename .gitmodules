@@ -1,0 +1,3 @@
+[submodule "sharedModules2"]
+	path = sharedModules2
+	url = git@github.com:juiveli/nixOsConfig.git
