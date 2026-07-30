@@ -18,11 +18,26 @@
   outputs =
     {
       fundamentals,
+      nix-dev-toolkit,
       nix-flatpak,
+      nixpkgs,
+      self,
       ...
     }:
 
     {
+
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
+
+      nixosConfigurations.nixos-test = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.nixos-test-specific
+        ];
+      };
+
       nixosModules = {
         nixos-test-specific =
           { pkgs, config, ... }:

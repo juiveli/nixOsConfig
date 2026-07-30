@@ -67,15 +67,29 @@
       fundamentals,
       home-manager,
       melonDS,
+      nix-dev-toolkit,
       nix-flatpak,
       nix-gnome-configs,
       nixpkgs,
       nix-wfinfo,
       podman-quadlets,
+      self,
       ...
     }:
 
     {
+
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
+
+      nixosConfigurations.main-pc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.main-pc-specific
+        ];
+      };
+
       nixosModules = {
         main-pc-specific =
           {

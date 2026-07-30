@@ -27,10 +27,24 @@
       nixpkgs,
       nix-router-functionalities,
       fundamentals,
+      nix-dev-toolkit,
+      self,
       ...
     }:
 
     {
+
+      formatter = nix-dev-toolkit.formatter;
+      checks = nix-dev-toolkit.checks;
+      devShells = nix-dev-toolkit.devShells;
+
+      nixosConfigurations.nixos-router = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          self.nixosModules.nixos-router-specific
+        ];
+      };
+
       nixosModules = {
         nixos-router-specific =
           {
