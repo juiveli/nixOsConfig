@@ -6,7 +6,7 @@
   inputs = {
 
     fundamentals = {
-      url = "github:juiveli/nixOsConfig?dir=sharedModules/fundamentals&ref=staging";
+      url = "path:./../../sharedModules/fundamentals";
       inputs.nix-dev-toolkit.follows = "nix-dev-toolkit";
       inputs.nixpkgs.follows = "nixpkgs";
     };
