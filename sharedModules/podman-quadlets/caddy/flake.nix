@@ -187,7 +187,7 @@
               };
               Path = {
                 PathChanged = "${hugo-blog}";
-                Service = "hugo-update.service";
+                Unit = "hugo-update.service";
               };
               Install = {
                 WantedBy = [ "default.target" ];
