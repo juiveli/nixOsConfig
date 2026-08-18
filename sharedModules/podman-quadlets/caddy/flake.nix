@@ -181,19 +181,6 @@
               };
             };
 
-            systemd.user.paths.hugo-source-watcher = {
-              Unit = {
-                Description = "Watch for changes to the Hugo site source.";
-              };
-              Path = {
-                PathChanged = "${hugo-blog}";
-                Unit = "hugo-update.service";
-              };
-              Install = {
-                WantedBy = [ "default.target" ];
-              };
-            };
-
             virtualisation.quadlet.containers = {
               caddy = {
                 autoStart = true;
