@@ -116,6 +116,10 @@
 
             ];
 
+            networking.nameservers = [
+              "1.1.1.1"
+              "8.8.8.8"
+            ]; # caddy tries to use ipv6, which does not work
             system.stateVersion = "24.11";
 
             custom.desktop-environment.gnome.enable = true;
