@@ -72,7 +72,7 @@
                 };
 
                 containerConfig = {
-                  image = "ghcr.io/grishy/any-sync-bundle:1.2.1-2025-12-10"; # https://github.com/grishy/any-sync-bundle
+                  image = "ghcr.io/grishy/any-sync-bundle:1.5.0-2026-07-17"; # https://github.com/grishy/any-sync-bundle
 
                   publishPorts = [
                     "33010:33010"
