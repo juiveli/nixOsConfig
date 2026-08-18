@@ -161,7 +161,7 @@
               Service = {
                 ExecStart = "${pkgs.hugo}/bin/hugo -d /var/lib/containers/caddy/srv/hugo --noBuildLock";
                 WorkingDirectory = "${hugo-blog}";
-                Restart = "always";
+                Type = "oneshot";
               };
               Install = {
                 WantedBy = [ "default.target" ];
