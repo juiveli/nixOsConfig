@@ -125,31 +125,6 @@ in
         ];
       }).fileSystems
       // (createMountPoints {
-        mountPoint = "/mnt/samsung4tb";
-        device = "/dev/disk/by-uuid/3acc60b2-77c6-41e5-87e6-c96a99b3e53e";
-        fsType = "xfs";
-        options = [
-          "users"
-          "nofail"
-        ];
-        bindMounts = [
-          {
-            path = "/var/lib/containers/chia/chiaPlots/samsung4tb";
-            relativePath = "chiaPlots";
-            options = [ "ro" ];
-          }
-          {
-            path = "/var/lib/containers/mmx/mmxPlots/samsung4tb";
-            relativePath = "mmxPlots";
-            options = [ "ro" ];
-          }
-          {
-            path = "/media/samsung4tb";
-            relativePath = ".";
-          }
-        ];
-      }).fileSystems
-      // (createMountPoints {
         mountPoint = "/mnt/myBook";
         device = "/dev/disk/by-uuid/F4BF-E7AD";
         fsType = "exfat";
