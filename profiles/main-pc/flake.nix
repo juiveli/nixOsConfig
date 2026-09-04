@@ -98,7 +98,9 @@
             lib,
             ...
           }:
+
           {
+
             imports = [
               # Include the results of the hardware scan.
               ./nixosModules/hardware-configuration.nix
@@ -146,6 +148,31 @@
 
                 home.stateVersion = "24.11";
 
+                home.persistence."/persistent" = {
+                  directories = [
+                    "Downloads"
+                    {
+                      directory = ".gnupg";
+                      mode = "0700";
+                    }
+                    {
+                      directory = ".ssh";
+                      mode = "0700";
+                    }
+                    {
+                      directory = ".nixops";
+                      mode = "0700";
+                    }
+                    {
+                      directory = ".local/share/keyrings";
+                      mode = "0700";
+                    }
+                    ".local/share/direnv"
+                  ];
+                  files = [
+                    ".screenrc"
+                  ];
+                };
               };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
@@ -324,6 +351,14 @@
               dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
               localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
             };
+
+            environment.persistence."/persistent".directories = [
+              "/var/lib/containers/any-sync-bundle"
+              "/var/lib/containers/caddy"
+              "/var/lib/containers/chia"
+              "/var/lib/container/mmx"
+              "/var/lib/containers/testServer"
+            ];
           };
       };
     };

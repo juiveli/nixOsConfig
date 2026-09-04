@@ -2,6 +2,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
+    impermanence.url = "github:nix-community/impermanence";
+
+    impermanence_helper = {
+      url = "./general/impermanence_helper";
+      inputs.impermanence.follows = "impermanence";
+    };
+
     packages = {
       url = "./packages";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,6 +21,8 @@
   outputs =
     {
       self,
+      impermanence,
+      impermanence_helper,
       nix-dev-toolkit,
       nixpkgs,
       packages,
@@ -89,9 +98,12 @@
             imports = [
               ./bootloader.nix
               ./desktop-environments/gnome.nix
+              ./general/zram.nix
               ./locale.nix
               ./networking.nix
               ./users/joonas.nix
+              impermanence_helper.nixosModules.impermanence_folders
+              impermanence_helper.nixosModules.impermanence_script
               packages.nixosModules.packages
             ];
 
@@ -119,8 +131,13 @@
               user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
             };
 
+            custom.impermanence_folders.enable = lib.mkDefault true;
+            custom.impermanence_script.enable = lib.mkDefault true;
+
             custom.packages.gui.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
             custom.packages.guiless.enable = lib.mkDefault true;
+
+            custom.zram.enable = lib.mkDefault true;
 
           };
 
