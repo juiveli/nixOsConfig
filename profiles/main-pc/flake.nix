@@ -48,10 +48,6 @@
       inputs.sops-nix.follows = "sops-nix";
     };
 
-    nix-wfinfo = {
-      url = "path:/home/joonas/Documents/wfinfo-ng";
-    };
-
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
     sops-nix = {
@@ -71,7 +67,6 @@
       nix-flatpak,
       nix-gnome-configs,
       nixpkgs,
-      nix-wfinfo,
       podman-quadlets,
       self,
       ...
@@ -342,7 +337,6 @@
               pkgs.sshfs
               pkgs.steam-run
               melonDS.packages.${pkgs.stdenv.hostPlatform.system}.default
-              nix-wfinfo.packages.${pkgs.stdenv.hostPlatform.system}.default
             ];
 
             programs.steam = {
