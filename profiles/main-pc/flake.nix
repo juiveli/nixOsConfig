@@ -155,6 +155,10 @@
                       mode = "0700";
                     }
                     {
+                      directory = ".config/sops";
+                      mode = "0700";
+                    }
+                    {
                       directory = ".nixops";
                       mode = "0700";
                     }
