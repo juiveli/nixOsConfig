@@ -354,7 +354,7 @@
               "/var/lib/containers/any-sync-bundle"
               "/var/lib/containers/caddy"
               "/var/lib/containers/chia"
-              "/var/lib/container/mmx"
+              "/var/lib/containers/mmx"
               "/var/lib/containers/testServer"
             ];
           };
