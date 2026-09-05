@@ -502,22 +502,6 @@
         "type": "github"
       }
     },
-    "nix-wfinfo": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_7",
-        "wfinfo-ng": "wfinfo-ng"
-      },
-      "locked": {
-        "lastModified": 1767493282,
-        "narHash": "sha256-yPyf+K5PFQzSetWd7B7c9EvkoYcro5kkFxKrzRPDqxc=",
-        "path": "/home/joonas/Documents/wfinfo-ng",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/joonas/Documents/wfinfo-ng",
-        "type": "path"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1768564909,
@@ -647,22 +631,6 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1767051569,
-        "narHash": "sha256-0MnuWoN+n1UYaGBIpqpPs9I9ZHW4kynits4mrnh1Pk4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "40ee5e1944bebdd128f9fbada44faefddfde29bd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_8": {
-      "locked": {
         "lastModified": 1782847189,
         "narHash": "sha256-twXPFqFsrrY5r28Zh7Homgcp2gUMBgQ6WDS98Q/3xFI=",
         "owner": "NixOS",
@@ -778,8 +746,7 @@
         "nix-dev-toolkit": "nix-dev-toolkit",
         "nix-flatpak": "nix-flatpak",
         "nix-gnome-configs": "nix-gnome-configs",
-        "nix-wfinfo": "nix-wfinfo",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_7",
         "podman-quadlets": "podman-quadlets",
         "quadlet-nix": "quadlet-nix",
         "sops-nix": "sops-nix"
@@ -964,19 +931,6 @@
         "fundamentals",
         "packages"
       ]
-    },
-    "wfinfo-ng": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767306114,
-        "narHash": "sha256-S305tEIaWTwGzKwYwmqUMg1RggxSJHtISX6SBAYqvIg=",
-        "path": "/home/joonas/Documents/wfinfo-ng",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/joonas/Documents/wfinfo-ng",
-        "type": "path"
-      }
     }
   },
   "root": "root",

@@ -203,7 +203,7 @@
             };
 
             services.nix-podman-any-sync-bundle-service = {
-              enable = true;
+              enable = false;
               homeStateVersion = "25.05";
             };
 
@@ -351,7 +351,7 @@
             };
 
             environment.persistence."/persistent".directories = [
-              "/var/lib/containers/any-sync-bundle"
+              #"/var/lib/containers/any-sync-bundle"
               "/var/lib/containers/caddy"
               "/var/lib/containers/chia"
               "/var/lib/containers/mmx"

@@ -133,6 +133,7 @@
 
             custom.impermanence_folders.enable = lib.mkDefault true;
             custom.impermanence_script.enable = lib.mkDefault true;
+            custom.impermanence__home_script.enable = lib.mkDefault true;
 
             custom.packages.gui.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
             custom.packages.guiless.enable = lib.mkDefault true;
