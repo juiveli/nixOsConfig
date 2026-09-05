@@ -12,7 +12,7 @@ sops:
             NTlYMlV5akl0NGR6RTBPTlFjamZsQ0EKNtFCtqDmflo9ywch3Ol8tOGcFfq99VJE
             112x52ZmX1liIzERt6y7QhyuL3hEM+/WZMtkZO1Cq4u38moxqN0ujA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-09-05T10:34:31Z"
-    mac: ENC[AES256_GCM,data:cQbEZwnPiG+4ryIFxOFMAJn3u2X6jOn9uJi0M3CoijpPZwzUeYRDmKgN6g49W2SAWYuKv6SPSoVJarh2CiaiNOFpDFbxWbpZas3OYyCfOVfqC5sYkvKYVjVbNZzJThEo6drsv2v1LpyRXL4IM644SlcM+cTvbeqtvlOXgQcFsmk=,iv:/VlgDJu+ckndGrGh3TtP06DlwShsRu99RZoUhYOFwuo=,tag:icSpOXxMxNbX++EzDgTC+w==,type:str]
+    lastmodified: "2026-09-05T10:42:40Z"
+    mac: ENC[AES256_GCM,data:1ZvK4ywPwxkGQqgwtawYa1V7t02D+YmCORw+FyCY/TIbH6zclWb39bbekyzgb1XIj5mnX1XquKeMwrwXc3AT5XHuGVTs4OsIG/PZC7b6JXg1xZpn0HBMp8kvP3C92gl//ePg1S/k54k083rRPpHs6oCpMOMQ05Vx8e+gphtWXCw=,iv:WaYZXidJKazi9w7RqX63a9JG2jGrgOZ7wfHb0wm2LIQ=,tag:NAkqkhrBAVgfJBab85kogg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.1
