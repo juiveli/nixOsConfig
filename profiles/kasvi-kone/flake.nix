@@ -96,7 +96,7 @@
             custom.desktop-environment.gnome.enable = true;
 
             services.displayManager.autoLogin = {
-                  enable = false;
+              enable = false;
             };
 
             home-manager.users.joonas =
@@ -195,6 +195,13 @@
               remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
               dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
               localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+            };
+
+            services.hardware.openrgb = {
+              enable = true;
+              package = pkgs.openrgb-with-all-plugins;
+              motherboard = "amd";
+              server.port = 6742;
             };
           };
       };
