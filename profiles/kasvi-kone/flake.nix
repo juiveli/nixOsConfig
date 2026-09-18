@@ -34,7 +34,7 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-     inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
@@ -91,10 +91,14 @@
             ];
 
             system.stateVersion = "26.05";
-	
-	    swapDevices = [{device = "/swap/swapfile";}];
+
+            swapDevices = [ { device = "/swap/swapfile"; } ];
             custom.desktop-environment.gnome.enable = true;
-	            
+
+            services.displayManager.autoLogin = {
+                  enable = false;
+            };
+
             home-manager.users.joonas =
               {
                 pkgs,
@@ -111,7 +115,7 @@
 
                 home.stateVersion = "26.05";
 
-               };
+              };
 
             networking.hostName = "kasvi-kone"; # Define your hostname.
 
@@ -126,7 +130,6 @@
 
             # Or disable the firewall altogether.
             networking.firewall.enable = true;
-
 
             system.autoUpgrade.enable = false;
             system.autoUpgrade.allowReboot = false;

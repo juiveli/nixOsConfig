@@ -145,6 +145,11 @@
 
                 custom.gnome.dconfSettings.enable = true;
 
+                services.displayManager.autoLogin = {
+                  enable = true;
+                  user = "joonas";
+                };
+
                 home.stateVersion = "24.11";
 
                 home.persistence."/persistent" = {
