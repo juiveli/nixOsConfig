@@ -104,6 +104,7 @@
               ./users/joonas.nix
               impermanence_helper.nixosModules.impermanence_folders
               impermanence_helper.nixosModules.impermanence_script
+              impermanence_helper.nixosModules.impermanence_home_script
               packages.nixosModules.packages
             ];
 
@@ -131,9 +132,9 @@
               user = lib.mkDefault "joonas"; # Default to "joonas" but allows override.
             };
 
-            custom.impermanence_folders.enable = lib.mkDefault true;
-            custom.impermanence_script.enable = lib.mkDefault true;
-            custom.impermanence__home_script.enable = lib.mkDefault true;
+            custom.impermanence_folders.enable = lib.mkDefault false;
+            custom.impermanence_script.enable = lib.mkDefault false;
+            custom.impermanence_home_script.enable = lib.mkDefault false;
 
             custom.packages.gui.enable = lib.mkDefault config.custom.desktop-environment.gnome.enable;
             custom.packages.guiless.enable = lib.mkDefault true;

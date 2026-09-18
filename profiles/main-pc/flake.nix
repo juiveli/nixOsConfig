@@ -117,6 +117,10 @@
 
             custom.desktop-environment.gnome.enable = true;
 
+            custom.impermanence_folders.enable = true;
+            custom.impermanence_script.enable = true;
+            custom.impermanence_home_script.enable = true;
+
             users.users.joonas = {
               # ...
               # required for auto start before user login

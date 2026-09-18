@@ -23,14 +23,5 @@ in
       priority = 100;
       memoryPercent = 50; # % of RAM available as compressed swap
     };
-
-    # If you used disko to partition, this is fine
-    swapDevices = [
-      {
-        device = "/persist/swap/swapfile";
-        priority = 1; # Lower priority -> used only when zram is full
-      }
-    ];
-
   };
 }
