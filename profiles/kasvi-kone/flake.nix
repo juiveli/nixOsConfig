@@ -79,6 +79,7 @@
             imports = [
               # Include the results of the hardware scan.
               ./nixosModules/hardware-configuration.nix
+              ./nixosModules/sara.nix
               home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
