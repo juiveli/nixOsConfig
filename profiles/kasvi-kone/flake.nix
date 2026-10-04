@@ -100,6 +100,8 @@
               enable = false;
             };
 
+            hardware.xone.enable = true;
+
             home-manager.users.joonas =
               {
                 pkgs,
