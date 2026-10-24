@@ -119,7 +119,6 @@
 
             custom.impermanence_folders.enable = true;
             custom.impermanence_script.enable = true;
-            custom.impermanence_home_script.enable = true;
 
             users.users.joonas = {
               # ...
@@ -128,6 +127,10 @@
               # required for rootless container with multiple users
               autoSubUidGidRange = true;
               uid = 1000;
+            };
+            services.displayManager.autoLogin = {
+              enable = true;
+              user = "joonas";
             };
 
             home-manager.users.joonas =
@@ -145,42 +148,8 @@
 
                 custom.gnome.dconfSettings.enable = true;
 
-                services.displayManager.autoLogin = {
-                  enable = true;
-                  user = "joonas";
-                };
-
                 home.stateVersion = "24.11";
 
-                home.persistence."/persistent" = {
-                  directories = [
-                    "Downloads"
-                    {
-                      directory = ".gnupg";
-                      mode = "0700";
-                    }
-                    {
-                      directory = ".ssh";
-                      mode = "0700";
-                    }
-                    {
-                      directory = ".config/sops";
-                      mode = "0700";
-                    }
-                    {
-                      directory = ".nixops";
-                      mode = "0700";
-                    }
-                    {
-                      directory = ".local/share/keyrings";
-                      mode = "0700";
-                    }
-                    ".local/share/direnv"
-                  ];
-                  files = [
-                    ".screenrc"
-                  ];
-                };
               };
 
             boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
