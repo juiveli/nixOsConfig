@@ -335,7 +335,14 @@
               "/var/lib/containers/mmx"
               "/var/lib/containers/testServer"
             ];
-          };
+
+            environment.persistence."/persistent".users.joonas = {
+              directories = [
+                "Documents"
+              ];
+            };
+
+        };
       };
     };
 }
